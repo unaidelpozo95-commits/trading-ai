@@ -2,11 +2,11 @@
 
 ## Estado del proyecto
 
-> **Estado actual: En desarrollo — fase de investigación cuantitativa**
+> **Estado actual: En desarrollo — fase de investigación cuantitativa + primeros pasos en backtesting**
 
 Este proyecto pretende convertirse en una plataforma de análisis cuantitativo de mercados capaz de estudiar datos históricos, detectar oportunidades, evaluar estrategias y asistir en el proceso de investigación mediante IA.
 
-Actualmente se ha construido la **base de investigación cuantitativa** y se está trabajando en la validación de las primeras hipótesis.
+Actualmente se ha construido la **base de investigación cuantitativa** y ya existe un **motor de backtesting inicial**, pendiente de validar contra datos reales.
 
 ### Lo que ya está implementado
 
@@ -26,16 +26,21 @@ Actualmente se ha construido la **base de investigación cuantitativa** y se est
 * [x] Separación Development / Out-of-Sample.
 * [x] Comparación contra baseline.
 * [x] Identificación de regiones de parámetros potencialmente robustas.
+* [x] Motor de backtesting base (`src/backtest/`): simulación de entradas/salidas con Stop Loss, Take Profit y salida por tiempo, curva de equity y métricas (CAGR, Sharpe, drawdown, win rate, profit factor).
 
 ### Lo que todavía NO está implementado
 
-* [ ] Backtesting completo de estrategias.
+* [ ] Validación del motor de backtesting contra los datos reales de AAPL (pendiente de ejecutar).
+* [ ] Position sizing avanzado (basado en equity total, no solo en cash libre) — necesario para multi-activo.
+* [ ] Comisiones y slippage reales (el motor ya tiene el hook, falta poner valores).
+* [ ] Walk-forward analysis (hoy el split Dev/OOS son dos backtests independientes, no una única curva continua).
 * [ ] Scanner automático de oportunidades.
 * [ ] Gestión del riesgo.
 * [ ] Análisis asistido por IA.
 * [ ] Pipeline completo para múltiples activos.
 * [ ] Evaluación sistemática de costes de transacción y slippage.
 * [ ] Sistema completo de generación y seguimiento de señales.
+* [ ] Conectar `DataValidator` / `AnomalyDetector` (ya implementados en `validator.py`) al pipeline de `event_study.py` / `robustness.py` / `backtest_run.py`.
 
 ---
 
@@ -67,27 +72,26 @@ La arquitectura de `FeatureEngine` está diseñada para poder ampliar progresiva
 
 ## 2. Backtesting de estrategias
 
-**Estado: 🔴 Pendiente**
+**Estado: 🟡 Base implementada — pendiente de validar con datos reales**
 
-Una vez identificadas y validadas hipótesis mediante event studies, el proyecto deberá permitir convertirlas en estrategias y realizar backtests completos.
+Ya existe un motor de backtesting (`src/backtest/engine.py`, `src/backtest/metrics.py`) y un script de ejecución (`backtest_run.py`) que reutiliza la señal ya validada en `robustness.py`.
 
-Esto deberá incluir, entre otros:
+Incluye, por ahora:
 
-* Reglas de entrada.
-* Reglas de salida.
-* Stop Loss.
-* Take Profit.
+* Reglas de entrada por señal (Close[D] → entrada en Open[D+1], evitando look-ahead bias).
+* Stop Loss y Take Profit fijos.
 * Time exits.
-* Position sizing.
-* Capital inicial.
-* Operaciones simultáneas.
-* Comisiones.
-* Slippage.
-* Equity curve.
-* Drawdown.
-* Métricas de rendimiento y riesgo.
+* Position sizing simple (100% del capital disponible por operación).
+* Arquitectura preparada para posiciones simultáneas (pensando en multi-activo).
+* Curva de equity y métricas: CAGR, Sharpe, max drawdown, win rate, profit factor.
+* Split Development / Out-of-Sample (como dos backtests independientes).
 
-El backtesting deberá mantener las mismas convenciones temporales utilizadas durante la investigación para evitar look-ahead bias.
+Pendiente:
+
+* Comisiones y slippage reales.
+* Position sizing basado en equity total (no en cash libre).
+* Walk-forward analysis en vez de split fijo.
+* Validación contra datos reales de AAPL (bloqueado por no poder ejecutar `pyarrow` en el entorno de análisis; pendiente correrlo en local).
 
 ---
 
@@ -237,23 +241,23 @@ El objetivo final puede resumirse como:
               ANALYSIS / ASSISTANCE
 ```
 
-La prioridad actual es **seguir construyendo y validando correctamente la capa de investigación antes de pasar a automatizar estrategias o señales**.
+La prioridad actual es **validar el motor de backtesting con datos reales y cerrar la capa de investigación antes de pasar al scanner o a la gestión del riesgo**.
 
 ---
 
 ## Estado actual resumido
 
 | Área                       | Estado                       |
-| -------------------------- | ---------------------------- |
-| Datos y proveedores        | 🟢 Implementado              |
-| Validación de datos        | 🟢 Implementado              |
-| Feature engineering        | 🟢 Implementado              |
-| Análisis de precio/volumen | 🟢 En desarrollo avanzado    |
-| Event studies              | 🟢 Implementado              |
-| Robustez / sensibilidad    | 🟢 Implementado              |
-| Validación OOS             | 🟢 Implementado inicialmente |
-| Backtesting                | 🔴 Pendiente                 |
-| Scanner                    | 🔴 Pendiente                 |
-| Gestión del riesgo         | 🔴 Pendiente                 |
-| IA                         | 🔴 Pendiente                 |
-| Portfolio / ejecución      | 🔴 Pendiente                 |
+| -------------------------- | ----------------------------- |
+| Datos y proveedores        | 🟢 Implementado               |
+| Validación de datos        | 🟢 Implementado (no conectado al pipeline aún) |
+| Feature engineering        | 🟢 Implementado               |
+| Análisis de precio/volumen | 🟢 En desarrollo avanzado     |
+| Event studies               | 🟢 Implementado               |
+| Robustez / sensibilidad    | 🟢 Implementado               |
+| Validación OOS              | 🟢 Implementado inicialmente  |
+| Backtesting                 | 🟡 Base implementada, pendiente de validar |
+| Scanner                     | 🔴 Pendiente                  |
+| Gestión del riesgo          | 🔴 Pendiente                  |
+| IA                          | 🔴 Pendiente                  |
+| Portfolio / ejecución       | 🔴 Pendiente                  |
