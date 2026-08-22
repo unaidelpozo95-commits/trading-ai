@@ -11,6 +11,20 @@ def compute_metrics(
     periods_per_year: int = 252,
 ) -> dict:
 
+    if equity_curve.empty:
+        return {
+            "total_return": None,
+            "cagr": None,
+            "sharpe": None,
+            "max_drawdown": None,
+            "n_trades": 0,
+            "win_rate": None,
+            "profit_factor": None,
+            "avg_win": None,
+            "avg_loss": None,
+            "exit_reasons": {},
+        }
+
     daily_returns = equity_curve.pct_change().dropna()
 
     total_return = equity_curve.iloc[-1] / initial_capital - 1
