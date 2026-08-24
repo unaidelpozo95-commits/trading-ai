@@ -14,7 +14,7 @@ import os
 from src.data.providers.yahoo import YahooProvider  # <-- ajusta esta ruta si hace falta
 
 
-TICKERS = ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA"]
+TICKERS = ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "TSLA", "META", "BRK-B", "JPM", "JNJ", "AVGO"]
 
 START_DATE = "2015-01-01"
 
