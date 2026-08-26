@@ -35,7 +35,17 @@ def main():
         idx = args.index("--from-file")
         file_path = args[idx + 1]
         tickers_df = pd.read_csv(file_path)
-        tickers = tickers_df["ticker"].tolist()
+
+        if "ticker" in tickers_df.columns:
+            tickers = tickers_df["ticker"].tolist()
+        elif "Symbol" in tickers_df.columns:
+            tickers = tickers_df["Symbol"].tolist()
+        else:
+            raise ValueError(f"{file_path} no tiene columna 'ticker' ni 'Symbol'")
+
+        tickers = [t.replace(".", "-") for t in tickers]
+        tickers = list(dict.fromkeys(tickers))
+
         print(f"Leyendo {len(tickers)} tickers desde {file_path}")
     else:
         tickers = args if args else TICKERS_TO_DISCOVER

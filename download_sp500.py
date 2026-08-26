@@ -21,13 +21,31 @@ from src.data.providers.yahoo import YahooProvider  # <-- ajusta esta ruta si ha
 START_DATE = "2015-01-01"
 OUTPUT_DIR = "data/raw/yahoo"
 
-SLEEP_SECONDS = 0.3
+SLEEP_SECONDS = 1.5
+
+
+def load_tickers(path: str) -> list:
+    """Lee tickers desde un CSV con columna 'ticker' o 'Symbol' (formato
+    típico de listas de S&P 500 descargadas de GitHub), arreglando
+    símbolos con punto (BRK.B -> BRK-B) para que yfinance los entienda."""
+
+    df = pd.read_csv(path)
+
+    if "ticker" in df.columns:
+        tickers = df["ticker"].tolist()
+    elif "Symbol" in df.columns:
+        tickers = df["Symbol"].tolist()
+    else:
+        raise ValueError(f"{path} no tiene columna 'ticker' ni 'Symbol'")
+
+    tickers = [t.replace(".", "-") for t in tickers]
+
+    return list(dict.fromkeys(tickers))
 
 
 def main():
 
-    tickers_df = pd.read_csv("data/sp500_tickers.csv")
-    tickers = tickers_df["ticker"].tolist()
+    tickers = load_tickers("data/SP500.csv")
 
     print(f"Descargando {len(tickers)} tickers desde {START_DATE}...")
 
