@@ -1,17 +1,4 @@
 {
   "ticker": "JBHT",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.05,
-    "pullback": 0.05,
-    "rvol": 1.0
-  },
-  "dev_events": 11,
-  "oos_events": 9,
-  "dev_alpha_20d": 0.038687366144300676,
-  "oos_alpha_20d": 0.12812942464754395,
-  "dev_tstat_20d": 3.1212359160556122,
-  "oos_tstat_20d": 4.971968528816658,
-  "n_candidates_found": 1
+  "validated": false
 }

@@ -1,17 +1,4 @@
 {
   "ticker": "TEL",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.1,
-    "pullback": 0.02,
-    "rvol": 1.2
-  },
-  "dev_events": 10,
-  "oos_events": 6,
-  "dev_alpha_20d": 0.08127715405234238,
-  "oos_alpha_20d": 0.04133676466036544,
-  "dev_tstat_20d": 3.2634779334262825,
-  "oos_tstat_20d": 4.979961376955612,
-  "n_candidates_found": 2
+  "validated": false
 }

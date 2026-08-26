@@ -4,14 +4,14 @@
   "recipe": "pullback_uptrend",
   "params": {
     "trend_strength": 0.15,
-    "pullback": 0.02,
-    "rvol": 1.2
+    "pullback": 0.03,
+    "rvol": 1.0
   },
-  "dev_events": 22,
-  "oos_events": 6,
-  "dev_alpha_20d": 0.11277652197129458,
-  "oos_alpha_20d": 0.07546864951226803,
-  "dev_tstat_20d": 11.451615460563458,
-  "oos_tstat_20d": 3.680354690255611,
-  "n_candidates_found": 6
+  "dev_events": 18,
+  "oos_events": 11,
+  "dev_alpha_20d": 0.095939249000935,
+  "oos_alpha_20d": 0.10378234087821606,
+  "dev_tstat_20d": 8.108806932661853,
+  "oos_tstat_20d": 4.723082462986233,
+  "n_candidates_found": 9
 }

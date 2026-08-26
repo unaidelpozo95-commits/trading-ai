@@ -1,17 +1,4 @@
 {
   "ticker": "WFC",
-  "validated": true,
-  "recipe": "trend_breakout",
-  "params": {
-    "move": 0.03,
-    "rvol": 1.5,
-    "distance": 0.15
-  },
-  "dev_events": 16,
-  "oos_events": 12,
-  "dev_alpha_20d": 0.06049939129435266,
-  "oos_alpha_20d": 0.049394104790157364,
-  "dev_tstat_20d": 4.184069850076687,
-  "oos_tstat_20d": 2.470894321209527,
-  "n_candidates_found": 5
+  "validated": false
 }

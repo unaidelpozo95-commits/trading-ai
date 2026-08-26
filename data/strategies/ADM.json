@@ -1,16 +1,4 @@
 {
   "ticker": "ADM",
-  "validated": true,
-  "recipe": "sustained_momentum",
-  "params": {
-    "move5": 0.05,
-    "rvol": 1.5
-  },
-  "dev_events": 21,
-  "oos_events": 15,
-  "dev_alpha_20d": 0.0322078337677861,
-  "oos_alpha_20d": 0.027006160894621517,
-  "dev_tstat_20d": 2.5246574579274563,
-  "oos_tstat_20d": 2.085751983325015,
-  "n_candidates_found": 1
+  "validated": false
 }

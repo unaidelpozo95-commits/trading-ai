@@ -1,16 +1,4 @@
 {
   "ticker": "COP",
-  "validated": true,
-  "recipe": "sustained_momentum",
-  "params": {
-    "move5": 0.05,
-    "rvol": 1.2
-  },
-  "dev_events": 59,
-  "oos_events": 16,
-  "dev_alpha_20d": 0.03408156114839541,
-  "oos_alpha_20d": 0.05430118146492764,
-  "dev_tstat_20d": 2.8496717022487936,
-  "oos_tstat_20d": 2.7550729967058256,
-  "n_candidates_found": 1
+  "validated": false
 }

@@ -1,4 +1,17 @@
 {
   "ticker": "PVH",
-  "validated": false
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.03,
+    "rvol": 1.0
+  },
+  "dev_events": 19,
+  "oos_events": 17,
+  "dev_alpha_20d": 0.0420965441700311,
+  "oos_alpha_20d": 0.08544653588572355,
+  "dev_tstat_20d": 4.038483062690377,
+  "oos_tstat_20d": 3.5796057758239894,
+  "n_candidates_found": 1
 }

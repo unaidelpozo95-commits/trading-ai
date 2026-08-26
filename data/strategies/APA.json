@@ -1,17 +1,4 @@
 {
   "ticker": "APA",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.1,
-    "pullback": 0.02,
-    "rvol": 1.0
-  },
-  "dev_events": 52,
-  "oos_events": 21,
-  "dev_alpha_20d": 0.08281422300765685,
-  "oos_alpha_20d": 0.05491003218993923,
-  "dev_tstat_20d": 3.680115233902876,
-  "oos_tstat_20d": 4.455064481080417,
-  "n_candidates_found": 10
+  "validated": false
 }

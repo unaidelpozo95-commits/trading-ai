@@ -1,17 +1,4 @@
 {
   "ticker": "XRAY",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.05,
-    "pullback": 0.03,
-    "rvol": 1.0
-  },
-  "dev_events": 19,
-  "oos_events": 6,
-  "dev_alpha_20d": 0.04947236428384558,
-  "oos_alpha_20d": 0.046329691293373505,
-  "dev_tstat_20d": 2.2796444301470773,
-  "oos_tstat_20d": 2.2512184163714255,
-  "n_candidates_found": 1
+  "validated": false
 }

@@ -1,17 +1,4 @@
 {
   "ticker": "GLW",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.15,
-    "pullback": 0.02,
-    "rvol": 1.2
-  },
-  "dev_events": 10,
-  "oos_events": 11,
-  "dev_alpha_20d": 0.06519222331637367,
-  "oos_alpha_20d": 0.10039921638098973,
-  "dev_tstat_20d": 3.42455229236645,
-  "oos_tstat_20d": 4.155304799017908,
-  "n_candidates_found": 6
+  "validated": false
 }

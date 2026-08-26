@@ -1,17 +1,4 @@
 {
   "ticker": "EQT",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.1,
-    "pullback": 0.05,
-    "rvol": 1.0
-  },
-  "dev_events": 32,
-  "oos_events": 9,
-  "dev_alpha_20d": 0.08009972077453048,
-  "oos_alpha_20d": 0.08891258508119743,
-  "dev_tstat_20d": 2.9645879014864898,
-  "oos_tstat_20d": 5.919884731670792,
-  "n_candidates_found": 6
+  "validated": false
 }

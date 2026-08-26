@@ -1,17 +1,4 @@
 {
   "ticker": "WYNN",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.1,
-    "pullback": 0.05,
-    "rvol": 1.0
-  },
-  "dev_events": 12,
-  "oos_events": 5,
-  "dev_alpha_20d": 0.07525918994579939,
-  "oos_alpha_20d": 0.05273451382905225,
-  "dev_tstat_20d": 2.0242690357295747,
-  "oos_tstat_20d": 2.0383673649394023,
-  "n_candidates_found": 1
+  "validated": false
 }

@@ -1,17 +1,4 @@
 {
   "ticker": "AXP",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.1,
-    "pullback": 0.02,
-    "rvol": 1.2
-  },
-  "dev_events": 10,
-  "oos_events": 23,
-  "dev_alpha_20d": 0.06604200852247255,
-  "oos_alpha_20d": 0.04365438681121208,
-  "dev_tstat_20d": 2.36687097194791,
-  "oos_tstat_20d": 2.8019438323864847,
-  "n_candidates_found": 2
+  "validated": false
 }

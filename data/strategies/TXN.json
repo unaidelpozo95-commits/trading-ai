@@ -1,4 +1,17 @@
 {
   "ticker": "TXN",
-  "validated": false
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.02,
+    "rvol": 1.0
+  },
+  "dev_events": 35,
+  "oos_events": 17,
+  "dev_alpha_20d": 0.033752009744195476,
+  "oos_alpha_20d": 0.05941400713986419,
+  "dev_tstat_20d": 3.7385807598978564,
+  "oos_tstat_20d": 4.390855545289118,
+  "n_candidates_found": 1
 }

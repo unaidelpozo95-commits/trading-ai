@@ -1,17 +1,4 @@
 {
   "ticker": "TXT",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.05,
-    "pullback": 0.03,
-    "rvol": 1.0
-  },
-  "dev_events": 16,
-  "oos_events": 12,
-  "dev_alpha_20d": 0.040329301098330606,
-  "oos_alpha_20d": 0.04647231675447616,
-  "dev_tstat_20d": 2.341695889111206,
-  "oos_tstat_20d": 2.3417566554758804,
-  "n_candidates_found": 2
+  "validated": false
 }

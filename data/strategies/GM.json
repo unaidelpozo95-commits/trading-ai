@@ -1,17 +1,4 @@
 {
   "ticker": "GM",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.05,
-    "pullback": 0.03,
-    "rvol": 1.2
-  },
-  "dev_events": 13,
-  "oos_events": 13,
-  "dev_alpha_20d": 0.09106107666329594,
-  "oos_alpha_20d": 0.05260014588901423,
-  "dev_tstat_20d": 2.480610494859337,
-  "oos_tstat_20d": 3.290269967545628,
-  "n_candidates_found": 1
+  "validated": false
 }

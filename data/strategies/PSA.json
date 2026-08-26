@@ -1,17 +1,4 @@
 {
   "ticker": "PSA",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.05,
-    "pullback": 0.03,
-    "rvol": 1.2
-  },
-  "dev_events": 29,
-  "oos_events": 5,
-  "dev_alpha_20d": 0.024485139941717565,
-  "oos_alpha_20d": 0.03490951098978491,
-  "dev_tstat_20d": 2.4548302674979756,
-  "oos_tstat_20d": 4.404440224059682,
-  "n_candidates_found": 1
+  "validated": false
 }

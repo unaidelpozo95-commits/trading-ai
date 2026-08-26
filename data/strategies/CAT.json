@@ -1,17 +1,4 @@
 {
   "ticker": "CAT",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.15,
-    "pullback": 0.03,
-    "rvol": 1.0
-  },
-  "dev_events": 12,
-  "oos_events": 10,
-  "dev_alpha_20d": 0.051792388565487006,
-  "oos_alpha_20d": 0.04688726134627647,
-  "dev_tstat_20d": 2.0227560309007067,
-  "oos_tstat_20d": 3.3182095169377868,
-  "n_candidates_found": 1
+  "validated": false
 }

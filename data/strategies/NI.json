@@ -1,17 +1,4 @@
 {
   "ticker": "NI",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.05,
-    "pullback": 0.03,
-    "rvol": 1.2
-  },
-  "dev_events": 14,
-  "oos_events": 5,
-  "dev_alpha_20d": 0.04342601591501016,
-  "oos_alpha_20d": 0.045751092545607566,
-  "dev_tstat_20d": 3.8652385977837573,
-  "oos_tstat_20d": 3.2638714884994102,
-  "n_candidates_found": 2
+  "validated": false
 }

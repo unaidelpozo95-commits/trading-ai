@@ -1,17 +1,4 @@
 {
   "ticker": "CMI",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.1,
-    "pullback": 0.03,
-    "rvol": 1.0
-  },
-  "dev_events": 11,
-  "oos_events": 23,
-  "dev_alpha_20d": 0.05594058357406652,
-  "oos_alpha_20d": 0.0556945611106741,
-  "dev_tstat_20d": 3.4648811103141997,
-  "oos_tstat_20d": 2.7369658426409234,
-  "n_candidates_found": 3
+  "validated": false
 }

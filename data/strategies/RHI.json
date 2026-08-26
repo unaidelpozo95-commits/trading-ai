@@ -1,16 +1,4 @@
 {
   "ticker": "RHI",
-  "validated": true,
-  "recipe": "sustained_momentum",
-  "params": {
-    "move5": 0.03,
-    "rvol": 1.2
-  },
-  "dev_events": 58,
-  "oos_events": 22,
-  "dev_alpha_20d": 0.022397693872103018,
-  "oos_alpha_20d": 0.04406136205483401,
-  "dev_tstat_20d": 2.108728531664943,
-  "oos_tstat_20d": 2.0978477673443483,
-  "n_candidates_found": 1
+  "validated": false
 }

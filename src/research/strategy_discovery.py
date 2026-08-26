@@ -28,24 +28,40 @@ from src.features.engine import FeatureEngine
 
 FORWARD_DAYS = [1, 3, 5, 10, 20]
 
+# =============================================================
+# CORTES DE FECHA PARA EL DESCUBRIMIENTO
+#
+# IMPORTANTE: antes usábamos Dev<=2022 / OOS>=2023 tanto para
+# seleccionar como para "validar" — eso hacía que el propio OOS
+# formara parte del criterio de selección (selection bias), dejando
+# el backtest de cartera posterior sin ningún tramo genuinamente
+# limpio para probar de verdad.
+#
+# Ahora el descubrimiento usa SOLO datos hasta 2022 (Dev hasta 2020,
+# "OOS interno" 2021-2022, ambos usados para seleccionar). El tramo
+# 2023 en adelante queda completamente fuera del proceso de
+# selección — es el holdout real, y coincide con el corte OOS que ya
+# usamos en el resto de la investigación (AAPL, reversión, etc.).
+# =============================================================
+
+DISCOVERY_DEV_END_YEAR = 2020
+DISCOVERY_OOS_START_YEAR = 2021
+DISCOVERY_OOS_END_YEAR = 2022
+
 # Umbrales de validación — los mismos que hemos usado en toda la investigación.
 MIN_DEV_EVENTS = 10
 MIN_OOS_EVENTS = 5
 MIN_ALPHA = 0.01  # 1% — significancia económica, no solo estadística
-MIN_TSTAT = 2.0   # ~equivalente a 95% de confianza en una sola prueba —
-                  # filtra la mayoría de falsos positivos que solo pasan
-                  # el umbral de alpha por casualidad al probar cientos de
-                  # combinaciones (comparaciones múltiples).
-                  # AVISO: probado con datos sintéticos, este umbral deja
-                  # pasar ocasionalmente algún falso positivo (~1 de cada
-                  # 3 tickers sin patrón real, en la prueba que hice) y
-                  # subirlo más empieza a rechazar señales reales de
-                  # muestra modesta. No hay umbral que lo resuelva del
-                  # todo — es un problema estadístico inherente a probar
-                  # cientos de combinaciones. Trata cualquier ticker
-                  # "VALIDADA" como candidato a revisar manualmente
-                  # (mirar events, t-stat, si el patrón tiene sentido
-                  # económico), no como luz verde automática.
+MIN_TSTAT = 3.5   # Umbral elevado respecto al usado con 14 tickers (2.0).
+                  # Con 500 tickers x ~1000 combos = ~500.000 pruebas en
+                  # total (frente a las ~5.000 de antes), el problema de
+                  # comparaciones múltiples se dispara ~100x. t>=3.5 es un
+                  # ajuste conservador aproximado (no un cálculo exacto de
+                  # Bonferroni) para compensar — con esta escala de
+                  # búsqueda, es preferible perder algún hallazgo real por
+                  # ser demasiado estrictos que inundarse de falsos
+                  # positivos. Trata cualquier "VALIDADA" como candidato a
+                  # revisar, nunca como luz verde automática.
 
 
 # =============================================================
@@ -204,8 +220,8 @@ def discover_best_strategy(ticker: str, verbose: bool = True) -> dict:
 
     df = load_ticker_for_discovery(ticker)
 
-    development = df.index.year <= 2022
-    test = df.index.year >= 2023
+    development = df.index.year <= DISCOVERY_DEV_END_YEAR
+    test = (df.index.year >= DISCOVERY_OOS_START_YEAR) & (df.index.year <= DISCOVERY_OOS_END_YEAR)
 
     candidates = []
 
@@ -286,8 +302,8 @@ def discover_best_strategy(ticker: str, verbose: bool = True) -> dict:
     if verbose:
         print(
             f"{ticker}: VALIDADA -> receta '{best['recipe']}' con {best['params']} | "
-            f"Dev N {best['dev_events']} alpha {best['dev_alpha_20d']:.2%} (t={best['dev_tstat_20d']:.2f}) | "
-            f"OOS N {best['oos_events']} alpha {best['oos_alpha_20d']:.2%} (t={best['oos_tstat_20d']:.2f}) | "
+            f"Dev(<={DISCOVERY_DEV_END_YEAR}) N {best['dev_events']} alpha {best['dev_alpha_20d']:.2%} (t={best['dev_tstat_20d']:.2f}) | "
+            f"OOS-interno({DISCOVERY_OOS_START_YEAR}-{DISCOVERY_OOS_END_YEAR}) N {best['oos_events']} alpha {best['oos_alpha_20d']:.2%} (t={best['oos_tstat_20d']:.2f}) | "
             f"({len(candidates)} combinaciones candidatas en total)"
         )
 

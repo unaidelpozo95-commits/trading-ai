@@ -1,16 +1,4 @@
 {
   "ticker": "AAPL",
-  "validated": true,
-  "recipe": "sustained_momentum",
-  "params": {
-    "move5": 0.05,
-    "rvol": 2.0
-  },
-  "dev_events": 10,
-  "oos_events": 5,
-  "dev_alpha_20d": 0.0570038116755807,
-  "oos_alpha_20d": 0.04234322286770278,
-  "dev_tstat_20d": 2.454345129745895,
-  "oos_tstat_20d": 2.2829251333606875,
-  "n_candidates_found": 2
+  "validated": false
 }

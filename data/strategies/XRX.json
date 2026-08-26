@@ -1,17 +1,4 @@
 {
   "ticker": "XRX",
-  "validated": true,
-  "recipe": "pullback_uptrend",
-  "params": {
-    "trend_strength": 0.05,
-    "pullback": 0.05,
-    "rvol": 1.0
-  },
-  "dev_events": 11,
-  "oos_events": 6,
-  "dev_alpha_20d": 0.09463607386017142,
-  "oos_alpha_20d": 0.06554933387617903,
-  "dev_tstat_20d": 2.2187538722749807,
-  "oos_tstat_20d": 2.970828633472328,
-  "n_candidates_found": 1
+  "validated": false
 }

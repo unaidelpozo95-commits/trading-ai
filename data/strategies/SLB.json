@@ -1,16 +1,4 @@
 {
   "ticker": "SLB",
-  "validated": true,
-  "recipe": "sustained_momentum",
-  "params": {
-    "move5": 0.05,
-    "rvol": 1.2
-  },
-  "dev_events": 57,
-  "oos_events": 26,
-  "dev_alpha_20d": 0.05524462232161472,
-  "oos_alpha_20d": 0.056061560445511235,
-  "dev_tstat_20d": 3.5685894958167426,
-  "oos_tstat_20d": 4.518660521409243,
-  "n_candidates_found": 16
+  "validated": false
 }
