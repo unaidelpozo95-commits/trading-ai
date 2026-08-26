@@ -1,0 +1,17 @@
+{
+  "ticker": "BIIB",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.03,
+    "rvol": 1.2
+  },
+  "dev_events": 22,
+  "oos_events": 13,
+  "dev_alpha_20d": 0.05643108370648178,
+  "oos_alpha_20d": 0.04163751180178887,
+  "dev_tstat_20d": 2.864655465353859,
+  "oos_tstat_20d": 2.198445823502968,
+  "n_candidates_found": 4
+}

@@ -1,0 +1,17 @@
+{
+  "ticker": "FISV",
+  "validated": true,
+  "recipe": "original_breakout",
+  "params": {
+    "move": 0.025,
+    "rvol": 2.0,
+    "distance": 0.2
+  },
+  "dev_events": 12,
+  "oos_events": 8,
+  "dev_alpha_20d": 0.03829667519054117,
+  "oos_alpha_20d": 0.03497964001547952,
+  "dev_tstat_20d": 2.5777056116877333,
+  "oos_tstat_20d": 2.26710918066834,
+  "n_candidates_found": 2
+}

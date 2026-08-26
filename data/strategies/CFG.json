@@ -1,0 +1,17 @@
+{
+  "ticker": "CFG",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.1,
+    "pullback": 0.03,
+    "rvol": 1.2
+  },
+  "dev_events": 16,
+  "oos_events": 13,
+  "dev_alpha_20d": 0.07350117548833032,
+  "oos_alpha_20d": 0.02585171730517181,
+  "dev_tstat_20d": 2.6483370513336904,
+  "oos_tstat_20d": 2.0138379953579975,
+  "n_candidates_found": 1
+}

@@ -1,0 +1,17 @@
+{
+  "ticker": "OKE",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.1,
+    "pullback": 0.02,
+    "rvol": 1.0
+  },
+  "dev_events": 43,
+  "oos_events": 16,
+  "dev_alpha_20d": 0.03039603062746925,
+  "oos_alpha_20d": 0.04186664429768006,
+  "dev_tstat_20d": 2.4427291571457457,
+  "oos_tstat_20d": 2.72546637063681,
+  "n_candidates_found": 1
+}

@@ -1,0 +1,17 @@
+{
+  "ticker": "UNM",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.02,
+    "rvol": 1.2
+  },
+  "dev_events": 43,
+  "oos_events": 18,
+  "dev_alpha_20d": 0.03564625173173268,
+  "oos_alpha_20d": 0.04004117411710667,
+  "dev_tstat_20d": 2.3659810148643565,
+  "oos_tstat_20d": 5.320092222302731,
+  "n_candidates_found": 3
+}

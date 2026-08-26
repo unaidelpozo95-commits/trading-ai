@@ -1,0 +1,17 @@
+{
+  "ticker": "JCI",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.03,
+    "rvol": 1.0
+  },
+  "dev_events": 21,
+  "oos_events": 32,
+  "dev_alpha_20d": 0.03666685073031913,
+  "oos_alpha_20d": 0.04521345902680647,
+  "dev_tstat_20d": 2.9486726559905576,
+  "oos_tstat_20d": 2.5775220375104126,
+  "n_candidates_found": 5
+}

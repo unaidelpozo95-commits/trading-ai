@@ -1,0 +1,17 @@
+{
+  "ticker": "EL",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.1,
+    "pullback": 0.03,
+    "rvol": 1.5
+  },
+  "dev_events": 10,
+  "oos_events": 5,
+  "dev_alpha_20d": 0.10127603954044292,
+  "oos_alpha_20d": 0.11934571889273281,
+  "dev_tstat_20d": 5.265088290485811,
+  "oos_tstat_20d": 2.1836431310720195,
+  "n_candidates_found": 6
+}

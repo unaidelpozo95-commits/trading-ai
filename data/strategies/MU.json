@@ -1,0 +1,17 @@
+{
+  "ticker": "MU",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.05,
+    "rvol": 1.0
+  },
+  "dev_events": 41,
+  "oos_events": 30,
+  "dev_alpha_20d": 0.06213192153189358,
+  "oos_alpha_20d": 0.09661879051788937,
+  "dev_tstat_20d": 2.5221935636168453,
+  "oos_tstat_20d": 2.2464346760665883,
+  "n_candidates_found": 1
+}

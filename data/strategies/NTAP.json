@@ -1,0 +1,17 @@
+{
+  "ticker": "NTAP",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.15,
+    "pullback": 0.02,
+    "rvol": 1.2
+  },
+  "dev_events": 22,
+  "oos_events": 6,
+  "dev_alpha_20d": 0.11277652197129458,
+  "oos_alpha_20d": 0.07546864951226803,
+  "dev_tstat_20d": 11.451615460563458,
+  "oos_tstat_20d": 3.680354690255611,
+  "n_candidates_found": 6
+}

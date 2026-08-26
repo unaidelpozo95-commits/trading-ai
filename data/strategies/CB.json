@@ -1,0 +1,17 @@
+{
+  "ticker": "CB",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.02,
+    "rvol": 1.0
+  },
+  "dev_events": 37,
+  "oos_events": 25,
+  "dev_alpha_20d": 0.024517668490430355,
+  "oos_alpha_20d": 0.034050184327298866,
+  "dev_tstat_20d": 3.2694222921054785,
+  "oos_tstat_20d": 3.1021718605081223,
+  "n_candidates_found": 2
+}

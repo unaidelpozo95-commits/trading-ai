@@ -1,0 +1,17 @@
+{
+  "ticker": "DG",
+  "validated": true,
+  "recipe": "original_breakout",
+  "params": {
+    "move": 0.02,
+    "rvol": 2.0,
+    "distance": 0.15
+  },
+  "dev_events": 21,
+  "oos_events": 8,
+  "dev_alpha_20d": 0.03732471423075769,
+  "oos_alpha_20d": 0.07886057213142077,
+  "dev_tstat_20d": 2.122634094393116,
+  "oos_tstat_20d": 4.27186515466628,
+  "n_candidates_found": 5
+}

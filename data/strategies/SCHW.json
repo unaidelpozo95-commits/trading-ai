@@ -1,0 +1,17 @@
+{
+  "ticker": "SCHW",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.05,
+    "rvol": 1.0
+  },
+  "dev_events": 22,
+  "oos_events": 8,
+  "dev_alpha_20d": 0.08444942353416492,
+  "oos_alpha_20d": 0.019215463380969525,
+  "dev_tstat_20d": 6.43894996515505,
+  "oos_tstat_20d": 3.264513668141627,
+  "n_candidates_found": 2
+}

@@ -1,0 +1,17 @@
+{
+  "ticker": "FLR",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.05,
+    "pullback": 0.05,
+    "rvol": 1.5
+  },
+  "dev_events": 11,
+  "oos_events": 6,
+  "dev_alpha_20d": 0.09970033333389527,
+  "oos_alpha_20d": 0.08262135606837863,
+  "dev_tstat_20d": 2.4563358571557306,
+  "oos_tstat_20d": 7.069059615714291,
+  "n_candidates_found": 5
+}

@@ -1,0 +1,17 @@
+{
+  "ticker": "HBAN",
+  "validated": true,
+  "recipe": "pullback_uptrend",
+  "params": {
+    "trend_strength": 0.1,
+    "pullback": 0.02,
+    "rvol": 1.2
+  },
+  "dev_events": 21,
+  "oos_events": 7,
+  "dev_alpha_20d": 0.03910641986865082,
+  "oos_alpha_20d": 0.04844368130383401,
+  "dev_tstat_20d": 2.1110821768377708,
+  "oos_tstat_20d": 5.439000172343695,
+  "n_candidates_found": 1
+}

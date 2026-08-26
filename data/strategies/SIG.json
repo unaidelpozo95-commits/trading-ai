@@ -1,0 +1,16 @@
+{
+  "ticker": "SIG",
+  "validated": true,
+  "recipe": "sustained_momentum",
+  "params": {
+    "move5": 0.1,
+    "rvol": 1.5
+  },
+  "dev_events": 28,
+  "oos_events": 7,
+  "dev_alpha_20d": 0.04963832175651451,
+  "oos_alpha_20d": 0.1093708917519831,
+  "dev_tstat_20d": 2.060022289676334,
+  "oos_tstat_20d": 2.8349624754945504,
+  "n_candidates_found": 1
+}
