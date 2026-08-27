@@ -2,14 +2,20 @@
 Descarga y cachea datos fundamentales anuales (10-K) desde SEC EDGAR.
 
 Usa solo cifras de 10-K (anuales, no trimestrales) para simplificar:
-NetIncomeLoss y StockholdersEquity del mismo informe anual, indexados
-por la fecha REAL de presentación (`filed`), no por el cierre del año
-fiscal — así el ROE calculado con estos datos solo "existe" para el
-backtest a partir del día en que se hizo público de verdad, evitando
-look-ahead bias.
+NetIncomeLoss, StockholdersEquity, EPS diluido y acciones en
+circulación, todo del mismo informe anual, indexado por la fecha REAL
+de presentación (`filed`), no por el cierre del año fiscal — así
+cualquier ratio calculado con estos datos solo "existe" a partir del
+día en que se hizo público de verdad, evitando look-ahead bias.
 
 Guarda un CSV por ticker en data/sec_fundamentals/{TICKER}.csv con
-columnas: fiscal_year_end, filed_date, net_income, stockholders_equity, roe
+columnas: fiscal_year_end, filed_date, net_income, stockholders_equity,
+eps, shares_outstanding, roe, book_value_per_share
+
+AVISO: si ya tenías datos descargados con la versión anterior de este
+script (sin eps/shares_outstanding), borra data/sec_fundamentals/ y
+vuelve a descargar — el chequeo de "ya existe" no distingue esquemas
+de columnas distintos.
 """
 
 import os
@@ -60,9 +66,9 @@ def get_ticker_to_cik_map() -> dict:
     return mapping
 
 
-def fetch_annual_concept(cik: str, concept: str) -> pd.DataFrame:
+def fetch_annual_concept(cik: str, concept: str, taxonomy: str = "us-gaap") -> pd.DataFrame:
 
-    url = f"https://data.sec.gov/api/xbrl/companyconcept/CIK{cik}/us-gaap/{concept}.json"
+    url = f"https://data.sec.gov/api/xbrl/companyconcept/CIK{cik}/{taxonomy}/{concept}.json"
     resp = requests.get(url, headers=HEADERS)
 
     if resp.status_code != 200:
@@ -91,12 +97,34 @@ def fetch_annual_concept(cik: str, concept: str) -> pd.DataFrame:
     return df
 
 
+def fetch_shares_outstanding(cik: str) -> pd.DataFrame:
+    """Acciones en circulación — vive en la taxonomía 'dei' (datos de
+    portada del informe), no en 'us-gaap'. Se prueban dos conceptos
+    porque las empresas no siempre usan el mismo."""
+
+    df = fetch_annual_concept(cik, "EntityCommonStockSharesOutstanding", taxonomy="dei")
+
+    if df.empty:
+        df = fetch_annual_concept(cik, "CommonStockSharesOutstanding", taxonomy="us-gaap")
+
+    return df
+
+
 def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
 
     net_income = fetch_annual_concept(cik, "NetIncomeLoss")
     time.sleep(0.15)
 
     equity = fetch_annual_concept(cik, "StockholdersEquity")
+    time.sleep(0.15)
+
+    eps = fetch_annual_concept(cik, "EarningsPerShareDiluted")
+    time.sleep(0.15)
+    if eps.empty:
+        eps = fetch_annual_concept(cik, "EarningsPerShareBasic")
+        time.sleep(0.15)
+
+    shares = fetch_shares_outstanding(cik)
     time.sleep(0.15)
 
     if net_income.empty or equity.empty:
@@ -109,7 +137,29 @@ def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
         how="inner",
     )
 
+    if not eps.empty:
+        merged = pd.merge(
+            merged,
+            eps[["fiscal_year_end", "value"]].rename(columns={"value": "eps"}),
+            on="fiscal_year_end",
+            how="left",
+        )
+    else:
+        merged["eps"] = None
+
+    if not shares.empty:
+        merged = pd.merge(
+            merged,
+            shares[["fiscal_year_end", "value"]].rename(columns={"value": "shares_outstanding"}),
+            on="fiscal_year_end",
+            how="left",
+        )
+    else:
+        merged["shares_outstanding"] = None
+
     merged["roe"] = merged["net_income"] / merged["stockholders_equity"]
+
+    merged["book_value_per_share"] = merged["stockholders_equity"] / merged["shares_outstanding"]
 
     return merged.sort_values("filed_date")
 
