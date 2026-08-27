@@ -1,0 +1,1 @@
+0 22 * * 1-5 cd /ruta/a/tu/repo && /ruta/a/tu/venv/bin/python update_prices_daily.py && /ruta/a/tu/venv/bin/python value_quality_screener.py --top 30 --min-roe 0.15 >> /ruta/a/tu/repo/data/screener_log.txt 2>&1
