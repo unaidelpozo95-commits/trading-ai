@@ -21,20 +21,10 @@ import os
 
 import pandas as pd
 
+from ticker_universe import load_tickers
+
 FUNDAMENTALS_DIR = "data/sec_fundamentals"
 PRICE_DIR = "data/raw/yahoo"
-
-
-def load_tickers(path: str = "data/SP500.csv") -> list:
-    df = pd.read_csv(path)
-    if "ticker" in df.columns:
-        tickers = df["ticker"].tolist()
-    elif "Symbol" in df.columns:
-        tickers = df["Symbol"].tolist()
-    else:
-        raise ValueError(f"{path} no tiene columna 'ticker' ni 'Symbol'")
-    tickers = [t.replace(".", "-") for t in tickers]
-    return list(dict.fromkeys(tickers))
 
 
 def get_latest_price(ticker: str):

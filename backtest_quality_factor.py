@@ -22,6 +22,7 @@ import pandas as pd
 
 from src.features.engine import FeatureEngine
 from src.backtest.metrics import compute_metrics
+from ticker_universe import load_tickers
 
 
 LEG_PCT = 0.30
@@ -34,18 +35,6 @@ SLIPPAGE_PCT = 0.0005
 ANNUAL_BORROW_RATE = 0.01
 
 FUNDAMENTALS_DIR = "data/sec_fundamentals"
-
-
-def load_tickers(path: str = "data/SP500.csv") -> list:
-    df = pd.read_csv(path)
-    if "ticker" in df.columns:
-        tickers = df["ticker"].tolist()
-    elif "Symbol" in df.columns:
-        tickers = df["Symbol"].tolist()
-    else:
-        raise ValueError(f"{path} no tiene columna 'ticker' ni 'Symbol'")
-    tickers = [t.replace(".", "-") for t in tickers]
-    return list(dict.fromkeys(tickers))
 
 
 TICKERS = load_tickers()

@@ -24,30 +24,14 @@ import time
 import pandas as pd
 import requests
 
+from ticker_universe import load_tickers
+
 
 USER_AGENT = "ValueResearch tu-email-real@dominio.com"
 
 OUTPUT_DIR = "data/sec_fundamentals"
 
 HEADERS = {"User-Agent": USER_AGENT}
-
-
-def load_tickers(path: str = "data/SP500.csv") -> list:
-    """Lee tickers desde un CSV con columna 'ticker' o 'Symbol', arreglando
-    símbolos con punto (BRK.B -> BRK-B)."""
-
-    df = pd.read_csv(path)
-
-    if "ticker" in df.columns:
-        tickers = df["ticker"].tolist()
-    elif "Symbol" in df.columns:
-        tickers = df["Symbol"].tolist()
-    else:
-        raise ValueError(f"{path} no tiene columna 'ticker' ni 'Symbol'")
-
-    tickers = [t.replace(".", "-") for t in tickers]
-
-    return list(dict.fromkeys(tickers))
 
 
 TICKERS = load_tickers()

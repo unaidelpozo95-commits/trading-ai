@@ -21,24 +21,13 @@ import time
 import pandas as pd
 
 from src.data.providers.yahoo import YahooProvider  # <-- ajusta esta ruta si hace falta
+from ticker_universe import load_tickers
 
 
 START_DATE = "2015-01-01"
 OUTPUT_DIR = "data/raw/yahoo"
 
 SLEEP_SECONDS = 0.3
-
-
-def load_tickers(path: str = "data/SP500.csv") -> list:
-    df = pd.read_csv(path)
-    if "ticker" in df.columns:
-        tickers = df["ticker"].tolist()
-    elif "Symbol" in df.columns:
-        tickers = df["Symbol"].tolist()
-    else:
-        raise ValueError(f"{path} no tiene columna 'ticker' ni 'Symbol'")
-    tickers = [t.replace(".", "-") for t in tickers]
-    return list(dict.fromkeys(tickers))
 
 
 def update_ticker(ticker: str, provider: YahooProvider) -> tuple:
