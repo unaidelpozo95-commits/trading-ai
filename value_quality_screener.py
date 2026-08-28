@@ -118,6 +118,69 @@ def build_screener_table(tickers: list) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def explain_pick(row: pd.Series, min_roe: float) -> str:
+    """Explicación en lenguaje llano de por qué esta empresa aparece
+    en el ranking — pura aritmética sobre los datos ya calculados,
+    sin IA ni caja negra."""
+
+    parts = []
+
+    pe_pct = row["pe_rank"]
+    pb_pct = row["pb_rank"]
+
+    parts.append(
+        f"P/E de {row['pe']:.1f} (más barata que el {(1 - pe_pct):.0%} de las "
+        f"empresas del ranking, según este criterio)"
+    )
+    parts.append(
+        f"P/B de {row['pb']:.1f} (más barata que el {(1 - pb_pct):.0%} en este criterio)"
+    )
+
+    roe_vs_min = row["roe"] - min_roe
+    parts.append(
+        f"ROE de {row['roe']:.1%} ({roe_vs_min:+.1%} respecto al mínimo exigido de {min_roe:.0%})"
+    )
+
+    # Identificar el motivo principal: el criterio donde destaca más
+    # (percentil más bajo = más barata en ese criterio concreto).
+    # Solo se afirma "destaca por X bajo" si de verdad está por debajo
+    # de la mediana — si no, es más honesto decir que no destaca por
+    # precio en ninguno de los dos criterios.
+    if pe_pct < 0.5 or pb_pct < 0.5:
+        if pe_pct <= pb_pct:
+            main_reason = f"Destaca sobre todo por su P/E bajo ({row['pe']:.1f})"
+        else:
+            main_reason = f"Destaca sobre todo por su P/B bajo ({row['pb']:.1f})"
+    else:
+        main_reason = (
+            "No destaca por tener un precio especialmente bajo en P/E ni P/B "
+            "respecto al resto del universo, pero es de las mejores opciones "
+            "entre las que cumplen el filtro de calidad"
+        )
+
+    return f"{main_reason}. " + "; ".join(parts) + "."
+
+
+def write_readable_report(top: pd.DataFrame, min_roe: float, output_path: str) -> None:
+    """Informe legible en texto plano, con una explicación por empresa
+    — pensado para leer de un vistazo, no para procesar con código."""
+
+    lines = []
+    lines.append("INFORME DE VALOR + CALIDAD")
+    lines.append("=" * 70)
+    lines.append("")
+
+    for rank, (_, row) in enumerate(top.iterrows(), 1):
+        filed = row["filed_date"].strftime("%Y-%m-%d") if pd.notna(row["filed_date"]) else "N/A"
+        lines.append(f"{rank}. {row['ticker']} — Precio: {row['price']:.2f}")
+        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | Último 10-K: {filed}")
+        lines.append(f"   {explain_pick(row, min_roe)}")
+        lines.append("")
+
+    with open(output_path, "w") as f:
+        f.write("\n".join(lines))
+
+
 def main():
 
     parser = argparse.ArgumentParser()
@@ -149,25 +212,34 @@ def main():
 
     top = quality_table.head(args.top)
 
+    top = top.copy()
+    top["explicacion"] = top.apply(lambda row: explain_pick(row, args.min_roe), axis=1)
+
     print()
     print("=" * 100)
     print(f"TOP {args.top} — MÁS BARATAS (P/E y P/B más bajos) CON ROE >= {args.min_roe:.0%}")
     print("=" * 100)
-    print(f"{'Ticker':<8} | {'Precio':>10} | {'P/E':>7} | {'P/B':>7} | {'ROE':>7} | {'10-K presentado':>16}")
-    print("-" * 100)
 
-    for _, row in top.iterrows():
+    for rank, (_, row) in enumerate(top.iterrows(), 1):
         filed = row["filed_date"].strftime("%Y-%m-%d") if pd.notna(row["filed_date"]) else "N/A"
-        print(
-            f"{row['ticker']:<8} | {row['price']:>10.2f} | {row['pe']:>7.2f} | "
-            f"{row['pb']:>7.2f} | {row['roe']:>6.1%} | {filed:>16}"
-        )
+        print()
+        print(f"{rank}. {row['ticker']} — Precio: {row['price']:.2f} | P/E: {row['pe']:.2f} | "
+              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | Último 10-K: {filed}")
+        print(f"   {row['explicacion']}")
 
     output_path = "data/value_quality_screener_report.csv"
-    quality_table.sort_values("value_score").to_csv(output_path, index=False)
+    quality_table_with_explain = quality_table.copy()
+    quality_table_with_explain["explicacion"] = quality_table_with_explain.apply(
+        lambda row: explain_pick(row, args.min_roe), axis=1
+    )
+    quality_table_with_explain.sort_values("value_score").to_csv(output_path, index=False)
+
+    readable_path = "data/value_quality_screener_report.txt"
+    write_readable_report(top, args.min_roe, readable_path)
 
     print()
-    print(f"Informe completo (todas las que cumplen el filtro) guardado en: {output_path}")
+    print(f"Informe completo (CSV, todas las que cumplen el filtro): {output_path}")
+    print(f"Informe legible (top {args.top}, con explicación de cada una): {readable_path}")
     print()
     print("=" * 100)
     print("CÓMO LEER ESTO")

@@ -1,0 +1,31 @@
+Analizando 505 tickers...
+Con datos completos (precio + fundamentales): 345 de 505
+Con ROE >= 15% y P/E, P/B calculables: 6
+
+====================================================================================================
+TOP 30 — MÁS BARATAS (P/E y P/B más bajos) CON ROE >= 15%
+====================================================================================================
+Ticker   |     Precio |     P/E |     P/B |     ROE |  10-K presentado
+----------------------------------------------------------------------------------------------------
+VNO      |      38.72 |    9.22 |    1.23 |  15.1% |       2026-02-09
+GOOG     |     337.23 |   31.20 |    9.82 |  31.8% |       2026-02-05
+DRI      |     211.13 |   20.34 |   10.91 |  54.7% |       2026-07-24
+GOOGL    |     340.53 |   31.50 |    9.91 |  31.8% |       2026-02-05
+NFLX     |      79.84 |   31.56 |   12.67 |  41.3% |       2026-01-23
+EXPE     |     318.92 |   32.51 |   29.05 | 100.8% |       2026-02-13
+
+Informe completo (todas las que cumplen el filtro) guardado en: data/value_quality_screener_report.csv
+
+====================================================================================================
+CÓMO LEER ESTO
+====================================================================================================
+P/E y P/B bajos = la acción cotiza barata respecto a su beneficio y a
+su valor contable. ROE alto = la empresa es rentable de verdad, no
+solo barata. El 'value_score' es el promedio simple de en qué percentil
+cae cada empresa en P/E y P/B (0 = más barata de todas, 1 = más cara) —
+no hay ningún modelo detrás, es aritmética directa y transparente.
+
+AVISO: esto es un punto de partida para tu propio análisis, no una
+recomendación de compra. Un P/E bajo a veces significa 'barata de
+verdad' y a veces significa 'el mercado sabe algo malo que tú no
+sabes todavía' — la herramienta no distingue entre ambos casos.

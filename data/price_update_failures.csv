@@ -1,0 +1,93 @@
+ticker,error
+ATVI,No data received for ATVI
+ALXN,No data received for ALXN
+"AGN,""Allergan, Plc"",Health Care","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+ADS,No data received for ADS
+"AIG,""American International Group, Inc-"",Financials","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+ABC,No data received for ABC
+"ADI,""Analog Devices, Inc-"",Information Technology","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+ANSS,No data received for ANSS
+ANTM,No data received for ANTM
+ARNC,No data received for ARNC
+"AVB,""AvalonBay Communities, Inc-"",Real Estate","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+"BHGE,""Baker Hughes, a GE Company"",Energy","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+BLL,No data received for BLL
+"CA,""CA, Inc-"",Information Technology","No data received for CA,""CA, Inc-"",Information Technology"
+COG,No data received for COG
+CBG,No data received for CBG
+CBS,No data received for CBS
+CELG,No data received for CELG
+CTL,No data received for CTL
+CERN,No data received for CERN
+CHK,No data received for CHK
+XEC,No data received for XEC
+CTXS,No data received for CTXS
+CMA,No data received for CMA
+CXO,No data received for CXO
+"COTY,""Coty, Inc"",Consumer Staples","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+DFS,No data received for DFS
+DISCA,No data received for DISCA
+DISCK,No data received for DISCK
+DISH,No data received for DISH
+DWDP,No data received for DWDP
+DPS,No data received for DPS
+DRE,No data received for DRE
+ETFC,No data received for ETFC
+"ESS,""Essex Property Trust, Inc-"",Real Estate","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+RE,No data received for RE
+"FB,""Facebook, Inc-"",Information Technology","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+FLIR,No data received for FLIR
+FL,No data received for FL
+FBHS,No data received for FBHS
+GPS,No data received for GPS
+GGP,No data received for GGP
+HBI,No data received for HBI
+HRS,No data received for HRS
+HCP,No data received for HCP
+HES,No data received for HES
+HOLX,No data received for HOLX
+IPG,No data received for IPG
+JEC,No data received for JEC
+JNPR,No data received for JNPR
+KSU,No data received for KSU
+K,No data received for K
+LLL,No data received for LLL
+LUK,No data received for LUK
+MRO,No data received for MRO
+MMC,No data received for MMC
+KORS,No data received for KORS
+MON,No data received for MON
+MYL,No data received for MYL
+"NDAQ,""Nasdaq, Inc-"",Financials","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume']"
+NLSN,No data received for NLSN
+NBL,No data received for NBL
+JWN,No data received for JWN
+PDCO,No data received for PDCO
+PBCT,No data received for PBCT
+PKI,No data received for PKI
+PXD,No data received for PXD
+PX,No data received for PX
+RTN,No data received for RTN
+RHT,No data received for RHT
+"SPGI,""S&P Global, Inc-"",Financials","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+SNI,No data received for SNI
+SEE,No data received for SEE
+SRCL,No data received for SRCL
+SYMC,No data received for SYMC
+"TPR,""Tapestry, Inc-"",Consumer Discretionary","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+BK,No data received for BK
+TIF,No data received for TIF
+TMK,No data received for TMK
+TSS,No data received for TSS
+"URI,""United Rentals, Inc-"",Industrials","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+UTX,No data received for UTX
+"UHS,""Universal Health Services, Inc-"",Health Care","Duplicate column names found: ['Open', 'Open', 'Open', 'Open', 'Open', 'Open', 'High', 'High', 'High', 'High', 'High', 'High', 'Low', 'Low', 'Low', 'Low', 'Low', 'Low', 'Close', 'Close', 'Close', 'Close', 'Close', 'Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Adj Close', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume', 'Volume']"
+VAR,No data received for VAR
+VIAB,No data received for VIAB
+WBA,No data received for WBA
+HCN,No data received for HCN
+WRK,No data received for WRK
+WLTW,No data received for WLTW
+WYN,No data received for WYN
+XLNX,No data received for XLNX
+XL,No data received for XL
