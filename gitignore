@@ -1,0 +1,21 @@
+# Credenciales — CRÍTICO, nunca subir esto a git
+.env
+
+# Datos descargados/generados — se regeneran con los scripts,
+# no hace falta versionarlos (y pesan bastante)
+data/raw/
+data/sec_fundamentals/
+data/strategies/
+data/*.csv
+data/*.parquet
+data/*.txt
+
+# Excepción: SÍ versionar las listas de tickers que mantienes a mano
+!data/tickers/
+!data/tickers/*.csv
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

@@ -108,6 +108,8 @@ def main():
         ["value_quality_screener.py", "--top", str(args.top), "--min-roe", str(args.min_roe)],
     )
 
+    run_step("Envío del informe por email", ["send_email_report.py"])
+
     end_time = datetime.now()
     print()
     print("=" * 70)
