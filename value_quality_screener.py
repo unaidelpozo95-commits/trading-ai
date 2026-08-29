@@ -21,7 +21,7 @@ import os
 
 import pandas as pd
 
-from ticker_universe import load_tickers
+from ticker_universe import load_tickers, load_ticker_names
 
 FUNDAMENTALS_DIR = "data/sec_fundamentals"
 PRICE_DIR = "data/raw/yahoo"
@@ -69,7 +69,7 @@ def get_latest_fundamentals(ticker: str) -> dict:
     }
 
 
-def build_screener_table(tickers: list) -> pd.DataFrame:
+def build_screener_table(tickers: list, ticker_names: dict) -> pd.DataFrame:
 
     rows = []
 
@@ -94,6 +94,7 @@ def build_screener_table(tickers: list) -> pd.DataFrame:
 
         rows.append({
             "ticker": ticker,
+            "company_name": ticker_names.get(ticker, ticker),
             "price": price,
             "price_date": price_date,
             "fiscal_year_end": fundamentals.get("fiscal_year_end"),
@@ -162,13 +163,67 @@ def write_readable_report(top: pd.DataFrame, min_roe: float, output_path: str) -
 
     for rank, (_, row) in enumerate(top.iterrows(), 1):
         filed = row["filed_date"].strftime("%Y-%m-%d") if pd.notna(row["filed_date"]) else "N/A"
-        lines.append(f"{rank}. {row['ticker']} — Precio: {row['price']:.2f}")
+        lines.append(f"{rank}. {row['ticker']} ({row['company_name']}) — Precio: {row['price']:.2f}")
         lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | Último 10-K: {filed}")
         lines.append(f"   {explain_pick(row, min_roe)}")
         lines.append("")
 
     with open(output_path, "w") as f:
         f.write("\n".join(lines))
+
+
+TEMPLATES_DIR = "templates"
+
+
+def write_html_report(top: pd.DataFrame, min_roe: float, output_path: str) -> None:
+    """Informe en HTML, construido a partir de las plantillas en
+    templates/ (report_shell.html y report_row.html) — edítalas
+    directamente para cambiar colores, textos o estructura sin tocar
+    este script."""
+
+    from datetime import datetime
+
+    today = datetime.now().strftime("%d/%m/%Y")
+
+    with open(os.path.join(TEMPLATES_DIR, "report_shell.html")) as f:
+        shell = f.read()
+
+    with open(os.path.join(TEMPLATES_DIR, "report_row.html")) as f:
+        row_template = f.read()
+
+    rows_html = []
+
+    for rank, (_, row) in enumerate(top.iterrows(), 1):
+
+        bg = "#f8f9fa" if rank % 2 == 0 else "#ffffff"
+        roe_color = "#1a7f37" if row["roe"] >= min_roe * 1.5 else "#2d2d2d"
+
+        row_html = (
+            row_template
+            .replace("{{BG_COLOR}}", bg)
+            .replace("{{RANK}}", str(rank))
+            .replace("{{TICKER}}", str(row["ticker"]))
+            .replace("{{COMPANY_NAME}}", str(row["company_name"]))
+            .replace("{{PRICE}}", f"{row['price']:.2f}")
+            .replace("{{PE}}", f"{row['pe']:.1f}")
+            .replace("{{PB}}", f"{row['pb']:.1f}")
+            .replace("{{ROE}}", f"{row['roe']:.1%}")
+            .replace("{{ROE_COLOR}}", roe_color)
+            .replace("{{EXPLANATION}}", explain_pick(row, min_roe))
+        )
+
+        rows_html.append(row_html)
+
+    html = (
+        shell
+        .replace("{{HEADER_DATE}}", today)
+        .replace("{{TOP_N}}", str(len(top)))
+        .replace("{{MIN_ROE}}", f"{min_roe:.0%}")
+        .replace("{{ROWS_HTML}}", "".join(rows_html))
+    )
+
+    with open(output_path, "w") as f:
+        f.write(html)
 
 
 def main():
@@ -179,10 +234,11 @@ def main():
     args = parser.parse_args()
 
     tickers = load_tickers()
+    ticker_names = load_ticker_names()
 
     print(f"Analizando {len(tickers)} tickers...")
 
-    table = build_screener_table(tickers)
+    table = build_screener_table(tickers, ticker_names)
 
     print(f"Con datos completos (precio + fundamentales): {len(table)} de {len(tickers)}")
 
@@ -213,7 +269,7 @@ def main():
     for rank, (_, row) in enumerate(top.iterrows(), 1):
         filed = row["filed_date"].strftime("%Y-%m-%d") if pd.notna(row["filed_date"]) else "N/A"
         print()
-        print(f"{rank}. {row['ticker']} — Precio: {row['price']:.2f} | P/E: {row['pe']:.2f} | "
+        print(f"{rank}. {row['ticker']} ({row['company_name']}) — Precio: {row['price']:.2f} | P/E: {row['pe']:.2f} | "
               f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | Último 10-K: {filed}")
         print(f"   {row['explicacion']}")
 
@@ -227,9 +283,13 @@ def main():
     readable_path = "data/value_quality_screener_report.txt"
     write_readable_report(top, args.min_roe, readable_path)
 
+    html_path = "data/value_quality_screener_report.html"
+    write_html_report(top, args.min_roe, html_path)
+
     print()
     print(f"Informe completo (CSV, todas las que cumplen el filtro): {output_path}")
     print(f"Informe legible (top {args.top}, con explicación de cada una): {readable_path}")
+    print(f"Informe HTML (para email): {html_path}")
     print()
     print("=" * 100)
     print("CÓMO LEER ESTO")

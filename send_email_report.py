@@ -29,6 +29,7 @@ from email import encoders
 
 ENV_PATH = ".env"
 
+REPORT_HTML = "data/value_quality_screener_report.html"
 REPORT_TXT = "data/value_quality_screener_report.txt"
 REPORT_CSV = "data/value_quality_screener_report.csv"
 
@@ -67,18 +68,23 @@ def build_email(env: dict) -> MIMEMultipart:
     msg["From"] = env["GMAIL_ADDRESS"]
     msg["To"] = env["EMAIL_TO"]
 
-    if os.path.exists(REPORT_TXT):
+    if os.path.exists(REPORT_HTML):
+        with open(REPORT_HTML) as f:
+            body = f.read()
+        msg["Subject"] = f"Screener Valor+Calidad — {today}"
+        msg.attach(MIMEText(body, "html"))
+    elif os.path.exists(REPORT_TXT):
         with open(REPORT_TXT) as f:
             body = f.read()
         msg["Subject"] = f"Screener Valor+Calidad — {today}"
+        msg.attach(MIMEText(body, "plain"))
     else:
         body = (
-            "No se encontró el informe (data/value_quality_screener_report.txt).\n"
+            "No se encontró ningún informe (ni HTML ni texto).\n"
             "Revisa el log del pipeline para ver si algún paso falló."
         )
         msg["Subject"] = f"Screener Valor+Calidad — {today} (SIN INFORME)"
-
-    msg.attach(MIMEText(body, "plain"))
+        msg.attach(MIMEText(body, "plain"))
 
     if os.path.exists(REPORT_CSV):
         with open(REPORT_CSV, "rb") as f:

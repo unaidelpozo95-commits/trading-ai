@@ -1,0 +1,46 @@
+<html>
+<body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 24px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="900" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+          <tr>
+            <td style="background-color: #111827; padding: 24px 28px;">
+              <span style="color: #ffffff; font-size: 20px; font-weight: 700;">Screener de Valor + Calidad</span><br>
+              <span style="color: #9ca3af; font-size: 13px;">{{HEADER_DATE}} · Top {{TOP_N}} · ROE mínimo {{MIN_ROE}}</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                <tr style="background-color: #f9fafb;">
+                  <th style="padding: 10px 12px; text-align: left; font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #e5e5e5;">#</th>
+                  <th style="padding: 10px 12px; text-align: left; font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #e5e5e5;">Empresa</th>
+                  <th style="padding: 10px 12px; text-align: right; font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #e5e5e5;">Precio</th>
+                  <th style="padding: 10px 12px; text-align: right; font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #e5e5e5;">P/E</th>
+                  <th style="padding: 10px 12px; text-align: right; font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #e5e5e5;">P/B</th>
+                  <th style="padding: 10px 12px; text-align: right; font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #e5e5e5;">ROE</th>
+                  <th style="padding: 10px 12px; text-align: left; font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #e5e5e5;">Por qué</th>
+                </tr>
+                {{ROWS_HTML}}
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px 28px; background-color: #f9fafb; border-top: 1px solid #e5e5e5;">
+              <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
+                P/E y P/B bajos = cotiza barata respecto a su beneficio y a su valor contable.
+                ROE alto = la empresa es rentable de verdad, no solo barata.
+                <br><br>
+                <strong>Esto es un punto de partida para tu propio análisis, no una recomendación de compra.</strong>
+                Un P/E bajo a veces significa "barata de verdad" y a veces significa "el mercado sabe algo malo
+                que tú no sabes todavía" — la herramienta no distingue entre ambos casos.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

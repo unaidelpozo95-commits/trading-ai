@@ -60,3 +60,32 @@ def load_tickers(tickers_dir: str = TICKERS_DIR) -> list:
           f"desde {len(csv_paths)} archivo(s) en {tickers_dir}/")
 
     return unique_tickers
+
+
+def load_ticker_names(tickers_dir: str = TICKERS_DIR) -> dict:
+    """Devuelve {ticker: nombre_empresa} para los CSV que tengan una
+    columna 'Name' o 'name'. Si un ticker aparece en varios archivos
+    con nombres distintos, se queda con el del primer archivo (por
+    orden alfabético) que lo traiga."""
+
+    csv_paths = sorted(glob.glob(os.path.join(tickers_dir, "*.csv")))
+
+    names = {}
+
+    for path in csv_paths:
+
+        df = pd.read_csv(path)
+
+        ticker_col = "ticker" if "ticker" in df.columns else ("Symbol" if "Symbol" in df.columns else None)
+        name_col = "Name" if "Name" in df.columns else ("name" if "name" in df.columns else None)
+
+        if ticker_col is None or name_col is None:
+            continue
+
+        for _, row in df.iterrows():
+            ticker = str(row[ticker_col]).strip().replace(".", "-")
+            name = row[name_col]
+            if ticker not in names and pd.notna(name):
+                names[ticker] = str(name).strip()
+
+    return names
