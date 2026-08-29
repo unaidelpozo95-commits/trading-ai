@@ -20,7 +20,3 @@ INFORME DE VALOR + CALIDAD
 5. NFLX — Precio: 81.72
    P/E: 32.30 | P/B: 12.96 | ROE: 41.3% | Último 10-K: 2026-01-23
    No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.3 (más barata que el 17% de las empresas del ranking, según este criterio); P/B de 13.0 (más barata que el 17% en este criterio); ROE de 41.3% (+26.3% respecto al mínimo exigido de 15%).
-
-6. EXPE — Precio: 329.44
-   P/E: 33.58 | P/B: 30.01 | ROE: 100.8% | Último 10-K: 2026-02-13
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 33.6 (más barata que el 0% de las empresas del ranking, según este criterio); P/B de 30.0 (más barata que el 0% en este criterio); ROE de 100.8% (+85.8% respecto al mínimo exigido de 15%).
