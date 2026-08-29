@@ -29,3 +29,47 @@ AVISO: esto es un punto de partida para tu propio análisis, no una
 recomendación de compra. Un P/E bajo a veces significa 'barata de
 verdad' y a veces significa 'el mercado sabe algo malo que tú no
 sabes todavía' — la herramienta no distingue entre ambos casos.
+  SP500.csv: 505 tickers
+Universo total (sin duplicados): 505 tickers desde 1 archivo(s) en data/tickers/
+Analizando 505 tickers...
+Con datos completos (precio + fundamentales): 345 de 505
+Con ROE >= 15% y P/E, P/B calculables: 6
+
+====================================================================================================
+TOP 30 — MÁS BARATAS (P/E y P/B más bajos) CON ROE >= 15%
+====================================================================================================
+
+1. VNO — Precio: 38.20 | P/E: 9.10 | P/B: 1.22 | ROE: 15.1% | Último 10-K: 2026-02-09
+   Destaca sobre todo por su P/E bajo (9.1). P/E de 9.1 (más barata que el 83% de las empresas del ranking, según este criterio); P/B de 1.2 (más barata que el 83% en este criterio); ROE de 15.1% (+0.1% respecto al mínimo exigido de 15%).
+
+2. GOOG — Precio: 342.88 | P/E: 31.72 | P/B: 9.98 | ROE: 31.8% | Último 10-K: 2026-02-05
+   Destaca sobre todo por su P/B bajo (10.0). P/E de 31.7 (más barata que el 50% de las empresas del ranking, según este criterio); P/B de 10.0 (más barata que el 67% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
+
+3. DRI — Precio: 215.63 | P/E: 20.77 | P/B: 11.14 | ROE: 54.7% | Último 10-K: 2026-07-24
+   Destaca sobre todo por su P/E bajo (20.8). P/E de 20.8 (más barata que el 67% de las empresas del ranking, según este criterio); P/B de 11.1 (más barata que el 33% en este criterio); ROE de 54.7% (+39.7% respecto al mínimo exigido de 15%).
+
+4. GOOGL — Precio: 346.59 | P/E: 32.06 | P/B: 10.09 | ROE: 31.8% | Último 10-K: 2026-02-05
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.1 (más barata que el 33% de las empresas del ranking, según este criterio); P/B de 10.1 (más barata que el 50% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
+
+5. NFLX — Precio: 81.72 | P/E: 32.30 | P/B: 12.96 | ROE: 41.3% | Último 10-K: 2026-01-23
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.3 (más barata que el 17% de las empresas del ranking, según este criterio); P/B de 13.0 (más barata que el 17% en este criterio); ROE de 41.3% (+26.3% respecto al mínimo exigido de 15%).
+
+6. EXPE — Precio: 329.44 | P/E: 33.58 | P/B: 30.01 | ROE: 100.8% | Último 10-K: 2026-02-13
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 33.6 (más barata que el 0% de las empresas del ranking, según este criterio); P/B de 30.0 (más barata que el 0% en este criterio); ROE de 100.8% (+85.8% respecto al mínimo exigido de 15%).
+
+Informe completo (CSV, todas las que cumplen el filtro): data/value_quality_screener_report.csv
+Informe legible (top 30, con explicación de cada una): data/value_quality_screener_report.txt
+
+====================================================================================================
+CÓMO LEER ESTO
+====================================================================================================
+P/E y P/B bajos = la acción cotiza barata respecto a su beneficio y a
+su valor contable. ROE alto = la empresa es rentable de verdad, no
+solo barata. El 'value_score' es el promedio simple de en qué percentil
+cae cada empresa en P/E y P/B (0 = más barata de todas, 1 = más cara) —
+no hay ningún modelo detrás, es aritmética directa y transparente.
+
+AVISO: esto es un punto de partida para tu propio análisis, no una
+recomendación de compra. Un P/E bajo a veces significa 'barata de
+verdad' y a veces significa 'el mercado sabe algo malo que tú no
+sabes todavía' — la herramienta no distingue entre ambos casos.

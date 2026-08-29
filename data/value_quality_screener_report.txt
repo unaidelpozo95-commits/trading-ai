@@ -1,26 +1,26 @@
 INFORME DE VALOR + CALIDAD
 ======================================================================
 
-1. VNO — Precio: 38.72
-   P/E: 9.22 | P/B: 1.23 | ROE: 15.1% | Último 10-K: 2026-02-09
-   Destaca sobre todo por su P/E bajo (9.2). P/E de 9.2 (más barata que el 83% de las empresas del ranking, según este criterio); P/B de 1.2 (más barata que el 83% en este criterio); ROE de 15.1% (+0.1% respecto al mínimo exigido de 15%).
+1. VNO — Precio: 38.20
+   P/E: 9.10 | P/B: 1.22 | ROE: 15.1% | Último 10-K: 2026-02-09
+   Destaca sobre todo por su P/E bajo (9.1). P/E de 9.1 (más barata que el 83% de las empresas del ranking, según este criterio); P/B de 1.2 (más barata que el 83% en este criterio); ROE de 15.1% (+0.1% respecto al mínimo exigido de 15%).
 
-2. GOOG — Precio: 337.23
-   P/E: 31.20 | P/B: 9.82 | ROE: 31.8% | Último 10-K: 2026-02-05
-   Destaca sobre todo por su P/B bajo (9.8). P/E de 31.2 (más barata que el 50% de las empresas del ranking, según este criterio); P/B de 9.8 (más barata que el 67% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
+2. GOOG — Precio: 342.88
+   P/E: 31.72 | P/B: 9.98 | ROE: 31.8% | Último 10-K: 2026-02-05
+   Destaca sobre todo por su P/B bajo (10.0). P/E de 31.7 (más barata que el 50% de las empresas del ranking, según este criterio); P/B de 10.0 (más barata que el 67% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
 
-3. DRI — Precio: 211.13
-   P/E: 20.34 | P/B: 10.91 | ROE: 54.7% | Último 10-K: 2026-07-24
-   Destaca sobre todo por su P/E bajo (20.3). P/E de 20.3 (más barata que el 67% de las empresas del ranking, según este criterio); P/B de 10.9 (más barata que el 33% en este criterio); ROE de 54.7% (+39.7% respecto al mínimo exigido de 15%).
+3. DRI — Precio: 215.63
+   P/E: 20.77 | P/B: 11.14 | ROE: 54.7% | Último 10-K: 2026-07-24
+   Destaca sobre todo por su P/E bajo (20.8). P/E de 20.8 (más barata que el 67% de las empresas del ranking, según este criterio); P/B de 11.1 (más barata que el 33% en este criterio); ROE de 54.7% (+39.7% respecto al mínimo exigido de 15%).
 
-4. GOOGL — Precio: 340.53
-   P/E: 31.50 | P/B: 9.91 | ROE: 31.8% | Último 10-K: 2026-02-05
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 31.5 (más barata que el 33% de las empresas del ranking, según este criterio); P/B de 9.9 (más barata que el 50% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
+4. GOOGL — Precio: 346.59
+   P/E: 32.06 | P/B: 10.09 | ROE: 31.8% | Último 10-K: 2026-02-05
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.1 (más barata que el 33% de las empresas del ranking, según este criterio); P/B de 10.1 (más barata que el 50% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
 
-5. NFLX — Precio: 79.84
-   P/E: 31.56 | P/B: 12.67 | ROE: 41.3% | Último 10-K: 2026-01-23
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 31.6 (más barata que el 17% de las empresas del ranking, según este criterio); P/B de 12.7 (más barata que el 17% en este criterio); ROE de 41.3% (+26.3% respecto al mínimo exigido de 15%).
+5. NFLX — Precio: 81.72
+   P/E: 32.30 | P/B: 12.96 | ROE: 41.3% | Último 10-K: 2026-01-23
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.3 (más barata que el 17% de las empresas del ranking, según este criterio); P/B de 13.0 (más barata que el 17% en este criterio); ROE de 41.3% (+26.3% respecto al mínimo exigido de 15%).
 
-6. EXPE — Precio: 318.92
-   P/E: 32.51 | P/B: 29.05 | ROE: 100.8% | Último 10-K: 2026-02-13
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.5 (más barata que el 0% de las empresas del ranking, según este criterio); P/B de 29.1 (más barata que el 0% en este criterio); ROE de 100.8% (+85.8% respecto al mínimo exigido de 15%).
+6. EXPE — Precio: 329.44
+   P/E: 33.58 | P/B: 30.01 | ROE: 100.8% | Último 10-K: 2026-02-13
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 33.6 (más barata que el 0% de las empresas del ranking, según este criterio); P/B de 30.0 (más barata que el 0% en este criterio); ROE de 100.8% (+85.8% respecto al mínimo exigido de 15%).
