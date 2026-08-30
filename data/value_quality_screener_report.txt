@@ -3,20 +3,32 @@ INFORME DE VALOR + CALIDAD
 
 1. VNO (Vornado Realty Trust) — Precio: 38.20
    P/E: 9.10 | P/B: 1.22 | ROE: 15.1% | Último 10-K: 2026-02-09
-   Destaca sobre todo por su P/E bajo (9.1). P/E de 9.1 (más barata que el 83% de las empresas del ranking, según este criterio); P/B de 1.2 (más barata que el 83% en este criterio); ROE de 15.1% (+0.1% respecto al mínimo exigido de 15%).
+   Destaca sobre todo por su P/E bajo (9.1). P/E de 9.1 (más barata que el 88% de las empresas del ranking, según este criterio); P/B de 1.2 (más barata que el 88% en este criterio); ROE de 15.1% (+0.1% respecto al mínimo exigido de 15%).
 
-2. GOOG (Alphabet Inc Class C) — Precio: 342.88
+2. CRCT (Cricut Inc. Class A Common Stock) — Precio: 5.80
+   P/E: 16.57 | P/B: 3.57 | ROE: 22.3% | Último 10-K: 2026-03-04
+   Destaca sobre todo por su P/E bajo (16.6). P/E de 16.6 (más barata que el 75% de las empresas del ranking, según este criterio); P/B de 3.6 (más barata que el 75% en este criterio); ROE de 22.3% (+7.3% respecto al mínimo exigido de 15%).
+
+3. GOOG (Alphabet Inc Class C) — Precio: 342.88
    P/E: 31.72 | P/B: 9.98 | ROE: 31.8% | Último 10-K: 2026-02-05
-   Destaca sobre todo por su P/B bajo (10.0). P/E de 31.7 (más barata que el 50% de las empresas del ranking, según este criterio); P/B de 10.0 (más barata que el 67% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
+   Destaca sobre todo por su P/B bajo (10.0). P/E de 31.7 (más barata que el 50% de las empresas del ranking, según este criterio); P/B de 10.0 (más barata que el 62% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
 
-3. DRI (Darden Restaurants) — Precio: 215.63
+4. DRI (Darden Restaurants) — Precio: 215.63
    P/E: 20.77 | P/B: 11.14 | ROE: 54.7% | Último 10-K: 2026-07-24
-   Destaca sobre todo por su P/E bajo (20.8). P/E de 20.8 (más barata que el 67% de las empresas del ranking, según este criterio); P/B de 11.1 (más barata que el 33% en este criterio); ROE de 54.7% (+39.7% respecto al mínimo exigido de 15%).
+   Destaca sobre todo por su P/E bajo (20.8). P/E de 20.8 (más barata que el 62% de las empresas del ranking, según este criterio); P/B de 11.1 (más barata que el 38% en este criterio); ROE de 54.7% (+39.7% respecto al mínimo exigido de 15%).
 
-4. GOOGL (Alphabet Inc Class A) — Precio: 346.59
+5. GOOGL (Alphabet Inc Class A) — Precio: 346.59
    P/E: 32.06 | P/B: 10.09 | ROE: 31.8% | Último 10-K: 2026-02-05
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.1 (más barata que el 33% de las empresas del ranking, según este criterio); P/B de 10.1 (más barata que el 50% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.1 (más barata que el 38% de las empresas del ranking, según este criterio); P/B de 10.1 (más barata que el 50% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%).
 
-5. NFLX (Netflix Inc.) — Precio: 81.72
+6. NFLX (Netflix Inc.) — Precio: 81.72
    P/E: 32.30 | P/B: 12.96 | ROE: 41.3% | Último 10-K: 2026-01-23
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.3 (más barata que el 17% de las empresas del ranking, según este criterio); P/B de 13.0 (más barata que el 17% en este criterio); ROE de 41.3% (+26.3% respecto al mínimo exigido de 15%).
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.3 (más barata que el 25% de las empresas del ranking, según este criterio); P/B de 13.0 (más barata que el 25% en este criterio); ROE de 41.3% (+26.3% respecto al mínimo exigido de 15%).
+
+7. EXPE (Expedia Inc.) — Precio: 329.44
+   P/E: 33.58 | P/B: 30.01 | ROE: 100.8% | Último 10-K: 2026-02-13
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 33.6 (más barata que el 0% de las empresas del ranking, según este criterio); P/B de 30.0 (más barata que el 12% en este criterio); ROE de 100.8% (+85.8% respecto al mínimo exigido de 15%).
+
+8. APP (Applovin Corporation Class A Common Stock) — Precio: 317.76
+   P/E: 32.59 | P/B: 50.36 | ROE: 156.2% | Último 10-K: 2026-02-19
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.6 (más barata que el 12% de las empresas del ranking, según este criterio); P/B de 50.4 (más barata que el 0% en este criterio); ROE de 156.2% (+141.2% respecto al mínimo exigido de 15%).
