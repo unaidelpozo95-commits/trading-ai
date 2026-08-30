@@ -18,6 +18,45 @@ import pandas as pd
 
 TICKERS_DIR = "data/tickers"
 
+# Sufijos de bolsa de Yahoo Finance que usan punto (ej. "14D.AX",
+# "0001.HK") — si el ticker termina en uno de estos, el punto NO se
+# toca. Si no coincide con ninguno, se asume que es un caso tipo
+# "BRK.B" (acciones de EEUU con clase) y el punto se convierte en
+# guion, que es lo que espera yfinance para esos casos.
+KNOWN_EXCHANGE_SUFFIXES = {
+    "AX",  # Australia (ASX)
+    "HK",  # Hong Kong
+    "DE",  # Alemania (Xetra/Frankfurt)
+    "F",   # Frankfurt (parqué, no Xetra)
+    "T",   # Japón (Tokyo Stock Exchange)
+    "L",   # Londres
+    "PA",  # París
+    "MI",  # Milán
+    "MC",  # Madrid
+    "AS",  # Ámsterdam
+    "SW",  # Suiza
+    "TO",  # Toronto
+    "SI",  # Singapur
+    "KS",  # Corea del Sur
+    "SS",  # Shanghai
+    "SZ",  # Shenzhen
+}
+
+
+def _fix_ticker(ticker: str) -> str:
+    """Convierte el punto en guion SOLO si no es un sufijo de bolsa
+    conocido — así "BRK.B" -> "BRK-B" pero "14D.AX" se queda igual."""
+
+    if "." not in ticker:
+        return ticker
+
+    prefix, suffix = ticker.rsplit(".", 1)
+
+    if suffix.upper() in KNOWN_EXCHANGE_SUFFIXES:
+        return ticker
+
+    return ticker.replace(".", "-")
+
 
 def load_tickers(tickers_dir: str = TICKERS_DIR) -> list:
     """Lee todos los .csv de tickers_dir, extrae la columna de ticker
@@ -48,7 +87,7 @@ def load_tickers(tickers_dir: str = TICKERS_DIR) -> list:
             continue
 
         tickers = df[col].dropna().astype(str).tolist()
-        tickers = [t.strip().replace(".", "-") for t in tickers]
+        tickers = [_fix_ticker(t.strip()) for t in tickers]
 
         print(f"  {os.path.basename(path)}: {len(tickers)} tickers")
 
@@ -83,7 +122,7 @@ def load_ticker_names(tickers_dir: str = TICKERS_DIR) -> dict:
             continue
 
         for _, row in df.iterrows():
-            ticker = str(row[ticker_col]).strip().replace(".", "-")
+            ticker = _fix_ticker(str(row[ticker_col]).strip())
             name = row[name_col]
             if ticker not in names and pd.notna(name):
                 names[ticker] = str(name).strip()
