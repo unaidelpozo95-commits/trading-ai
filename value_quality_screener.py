@@ -17,6 +17,7 @@ USO:
 """
 
 import argparse
+import html
 import os
 
 import pandas as pd
@@ -340,8 +341,8 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             row_template
             .replace("{{BG_COLOR}}", bg)
             .replace("{{RANK}}", str(rank))
-            .replace("{{TICKER}}", str(row["ticker"]))
-            .replace("{{COMPANY_NAME}}", str(row["company_name"]))
+            .replace("{{TICKER}}", html.escape(str(row["ticker"])))
+            .replace("{{COMPANY_NAME}}", html.escape(str(row["company_name"])))
             .replace("{{PRICE}}", f"{row['price']:.2f}")
             .replace("{{PE}}", f"{row['pe']:.1f}")
             .replace("{{PB}}", f"{row['pb']:.1f}")
@@ -350,7 +351,7 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             .replace("{{TARGET_PRICE}}", target_str)
             .replace("{{VS_TARGET}}", vs_target_str)
             .replace("{{VS_TARGET_COLOR}}", vs_target_color)
-            .replace("{{EXPLANATION}}", explain_pick(row, min_roe))
+            .replace("{{EXPLANATION}}", html.escape(explain_pick(row, min_roe)))
         )
 
         rows_html.append(row_html)
@@ -361,8 +362,8 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             color = "#1a7f37" if is_gainer else "#c0392b"
             parts.append(
                 movers_row_template
-                .replace("{{TICKER}}", str(row["ticker"]))
-                .replace("{{COMPANY_NAME}}", str(row["company_name"]))
+                .replace("{{TICKER}}", html.escape(str(row["ticker"])))
+                .replace("{{COMPANY_NAME}}", html.escape(str(row["company_name"])))
                 .replace("{{PRICE}}", f"{row['price']:.2f}")
                 .replace("{{CHANGE_PCT}}", f"{row['change_pct']:+.2%}")
                 .replace("{{CHANGE_COLOR}}", color)
@@ -372,7 +373,7 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
     gainers_html = build_movers_html(gainers, is_gainer=True)
     losers_html = build_movers_html(losers, is_gainer=False)
 
-    html = (
+    html_output = (
         shell
         .replace("{{HEADER_DATE}}", today)
         .replace("{{TOP_N}}", str(len(top)))
@@ -383,7 +384,7 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
     )
 
     with open(output_path, "w") as f:
-        f.write(html)
+        f.write(html_output)
 
 
 def main():
