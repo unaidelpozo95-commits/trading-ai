@@ -154,10 +154,22 @@ def add_target_price(df: pd.DataFrame, sector_median_pe: pd.Series) -> pd.DataFr
     return df
 
 
+MIN_PRICE_FOR_MOVERS = 5.0  # excluye penny stocks: splits inversos y precios
+                             # cercanos a cero producen "% de cambio" absurdos
+                             # que no reflejan un movimiento de mercado real
+
+
 def compute_top_movers(tickers: list, ticker_names: dict, n: int = N_MOVERS) -> tuple:
     """Top N subidas y top N caídas del día, sobre TODO el universo
     cargado (no solo las que pasan el filtro de calidad) — es una
-    foto de mercado, no un filtro de valor."""
+    foto de mercado, no un filtro de valor.
+
+    Usa el precio AJUSTADO (Adj Close, corrige splits/dividendos) en
+    vez del precio en bruto — si no, un split inverso de una penny
+    stock aparece como una "subida" del 1000% que no es real.
+    También excluye acciones por debajo de MIN_PRICE_FOR_MOVERS: con
+    precios cercanos a cero, hasta el movimiento más pequeño en
+    términos absolutos se convierte en un porcentaje descontrolado."""
 
     changes = []
 
@@ -173,9 +185,13 @@ def compute_top_movers(tickers: list, ticker_names: dict, n: int = N_MOVERS) -> 
         if len(df) < 2:
             continue
 
-        last_two = df["Close"].iloc[-2:]
+        close_col = "Adj Close" if "Adj Close" in df.columns else "Close"
+        last_two = df[close_col].iloc[-2:]
 
         if last_two.iloc[-2] == 0 or pd.isna(last_two.iloc[-2]) or pd.isna(last_two.iloc[-1]):
+            continue
+
+        if last_two.iloc[-1] < MIN_PRICE_FOR_MOVERS:
             continue
 
         change_pct = (last_two.iloc[-1] / last_two.iloc[-2]) - 1
