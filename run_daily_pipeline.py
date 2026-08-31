@@ -8,10 +8,17 @@ Ejecuta, en orden:
      martillear la API de la SEC sin necesidad (el ROE solo cambia
      una vez al año por ticker)
   3. Screener de Valor + Calidad
+  4. Envío del informe por email
 
 El universo de tickers es dinámico: todo lo que haya en
 data/tickers/*.csv se procesa automáticamente — añade un CSV nuevo
 ahí y al día siguiente ya está incluido, sin tocar código.
+
+Se puede dividir en dos fases (por ejemplo, cálculo la noche antes y
+envío por la mañana, con dos entradas de cron distintas):
+
+    python run_daily_pipeline.py --calculate-only   # pasos 1-3, sin email
+    python run_daily_pipeline.py --send-only        # solo el paso 4
 
 USO (pensado para cron):
     python run_daily_pipeline.py
@@ -76,10 +83,26 @@ def main():
     parser.add_argument("--min-roe", type=float, default=0.10)
     parser.add_argument("--skip-fundamentals", action="store_true",
                          help="No refrescar fundamentales aunque estén desactualizados")
+    parser.add_argument("--calculate-only", action="store_true",
+                         help="Solo precios+fundamentales+screener, sin enviar email")
+    parser.add_argument("--send-only", action="store_true",
+                         help="Solo enviar el email con el último informe ya calculado")
     args = parser.parse_args()
+
+    if args.calculate_only and args.send_only:
+        raise ValueError("--calculate-only y --send-only son excluyentes, usa solo uno")
 
     start_time = datetime.now()
     print(f"Pipeline diario — inicio: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+
+    if args.send_only:
+        run_step("Envío del informe por email", ["send_email_report.py"])
+        end_time = datetime.now()
+        print()
+        print("=" * 70)
+        print(f"Fase de envío completa. Duración: {end_time - start_time}")
+        print("=" * 70)
+        return
 
     print()
     print("Cargando universo de tickers desde data/tickers/...")
@@ -108,7 +131,11 @@ def main():
         ["value_quality_screener.py", "--top", str(args.top), "--min-roe", str(args.min_roe)],
     )
 
-    run_step("Envío del informe por email", ["send_email_report.py"])
+    if not args.calculate_only:
+        run_step("Envío del informe por email", ["send_email_report.py"])
+    else:
+        print()
+        print("--calculate-only activado — se omite el envío del email (se hará en la fase de envío).")
 
     end_time = datetime.now()
     print()
