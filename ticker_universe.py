@@ -7,6 +7,11 @@ puedes tener data/tickers/sp500.csv, data/tickers/watchlist.csv,
 data/tickers/europa.csv, etc. — todos los scripts del proyecto los
 verán juntos, sin tocar código cada vez que añadas una lista nueva.
 
+Los CSV dentro de SUBCARPETAS se ignoran a propósito (ej.
+data/tickers/ignore/frankfurt.csv) — es la forma de "aparcar" un
+mercado sin borrarlo, para volver a activarlo más adelante moviéndolo
+de vuelta a data/tickers/.
+
 Import: from ticker_universe import load_tickers
 """
 
@@ -128,3 +133,30 @@ def load_ticker_names(tickers_dir: str = TICKERS_DIR) -> dict:
                 names[ticker] = str(name).strip()
 
     return names
+
+
+def load_ticker_sectors(tickers_dir: str = TICKERS_DIR) -> dict:
+    """Devuelve {ticker: sector} para los CSV que tengan una columna
+    'Sector'. Mismo criterio que load_ticker_names(): si un ticker
+    aparece en varios archivos, se queda con el primero que lo traiga."""
+
+    csv_paths = sorted(glob.glob(os.path.join(tickers_dir, "*.csv")))
+
+    sectors = {}
+
+    for path in csv_paths:
+
+        df = pd.read_csv(path)
+
+        ticker_col = "ticker" if "ticker" in df.columns else ("Symbol" if "Symbol" in df.columns else None)
+
+        if ticker_col is None or "Sector" not in df.columns:
+            continue
+
+        for _, row in df.iterrows():
+            ticker = _fix_ticker(str(row[ticker_col]).strip())
+            sector = row["Sector"]
+            if ticker not in sectors and pd.notna(sector) and str(sector).strip():
+                sectors[ticker] = str(sector).strip()
+
+    return sectors
