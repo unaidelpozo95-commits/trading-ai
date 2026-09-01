@@ -70,6 +70,7 @@ def get_latest_fundamentals(ticker: str) -> dict:
         "eps": latest.get("eps"),
         "book_value_per_share": latest.get("book_value_per_share"),
         "roe": latest.get("roe"),
+        "debt_to_equity": latest.get("debt_to_equity"),
     }
 
 
@@ -92,6 +93,7 @@ def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict
         eps = fundamentals.get("eps")
         bvps = fundamentals.get("book_value_per_share")
         roe = fundamentals.get("roe")
+        debt_to_equity = fundamentals.get("debt_to_equity")
 
         pe = price / eps if eps is not None and pd.notna(eps) and eps > 0 else None
         pb = price / bvps if bvps is not None and pd.notna(bvps) and bvps > 0 else None
@@ -107,6 +109,7 @@ def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict
             "eps": eps,
             "book_value_per_share": bvps,
             "roe": roe,
+            "debt_to_equity": debt_to_equity,
             "pe": pe,
             "pb": pb,
         })
@@ -244,6 +247,16 @@ def explain_pick(row: pd.Series, min_roe: float) -> str:
             f"({row['vs_target_pct']:+.1%} respecto al precio actual)"
         )
 
+    if pd.notna(row.get("debt_to_equity")):
+        de = row["debt_to_equity"]
+        if de < 0.5:
+            de_comment = "deuda baja respecto a su patrimonio"
+        elif de < 1.5:
+            de_comment = "deuda moderada respecto a su patrimonio"
+        else:
+            de_comment = "deuda alta respecto a su patrimonio — conviene mirarlo con más cuidado"
+        parts.append(f"deuda/patrimonio de {de:.2f} ({de_comment})")
+
     # Identificar el motivo principal: el criterio donde destaca más
     # (percentil más bajo = más barata en ese criterio concreto).
     # Solo se afirma "destaca por X bajo" si de verdad está por debajo
@@ -290,7 +303,8 @@ def write_readable_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.D
     for rank, (_, row) in enumerate(top.iterrows(), 1):
         filed = row["filed_date"].strftime("%Y-%m-%d") if pd.notna(row["filed_date"]) else "N/A"
         lines.append(f"{rank}. {row['ticker']} ({row['company_name']}) — Precio: {row['price']:.2f}")
-        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | Último 10-K: {filed}")
+        de_str = f"{row['debt_to_equity']:.2f}" if pd.notna(row.get("debt_to_equity")) else "N/A"
+        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | D/E: {de_str} | Último 10-K: {filed}")
         lines.append(f"   {explain_pick(row, min_roe)}")
         lines.append("")
 
@@ -337,6 +351,19 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             vs_target_str = "N/A"
             vs_target_color = "#6b7280"
 
+        if pd.notna(row.get("debt_to_equity")):
+            de = row["debt_to_equity"]
+            de_str = f"{de:.2f}"
+            if de < 0.5:
+                de_color = "#1a7f37"
+            elif de < 1.5:
+                de_color = "#2d2d2d"
+            else:
+                de_color = "#c0392b"
+        else:
+            de_str = "N/A"
+            de_color = "#6b7280"
+
         row_html = (
             row_template
             .replace("{{BG_COLOR}}", bg)
@@ -348,6 +375,8 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             .replace("{{PB}}", f"{row['pb']:.1f}")
             .replace("{{ROE}}", f"{row['roe']:.1%}")
             .replace("{{ROE_COLOR}}", roe_color)
+            .replace("{{DEBT_TO_EQUITY}}", de_str)
+            .replace("{{DEBT_TO_EQUITY_COLOR}}", de_color)
             .replace("{{TARGET_PRICE}}", target_str)
             .replace("{{VS_TARGET}}", vs_target_str)
             .replace("{{VS_TARGET_COLOR}}", vs_target_color)
@@ -449,9 +478,10 @@ def main():
 
     for rank, (_, row) in enumerate(top.iterrows(), 1):
         filed = row["filed_date"].strftime("%Y-%m-%d") if pd.notna(row["filed_date"]) else "N/A"
+        de_str = f"{row['debt_to_equity']:.2f}" if pd.notna(row.get("debt_to_equity")) else "N/A"
         print()
         print(f"{rank}. {row['ticker']} ({row['company_name']}) — Precio: {row['price']:.2f} | P/E: {row['pe']:.2f} | "
-              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | Último 10-K: {filed}")
+              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | D/E: {de_str} | Último 10-K: {filed}")
         print(f"   {row['explicacion']}")
 
     output_path = "data/value_quality_screener_report.csv"

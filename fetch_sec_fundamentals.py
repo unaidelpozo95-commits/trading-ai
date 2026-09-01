@@ -10,7 +10,8 @@ día en que se hizo público de verdad, evitando look-ahead bias.
 
 Guarda un CSV por ticker en data/sec_fundamentals/{TICKER}.csv con
 columnas: fiscal_year_end, filed_date, net_income, stockholders_equity,
-eps, shares_outstanding, roe, book_value_per_share
+eps, shares_outstanding, liabilities, roe, book_value_per_share,
+debt_to_equity
 
 AVISO: si ya tenías datos descargados con la versión anterior de este
 script (sin eps/shares_outstanding), borra data/sec_fundamentals/ y
@@ -111,6 +112,9 @@ def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
     shares = fetch_shares_outstanding(cik)
     time.sleep(0.15)
 
+    liabilities = fetch_annual_concept(cik, "Liabilities")
+    time.sleep(0.15)
+
     if net_income.empty or equity.empty:
         return pd.DataFrame()
 
@@ -141,9 +145,30 @@ def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
     else:
         merged["shares_outstanding"] = None
 
+    if not liabilities.empty:
+        merged = pd.merge(
+            merged,
+            liabilities[["fiscal_year_end", "value"]].rename(columns={"value": "liabilities"}),
+            on="fiscal_year_end",
+            how="left",
+        )
+    else:
+        merged["liabilities"] = None
+
     merged["roe"] = merged["net_income"] / merged["stockholders_equity"]
 
     merged["book_value_per_share"] = merged["stockholders_equity"] / merged["shares_outstanding"]
+
+    # Deuda/Patrimonio: solo tiene sentido si el patrimonio es positivo
+    # (con patrimonio negativo el ratio sale sin sentido — una empresa
+    # con patrimonio negativo ya es de por sí una señal de alerta que
+    # no necesita este ratio para verse)
+    merged["debt_to_equity"] = merged.apply(
+        lambda row: row["liabilities"] / row["stockholders_equity"]
+        if pd.notna(row["liabilities"]) and row["stockholders_equity"] > 0
+        else None,
+        axis=1,
+    )
 
     return merged.sort_values("filed_date")
 
