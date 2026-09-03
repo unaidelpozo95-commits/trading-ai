@@ -22,6 +22,7 @@ import os
 
 import pandas as pd
 
+from src.data.validator import AnomalyDetector
 from ticker_universe import load_tickers, load_ticker_names, load_ticker_sectors
 
 FUNDAMENTALS_DIR = "data/sec_fundamentals"
@@ -163,6 +164,74 @@ MIN_PRICE_FOR_MOVERS = 5.0  # excluye penny stocks: splits inversos y precios
                              # que no reflejan un movimiento de mercado real
 
 
+ANOMALY_LOOKBACK_DAYS = 30  # margen de sobra para que la media móvil de 20 sesiones del detector tenga con qué calcularse
+
+
+def compute_todays_anomalies(tickers: list, ticker_names: dict) -> pd.DataFrame:
+    """Corre AnomalyDetector sobre los últimos días de cada ticker y
+    se queda solo con las anomalías detectadas en la ÚLTIMA fecha
+    disponible (la de hoy) — el detector en sí puede marcar cualquier
+    día del rango que le pases, pero para el informe diario solo nos
+    interesa lo que pasó hoy."""
+
+    detector = AnomalyDetector()
+    rows = []
+
+    for ticker in tickers:
+
+        path = os.path.join(PRICE_DIR, f"{ticker}.parquet")
+
+        if not os.path.exists(path):
+            continue
+
+        df = pd.read_parquet(path)
+
+        if len(df) < 21:  # hace falta margen para la media móvil de 20 sesiones
+            continue
+
+        tail = df.tail(ANOMALY_LOOKBACK_DAYS)
+        last_date = tail.index[-1]
+
+        try:
+            anomalies = detector.detect(tail)
+        except Exception:
+            continue
+
+        for anomaly in anomalies:
+            if anomaly.date != last_date:
+                continue
+            rows.append({
+                "ticker": ticker,
+                "company_name": ticker_names.get(ticker, ticker),
+                "kind": anomaly.kind,
+                "description": anomaly.description,
+            })
+
+    return pd.DataFrame(rows)
+
+
+def enrich_movers_with_target(movers_df: pd.DataFrame, table: pd.DataFrame, sector_median_pe: pd.Series) -> pd.DataFrame:
+    """Añade precio objetivo a un DataFrame de movers, cruzando con la
+    tabla de fundamentales por ticker. Los movers que no tengan
+    fundamentales (no todos los del universo completo los tienen)
+    quedan con target_price/vs_target_pct en None — se muestra N/A,
+    no se inventa nada."""
+
+    movers_df = movers_df.copy()
+
+    if movers_df.empty:
+        movers_df["sector"] = None
+        movers_df["eps"] = None
+        movers_df["target_price"] = None
+        movers_df["vs_target_pct"] = None
+        return movers_df
+
+    fundamentals_lookup = table[["ticker", "sector", "eps"]].drop_duplicates(subset="ticker")
+    merged = movers_df.merge(fundamentals_lookup, on="ticker", how="left")
+
+    return add_target_price(merged, sector_median_pe)
+
+
 def compute_top_movers(tickers: list, ticker_names: dict, n: int = N_MOVERS) -> tuple:
     """Top N subidas y top N caídas del día, sobre TODO el universo
     cargado (no solo las que pasan el filtro de calidad) — es una
@@ -278,7 +347,7 @@ def explain_pick(row: pd.Series, min_roe: float) -> str:
 
 
 def write_readable_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataFrame,
-                           min_roe: float, output_path: str) -> None:
+                           anomalies: pd.DataFrame, min_roe: float, output_path: str) -> None:
     """Informe legible en texto plano, con una explicación por empresa
     — pensado para leer de un vistazo, no para procesar con código."""
 
@@ -292,10 +361,21 @@ def write_readable_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.D
         lines.append("-" * 70)
         lines.append("Mayores subidas:")
         for _, row in gainers.iterrows():
-            lines.append(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}")
+            target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
+            lines.append(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
         lines.append("Mayores caídas:")
         for _, row in losers.iterrows():
-            lines.append(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}")
+            target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
+            lines.append(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
+        lines.append("")
+        lines.append("=" * 70)
+        lines.append("")
+
+    if not anomalies.empty:
+        lines.append("ANOMALÍAS DE DATOS DE HOY")
+        lines.append("-" * 70)
+        for _, row in anomalies.iterrows():
+            lines.append(f"  {row['ticker']} ({row['company_name']}) [{row['kind']}]: {row['description']}")
         lines.append("")
         lines.append("=" * 70)
         lines.append("")
@@ -316,11 +396,11 @@ TEMPLATES_DIR = "templates"
 
 
 def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataFrame,
-                       min_roe: float, output_path: str) -> None:
+                       anomalies: pd.DataFrame, min_roe: float, output_path: str) -> None:
     """Informe en HTML, construido a partir de las plantillas en
-    templates/ (report_shell.html, report_row.html y
-    movers_row.html) — edítalas directamente para cambiar colores,
-    textos o estructura sin tocar este script."""
+    templates/ (report_shell.html, report_row.html,
+    movers_row.html y anomaly_row.html) — edítalas directamente para
+    cambiar colores, textos o estructura sin tocar este script."""
 
     from datetime import datetime
 
@@ -334,6 +414,9 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
 
     with open(os.path.join(TEMPLATES_DIR, "movers_row.html")) as f:
         movers_row_template = f.read()
+
+    with open(os.path.join(TEMPLATES_DIR, "anomaly_row.html")) as f:
+        anomaly_row_template = f.read()
 
     rows_html = []
 
@@ -389,6 +472,16 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
         parts = []
         for _, row in movers_df.iterrows():
             color = "#1a7f37" if is_gainer else "#c0392b"
+
+            if pd.notna(row.get("vs_target_pct")):
+                target_str = f"{row['target_price']:.2f}"
+                vs_target_str = f"{row['vs_target_pct']:+.1%}"
+                target_color = "#1a7f37" if row["vs_target_pct"] > 0 else "#c0392b"
+            else:
+                target_str = "N/A"
+                vs_target_str = ""
+                target_color = "#6b7280"
+
             parts.append(
                 movers_row_template
                 .replace("{{TICKER}}", html.escape(str(row["ticker"])))
@@ -396,11 +489,31 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
                 .replace("{{PRICE}}", f"{row['price']:.2f}")
                 .replace("{{CHANGE_PCT}}", f"{row['change_pct']:+.2%}")
                 .replace("{{CHANGE_COLOR}}", color)
+                .replace("{{TARGET_PRICE}}", target_str)
+                .replace("{{VS_TARGET}}", vs_target_str)
+                .replace("{{TARGET_COLOR}}", target_color)
             )
         return "".join(parts)
 
     gainers_html = build_movers_html(gainers, is_gainer=True)
     losers_html = build_movers_html(losers, is_gainer=False)
+
+    if anomalies.empty:
+        anomalies_html = (
+            '<div style="padding: 12px 0; color: #6b7280; font-size: 13px;">'
+            "Ninguna detectada hoy.</div>"
+        )
+    else:
+        anomaly_parts = []
+        for _, row in anomalies.iterrows():
+            anomaly_parts.append(
+                anomaly_row_template
+                .replace("{{TICKER}}", html.escape(str(row["ticker"])))
+                .replace("{{COMPANY_NAME}}", html.escape(str(row["company_name"])))
+                .replace("{{KIND}}", html.escape(str(row["kind"])))
+                .replace("{{DESCRIPTION}}", html.escape(str(row["description"])))
+            )
+        anomalies_html = "".join(anomaly_parts)
 
     html_output = (
         shell
@@ -410,6 +523,7 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
         .replace("{{ROWS_HTML}}", "".join(rows_html))
         .replace("{{GAINERS_HTML}}", gainers_html)
         .replace("{{LOSERS_HTML}}", losers_html)
+        .replace("{{ANOMALIES_HTML}}", anomalies_html)
     )
 
     with open(output_path, "w") as f:
@@ -463,13 +577,35 @@ def main():
     print("=" * 100)
 
     gainers, losers = compute_top_movers(tickers, ticker_names, N_MOVERS)
+    gainers = enrich_movers_with_target(gainers, table, sector_median_pe)
+    losers = enrich_movers_with_target(losers, table, sector_median_pe)
 
     print(f"Mayores subidas (top {N_MOVERS}):")
     for _, row in gainers.iterrows():
-        print(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}")
+        target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
+        print(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
     print(f"Mayores caídas (top {N_MOVERS}):")
     for _, row in losers.iterrows():
-        print(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}")
+        target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
+        print(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
+
+    print()
+    print("=" * 100)
+    print("ANOMALÍAS DE DATOS DE HOY")
+    print("=" * 100)
+    print(
+        "Movimientos de precio >=15% o volumen >=5x la media de 20 sesiones.\n"
+        "Puede ser una noticia real, o un error/artefacto en los datos —\n"
+        "esta herramienta no distingue entre ambos casos, solo avisa."
+    )
+
+    anomalies = compute_todays_anomalies(tickers, ticker_names)
+
+    if anomalies.empty:
+        print("Ninguna detectada hoy.")
+    else:
+        for _, row in anomalies.iterrows():
+            print(f"  {row['ticker']} ({row['company_name']}) [{row['kind']}]: {row['description']}")
 
     print()
     print("=" * 100)
@@ -492,10 +628,10 @@ def main():
     quality_table_with_explain.sort_values("value_score").to_csv(output_path, index=False)
 
     readable_path = "data/value_quality_screener_report.txt"
-    write_readable_report(top, gainers, losers, args.min_roe, readable_path)
+    write_readable_report(top, gainers, losers, anomalies, args.min_roe, readable_path)
 
     html_path = "data/value_quality_screener_report.html"
-    write_html_report(top, gainers, losers, args.min_roe, html_path)
+    write_html_report(top, gainers, losers, anomalies, args.min_roe, html_path)
 
     print()
     print(f"Informe completo (CSV, todas las que cumplen el filtro): {output_path} ({len(quality_table)} filas)")

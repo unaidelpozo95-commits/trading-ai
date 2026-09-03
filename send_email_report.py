@@ -9,6 +9,10 @@ datos reales:
     GMAIL_APP_PASSWORD=xxxxxxxxxxxxxxxx
     EMAIL_TO=tu_correo@gmail.com
 
+Para varios destinatarios, sepáralos por comas en EMAIL_TO:
+
+    EMAIL_TO=tu_correo@gmail.com, otro@dominio.com, un_tercero@dominio.com
+
 La GMAIL_APP_PASSWORD es una "contraseña de aplicación" de Google
 (no tu contraseña normal) — se genera en:
 https://myaccount.google.com/apppasswords
@@ -60,13 +64,19 @@ def load_env(path: str = ENV_PATH) -> dict:
     return env
 
 
-def build_email(env: dict) -> MIMEMultipart:
+def parse_recipients(value: str) -> list:
+    """EMAIL_TO puede traer uno o varios correos separados por comas."""
+
+    return [addr.strip() for addr in value.split(",") if addr.strip()]
+
+
+def build_email(env: dict, recipients: list) -> MIMEMultipart:
 
     today = datetime.now().strftime("%Y-%m-%d")
 
     msg = MIMEMultipart()
     msg["From"] = env["GMAIL_ADDRESS"]
-    msg["To"] = env["EMAIL_TO"]
+    msg["To"] = ", ".join(recipients)
 
     if os.path.exists(REPORT_HTML):
         with open(REPORT_HTML) as f:
@@ -100,12 +110,12 @@ def build_email(env: dict) -> MIMEMultipart:
     return msg
 
 
-def send_email(env: dict, msg: MIMEMultipart) -> None:
+def send_email(env: dict, msg: MIMEMultipart, recipients: list) -> None:
 
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
         server.starttls()
         server.login(env["GMAIL_ADDRESS"], env["GMAIL_APP_PASSWORD"])
-        server.send_message(msg)
+        server.send_message(msg, to_addrs=recipients)
 
 
 def main():
@@ -120,10 +130,15 @@ def main():
         raise ValueError(f"Faltan estas claves en .env: {missing}")
 
     print("Construyendo email...")
-    msg = build_email(env)
+    recipients = parse_recipients(env["EMAIL_TO"])
 
-    print(f"Enviando a {env['EMAIL_TO']}...")
-    send_email(env, msg)
+    if not recipients:
+        raise ValueError("EMAIL_TO está vacío o no tiene ningún correo válido")
+
+    msg = build_email(env, recipients)
+
+    print(f"Enviando a {', '.join(recipients)} ({len(recipients)} destinatario{'s' if len(recipients) != 1 else ''})...")
+    send_email(env, msg, recipients)
 
     print("Email enviado correctamente.")
 

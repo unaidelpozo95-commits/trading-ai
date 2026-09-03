@@ -20,6 +20,7 @@ import time
 import pandas as pd
 
 from src.data.providers.yahoo import YahooProvider  # <-- ajusta esta ruta si hace falta
+from src.data.validator import DataValidator
 from ticker_universe import load_tickers
 
 
@@ -36,7 +37,7 @@ def update_ticker(ticker: str, provider: YahooProvider) -> tuple:
     if not os.path.exists(path):
         data = provider.get_daily(ticker, start=START_DATE)
         data.to_parquet(path)
-        return "full_download", len(data)
+        return "full_download", len(data), data
 
     existing = pd.read_parquet(path)
 
@@ -49,7 +50,7 @@ def update_ticker(ticker: str, provider: YahooProvider) -> tuple:
     try:
         new_data = provider.get_daily(ticker, start=next_date)
     except ValueError:
-        return "up_to_date", 0
+        return "up_to_date", 0, existing
 
     combined = pd.concat([existing, new_data])
     combined = combined[~combined.index.duplicated(keep="last")]
@@ -57,7 +58,7 @@ def update_ticker(ticker: str, provider: YahooProvider) -> tuple:
 
     combined.to_parquet(path)
 
-    return "updated", len(new_data)
+    return "updated", len(new_data), combined
 
 
 def main():
@@ -69,18 +70,34 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     provider = YahooProvider()
+    validator = DataValidator()
 
     counts = {"full_download": 0, "updated": 0, "up_to_date": 0, "error": 0}
     errors = []
+    quality_failures = []
 
     for i, ticker in enumerate(tickers, 1):
 
         try:
-            status, n_rows = update_ticker(ticker, provider)
+            status, n_rows, df = update_ticker(ticker, provider)
             counts[status] += 1
 
             if status != "up_to_date":
                 print(f"[{i}/{len(tickers)}] {ticker}: {status} (+{n_rows} filas)")
+
+            report = validator.validate(df, ticker=ticker)
+
+            if not report.is_valid:
+                quality_failures.append({
+                    "ticker": ticker,
+                    "duplicate_dates": report.duplicate_dates,
+                    "chronological": report.chronological,
+                    "missing_values": report.missing_values,
+                    "invalid_prices": report.invalid_prices,
+                    "invalid_ohlc": report.invalid_ohlc,
+                    "invalid_volume": report.invalid_volume,
+                })
+                print(f"  AVISO calidad de datos: {ticker} no pasa la validación (ver data/data_quality_failures.csv)")
 
         except Exception as e:
             counts["error"] += 1
@@ -97,12 +114,17 @@ def main():
     print(f"Actualizados con datos nuevos:         {counts['updated']}")
     print(f"Ya estaban al día:                     {counts['up_to_date']}")
     print(f"Errores:                               {counts['error']}")
+    print(f"Con problemas de calidad de datos:     {len(quality_failures)}")
 
     if errors:
         failed_df = pd.DataFrame(errors, columns=["ticker", "error"])
         failed_df.to_csv("data/price_update_failures.csv", index=False)
         print()
         print("Detalle de errores guardado en: data/price_update_failures.csv")
+
+    if quality_failures:
+        pd.DataFrame(quality_failures).to_csv("data/data_quality_failures.csv", index=False)
+        print("Detalle de calidad de datos guardado en: data/data_quality_failures.csv")
 
 
 if __name__ == "__main__":
