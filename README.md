@@ -4,27 +4,60 @@ Repo: [github.com/unaidelpozo95-commits/trading-ai](https://github.com/unaidelpo
 
 ---
 
-## Pendiente / roadmap
+## Roadmap
 
-### ✅ Resuelto recientemente
-- Cron dividido en dos fases: cálculo a las 22:00, envío del email a las 7:00 (con `CRON_TZ=Europe/Madrid` para no depender de la zona horaria del sistema)
-- Top 5 mayores subidas / Top 5 mayores caídas del día, con precio objetivo incluido
-- Precio objetivo por P/E mediano del sector (tabla principal y top movers)
-- Ratio Deuda/Patrimonio (D/E), con aviso de que varía mucho por sector (bancos/financieras tienen D/E alto de forma normal)
-- `DataValidator` conectado en `update_prices_daily.py` — valida cada ticker tras actualizarlo (fechas duplicadas, orden cronológico, OHLC inconsistente, valores negativos), sin bloquear el proceso
-- `AnomalyDetector` conectado en `value_quality_screener.py` — nueva sección "Anomalías de datos de hoy" (movimientos de precio ≥15% o volumen ≥5x la media)
-- Envío del email a varios destinatarios a la vez (`EMAIL_TO` separado por comas)
-- Reorganización del repo: todo lo que no es producción diaria (investigación, backtests, descubrimiento de estrategias) vive en `research/`
+Orden de prioridad acordado: **Fase 1 (pulido) → Fase 2 → Fase 3 → Fase 4 → Fase 5 → Fase 6.**
 
-### 🔧 Pendiente de verdad
-- **HTML del informe más cuidado/bonito** para poder compartirlo con otras personas — el actual ya es robusto (tras resolver que Gmail rompía las tablas), pero sigue siendo bastante básico visualmente
-- **Optimizar la descarga de precios por lotes** — se intentó con `yf.download` en lotes, dio error "possibly delisted; no timezone found" en casi todos los tickers; revertido a ticker-a-ticker (lento pero funcional). Diagnóstico de la causa real pendiente
-- **Universo internacional**: CSVs ya convertidos (Frankfurt, ASX, Hong Kong, Tokio, IBEX35 — este último desactualizado, composición de ~2015) aparcados en `data/tickers/ignore/`. El filtro de Valor+Calidad **no funciona fuera de EEUU** porque SEC EDGAR solo cubre empresas que reportan a ese regulador — haría falta una fuente de fundamentales por país
-- **PEAD** (Post-Earnings Announcement Drift) — diagnóstico de datos construido (`research/pead_data_check.py`), nunca ejecutado
-- **Trend-following** — señal a 120 días prometedora en el análisis preliminar, pero con aviso de solapamiento de ventanas sospechoso; sin backtest real de confirmación
-- **Factor de Calidad (ROE) como tercera pieza** de la cartera combinada AAPL+Reversión (80/20) — nunca se llegó a probar esa correlación
-- **Revenues en SEC EDGAR** con cobertura irregular (problema conocido de múltiples nombres de tag XBRL)
-- **Métricas adicionales para el screener**, mencionadas pero no implementadas: FCF Yield (flujo de caja libre / precio), consistencia del ROE en varios años (ya tenemos el histórico descargado, solo falta usarlo), PEG ratio, Piotroski F-Score
+### Fase 1: Pulido del proyecto actual (corto plazo)
+
+Antes de abrir líneas nuevas, cerrar los cabos sueltos del screener Valor+Calidad ya en producción:
+
+- [x] ~~Email a múltiples destinatarios~~ — hecho: `EMAIL_TO` en `.env` acepta varios correos separados por comas.
+- [ ] **Diagnosticar la descarga por lotes** — `update_prices_daily.py` falla ("possibly delisted; no timezone found") al usar `yf.download` con varios tickers por llamada. Revertido a ticker-a-ticker (funcional pero lento, ~4h con miles de tickers). Investigar si es `threads=True`, tamaño de lote, versión de `yfinance` o rate limit.
+- [ ] **Decidir si el factor Calidad entra en la cartera combinada** — comprobar su correlación con la cartera AAPL (momentum) + Reversión cross-sectional (80/20 ya validada). Si la correlación es baja, evaluar añadirlo como tercera pieza diversificadora aunque sea débil en solitario (mismo patrón que la reversión).
+- [ ] **Conectar `DataValidator`/`AnomalyDetector` a los scripts de investigación** (`research/`) — ya están conectados al pipeline de producción (`update_prices_daily.py`, `value_quality_screener.py`), pero los scripts de investigación no pasan por ellos todavía. (Opcional, menor prioridad.)
+- [ ] HTML del informe más cuidado/bonito para poder compartirlo con otras personas.
+- [ ] Universo internacional: CSVs ya convertidos (Frankfurt, ASX, Hong Kong, Tokio, IBEX35 — este último desactualizado) aparcados en `data/tickers/ignore/`. El filtro de Valor+Calidad no funciona fuera de EEUU porque SEC EDGAR solo cubre empresas que reportan a ese regulador.
+- [ ] Métricas adicionales al screener: FCF Yield, consistencia del ROE en varios años (histórico ya descargado, falta usarlo), PEG ratio, Piotroski F-Score.
+- [ ] Retomar PEAD y trend-following (research), sin confirmar ni descartar todavía.
+
+### Fase 2: Insider trading tracker (Form 4, SEC EDGAR) — medio plazo
+
+Reutiliza el pipeline de EDGAR ya construido para fundamentales.
+
+- [ ] Extender el fetcher de SEC EDGAR para leer Form 4 (compras/ventas de insiders) en vez de solo XBRL de balances.
+- [ ] Definir la señal: "cluster buying" (varios insiders distintos comprando en una ventana corta) como hipótesis principal, con justificación en literatura académica.
+- [ ] Aplicar la misma disciplina que en el resto del proyecto: split Train/Validación/Test, parámetros fijos sin barrido, Test se mira una sola vez.
+- [ ] Backtest real con fricciones antes de decidir si pasa a producción.
+
+### Fase 3: Seguimiento de 13F institucional — medio plazo
+
+- [ ] Fuente de datos: 13F trimestrales (SEC EDGAR, mismo API base que Form 4).
+- [ ] Señal candidata: entradas/salidas fuertes de fondos de calidad (concentración, activismo) en una posición.
+- [ ] Misma disciplina de validación que en Fase 1. Señal más lenta (trimestral) — ajustar expectativas de frecuencia de trading.
+
+### Fase 4: Cripto — funding rate / basis arbitrage — medio-largo plazo
+
+- [ ] Investigar APIs de exchanges (Binance/Bybit u otros) para funding rate de perpetuos y precio spot.
+- [ ] Estrategia base: long spot + short perpetuo cuando el funding es muy positivo (delta-neutral, no depende de dirección).
+- [ ] Modelar costes reales: comisiones, spread, riesgo de contraparte/exchange, gestión de márgenes.
+- [ ] Script de monitorización diaria/intradía de oportunidades, con o sin ejecución automática (empezar solo con alertas).
+
+### Fase 5: Screener como producto (newsletter de pago) — largo plazo
+
+Cambio de modelo de negocio: en vez de buscar batir al mercado con capital propio, vender la información.
+
+- [ ] Definir formato del informe (ya existe la base: email diario del screener Valor+Calidad).
+- [ ] Elegir plataforma de suscripción/pago (Substack, Beehiiv, Gumroad, etc.) y flujo de alta de nuevos suscriptores.
+- [ ] Adaptar `run_daily_pipeline.py` para generar salida apta para envío masivo (no solo a tu email).
+- [ ] Validar la propuesta de valor con un grupo piloto antes de monetizar.
+
+### Fase 6: Apuestas deportivas / mercados de predicción — largo plazo
+
+- [ ] Elegir mercado inicial (liga menor con menos eficiencia, o mercado de predicción tipo Polymarket/Kalshi).
+- [ ] Pipeline de scraping de cuotas/odds.
+- [ ] Modelo de valor esperado (value betting) con misma disciplina de validación.
+- [ ] Revisar marco regulatorio y de liquidez antes de operar con capital real.
 
 ---
 

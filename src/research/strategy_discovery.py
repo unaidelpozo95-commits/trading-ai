@@ -24,6 +24,7 @@ para el flujo de cacheo.
 import pandas as pd
 
 from src.features.engine import FeatureEngine
+from src.data.loader import load_and_validate
 
 
 FORWARD_DAYS = [1, 3, 5, 10, 20]
@@ -70,7 +71,7 @@ MIN_TSTAT = 3.5   # Umbral elevado respecto al usado con 14 tickers (2.0).
 
 def load_ticker_for_discovery(ticker: str) -> pd.DataFrame:
 
-    data = pd.read_parquet(f"data/raw/yahoo/{ticker}.parquet")
+    data = load_and_validate(ticker)
 
     engine = FeatureEngine()
     df = engine.build(data)
