@@ -50,7 +50,10 @@ def get_latest_price(ticker: str):
     return last_row["Close"], last_date
 
 
-def get_latest_fundamentals(ticker: str) -> dict:
+ROE_CONSISTENCY_LOOKBACK = 5  # cuántos años (como máximo) se miran hacia atrás
+
+
+def get_latest_fundamentals(ticker: str, min_roe: float) -> dict:
 
     path = os.path.join(FUNDAMENTALS_DIR, f"{ticker}.csv")
 
@@ -65,6 +68,16 @@ def get_latest_fundamentals(ticker: str) -> dict:
     df = df.sort_values("filed_date")
     latest = df.iloc[-1]
 
+    # Consistencia del ROE: de los últimos ROE_CONSISTENCY_LOOKBACK años
+    # con dato disponible, ¿en cuántos el ROE estuvo por encima del
+    # mínimo exigido? Distingue "calidad sostenida" de "un año bueno
+    # puntual" (venta de un activo, efecto contable no recurrente...).
+    recent_years = df.tail(ROE_CONSISTENCY_LOOKBACK)
+    roe_values = recent_years["roe"].dropna()
+
+    roe_consistency_total = len(roe_values)
+    roe_consistency_years = int((roe_values >= min_roe).sum())
+
     return {
         "fiscal_year_end": latest.get("fiscal_year_end"),
         "filed_date": latest.get("filed_date"),
@@ -72,10 +85,12 @@ def get_latest_fundamentals(ticker: str) -> dict:
         "book_value_per_share": latest.get("book_value_per_share"),
         "roe": latest.get("roe"),
         "debt_to_equity": latest.get("debt_to_equity"),
+        "roe_consistency_years": roe_consistency_years,
+        "roe_consistency_total": roe_consistency_total,
     }
 
 
-def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict) -> pd.DataFrame:
+def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict, min_roe: float) -> pd.DataFrame:
 
     rows = []
 
@@ -86,7 +101,7 @@ def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict
         if price is None:
             continue
 
-        fundamentals = get_latest_fundamentals(ticker)
+        fundamentals = get_latest_fundamentals(ticker, min_roe)
 
         if not fundamentals:
             continue
@@ -111,6 +126,8 @@ def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict
             "book_value_per_share": bvps,
             "roe": roe,
             "debt_to_equity": debt_to_equity,
+            "roe_consistency_years": fundamentals.get("roe_consistency_years"),
+            "roe_consistency_total": fundamentals.get("roe_consistency_total"),
             "pe": pe,
             "pb": pb,
         })
@@ -310,6 +327,19 @@ def explain_pick(row: pd.Series, min_roe: float) -> str:
         f"ROE de {row['roe']:.1%} ({roe_vs_min:+.1%} respecto al mínimo exigido de {min_roe:.0%})"
     )
 
+    consistency_years = row.get("roe_consistency_years")
+    consistency_total = row.get("roe_consistency_total")
+    if pd.notna(consistency_total) and consistency_total > 0:
+        if consistency_years == consistency_total:
+            consistency_comment = "ROE sostenido en todos los años disponibles, no es un año puntual"
+        elif consistency_years >= consistency_total / 2:
+            consistency_comment = "ROE por encima del mínimo en la mayoría de años recientes"
+        else:
+            consistency_comment = "ROE inconsistente en años recientes — puede que el dato actual sea un año excepcional, conviene revisarlo"
+        parts.append(
+            f"consistencia: {int(consistency_years)}/{int(consistency_total)} años recientes con ROE por encima del mínimo ({consistency_comment})"
+        )
+
     if pd.notna(row.get("vs_target_pct")):
         parts.append(
             f"precio objetivo por P/E mediano de su sector: {row['target_price']:.2f} "
@@ -384,7 +414,9 @@ def write_readable_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.D
         filed = row["filed_date"].strftime("%Y-%m-%d") if pd.notna(row["filed_date"]) else "N/A"
         lines.append(f"{rank}. {row['ticker']} ({row['company_name']}) — Precio: {row['price']:.2f}")
         de_str = f"{row['debt_to_equity']:.2f}" if pd.notna(row.get("debt_to_equity")) else "N/A"
-        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | D/E: {de_str} | Último 10-K: {filed}")
+        consistency_total = row.get("roe_consistency_total")
+        roe_cons_str = f"{int(row['roe_consistency_years'])}/{int(consistency_total)} años" if pd.notna(consistency_total) and consistency_total > 0 else "N/A"
+        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | Último 10-K: {filed}")
         lines.append(f"   {explain_pick(row, min_roe)}")
         lines.append("")
 
@@ -425,6 +457,12 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
         bg = "#f8f9fa" if rank % 2 == 0 else "#ffffff"
         roe_color = "#1a7f37" if row["roe"] >= min_roe * 1.5 else "#2d2d2d"
 
+        consistency_total = row.get("roe_consistency_total")
+        if pd.notna(consistency_total) and consistency_total > 0:
+            roe_consistency_str = f"{int(row['roe_consistency_years'])}/{int(consistency_total)} años"
+        else:
+            roe_consistency_str = "N/A"
+
         if pd.notna(row.get("vs_target_pct")):
             target_str = f"{row['target_price']:.2f}"
             vs_target_str = f"{row['vs_target_pct']:+.1%}"
@@ -457,6 +495,7 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             .replace("{{PE}}", f"{row['pe']:.1f}")
             .replace("{{PB}}", f"{row['pb']:.1f}")
             .replace("{{ROE}}", f"{row['roe']:.1%}")
+            .replace("{{ROE_CONSISTENCY}}", roe_consistency_str)
             .replace("{{ROE_COLOR}}", roe_color)
             .replace("{{DEBT_TO_EQUITY}}", de_str)
             .replace("{{DEBT_TO_EQUITY_COLOR}}", de_color)
@@ -543,7 +582,7 @@ def main():
 
     print(f"Analizando {len(tickers)} tickers...")
 
-    table = build_screener_table(tickers, ticker_names, ticker_sectors)
+    table = build_screener_table(tickers, ticker_names, ticker_sectors, args.min_roe)
 
     print(f"Con datos completos (precio + fundamentales): {len(table)} de {len(tickers)}")
 
@@ -615,9 +654,11 @@ def main():
     for rank, (_, row) in enumerate(top.iterrows(), 1):
         filed = row["filed_date"].strftime("%Y-%m-%d") if pd.notna(row["filed_date"]) else "N/A"
         de_str = f"{row['debt_to_equity']:.2f}" if pd.notna(row.get("debt_to_equity")) else "N/A"
+        consistency_total = row.get("roe_consistency_total")
+        roe_cons_str = f"{int(row['roe_consistency_years'])}/{int(consistency_total)} años" if pd.notna(consistency_total) and consistency_total > 0 else "N/A"
         print()
         print(f"{rank}. {row['ticker']} ({row['company_name']}) — Precio: {row['price']:.2f} | P/E: {row['pe']:.2f} | "
-              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} | D/E: {de_str} | Último 10-K: {filed}")
+              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | Último 10-K: {filed}")
         print(f"   {row['explicacion']}")
 
     output_path = "data/value_quality_screener_report.csv"
