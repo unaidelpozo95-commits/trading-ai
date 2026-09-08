@@ -7,23 +7,12 @@
           <tr>
             <td style="background-color: #111827; padding: 24px 28px;">
               <span style="color: #ffffff; font-size: 20px; font-weight: 700;">Screener de Valor + Calidad</span><br>
-              <span style="color: #9ca3af; font-size: 13px;">{{HEADER_DATE}} · Top {{TOP_N}} · ROE mínimo {{MIN_ROE}}</span>
+              <span style="color: #9ca3af; font-size: 13px;">{{HEADER_DATE}} · Top {{TOP_N}} · ROE mínimo {{MIN_ROE}}</span><br>
+              <span style="color: #6b7280; font-size: 11px;">Significado de cada métrica al final del correo</span>
             </td>
           </tr>
           <tr>
             <td style="padding: 0 28px;">
-              <div style="font-size: 0; background-color: #f9fafb; border-bottom: 2px solid #e5e5e5;">
-                <div style="display: inline-block; width: 30px; vertical-align: top; padding: 10px 0; font-size: 11px; text-transform: uppercase; color: #6b7280;">#</div>
-                <div style="display: inline-block; width: 150px; vertical-align: top; padding: 10px 0; font-size: 11px; text-transform: uppercase; color: #6b7280;">Empresa</div>
-                <div style="display: inline-block; width: 60px; vertical-align: top; padding: 10px 0; text-align: right; font-size: 11px; text-transform: uppercase; color: #6b7280;">Precio</div>
-                <div style="display: inline-block; width: 45px; vertical-align: top; padding: 10px 0; text-align: right; font-size: 11px; text-transform: uppercase; color: #6b7280;">P/E</div>
-                <div style="display: inline-block; width: 45px; vertical-align: top; padding: 10px 0; text-align: right; font-size: 11px; text-transform: uppercase; color: #6b7280;">P/B</div>
-                <div style="display: inline-block; width: 60px; vertical-align: top; padding: 10px 0; text-align: right; font-size: 11px; text-transform: uppercase; color: #6b7280;">ROE</div>
-                <div style="display: inline-block; width: 50px; vertical-align: top; padding: 10px 0; text-align: right; font-size: 11px; text-transform: uppercase; color: #6b7280;">D/E</div>
-                <div style="display: inline-block; width: 70px; vertical-align: top; padding: 10px 0; text-align: right; font-size: 11px; text-transform: uppercase; color: #6b7280;">P. obj.</div>
-                <div style="display: inline-block; width: 60px; vertical-align: top; padding: 10px 0; text-align: right; font-size: 11px; text-transform: uppercase; color: #6b7280;">vs sector</div>
-                <div style="display: inline-block; width: 235px; vertical-align: top; padding: 10px 0; font-size: 11px; text-transform: uppercase; color: #6b7280;">Por qué</div>
-              </div>
               {{ROWS_HTML}}
             </td>
           </tr>
@@ -69,20 +58,33 @@
           </tr>
           <tr>
             <td style="padding: 20px 28px; background-color: #f9fafb; border-top: 1px solid #e5e5e5;">
-              <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
-                P/E y P/B bajos = cotiza barata respecto a su beneficio y a su valor contable.
-                ROE alto = la empresa es rentable de verdad, no solo barata.
-                El "precio objetivo" es el P/E mediano de las demás empresas del mismo sector
-                multiplicado por el beneficio por acción — una referencia RELATIVA al sector,
-                no un valor "justo" absoluto (no tiene en cuenta tipos de interés ni ciclo económico).
-                D/E = deuda total ÷ patrimonio neto: cuanto más alto, más apalancada está la
-                empresa (un ROE alto con D/E alto puede deberse a la deuda, no solo a buena gestión).
-                Varía mucho por sector — bancos y financieras suelen tener D/E naturalmente altos
-                sin que sea una señal de alarma.
-                El número pequeño bajo el ROE (ej. "4/5 años") indica en cuántos de los últimos
-                años el ROE estuvo por encima del mínimo exigido — distingue una empresa
-                consistentemente rentable de otra que tuvo un año excepcional puntual.
-                <br><br>
+              <p style="margin: 0 0 12px 0; color: #1a1a1a; font-size: 13px; font-weight: 700;">Qué significa cada métrica</p>
+              <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
+                <strong style="color: #374151;">P/E</strong> (Precio/Beneficio) y <strong style="color: #374151;">P/B</strong> (Precio/Valor contable) —
+                bajos significa que la acción cotiza barata respecto a su beneficio y a su valor contable.
+              </p>
+              <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
+                <strong style="color: #374151;">ROE</strong> (rentabilidad sobre el patrimonio) — alto significa que la empresa es
+                rentable de verdad, no solo barata. El número entre paréntesis (ej. "4/5 años") indica en cuántos de los
+                últimos años el ROE estuvo por encima del mínimo exigido — distingue una empresa consistentemente rentable
+                de otra que tuvo un año excepcional puntual.
+              </p>
+              <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
+                <strong style="color: #374151;">D/E</strong> (Deuda/Patrimonio) — cuanto más alto, más apalancada está la
+                empresa (un ROE alto con D/E alto puede deberse a la deuda, no solo a buena gestión). Varía mucho por
+                sector — bancos y financieras suelen tener D/E naturalmente altos sin que sea una señal de alarma.
+              </p>
+              <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
+                <strong style="color: #374151;">FCF Yield</strong> (flujo de caja libre por acción ÷ precio) — más difícil de
+                maquillar contablemente que el beneficio neto (P/E), por eso lo prefieren los inversores value más
+                rigurosos. Negativo significa que el negocio quema caja en vez de generarla.
+              </p>
+              <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
+                <strong style="color: #374151;">Precio objetivo</strong> — el P/E mediano de las demás empresas del mismo
+                sector multiplicado por el beneficio por acción. Es una referencia RELATIVA al sector, no un valor
+                "justo" absoluto (no tiene en cuenta tipos de interés ni ciclo económico).
+              </p>
+              <p style="margin: 12px 0 0 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
                 <strong>Esto es un punto de partida para tu propio análisis, no una recomendación de compra.</strong>
                 Un P/E bajo a veces significa "barata de verdad" y a veces significa "el mercado sabe algo malo
                 que tú no sabes todavía" — la herramienta no distingue entre ambos casos.

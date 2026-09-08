@@ -10,8 +10,9 @@ día en que se hizo público de verdad, evitando look-ahead bias.
 
 Guarda un CSV por ticker en data/sec_fundamentals/{TICKER}.csv con
 columnas: fiscal_year_end, filed_date, net_income, stockholders_equity,
-eps, shares_outstanding, liabilities, roe, book_value_per_share,
-debt_to_equity
+eps, shares_outstanding, liabilities, operating_cash_flow, capex,
+roe, book_value_per_share, debt_to_equity, free_cash_flow,
+fcf_per_share
 
 AVISO: si ya tenías datos descargados con la versión anterior de este
 script (sin eps/shares_outstanding), borra data/sec_fundamentals/ y
@@ -115,6 +116,12 @@ def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
     liabilities = fetch_annual_concept(cik, "Liabilities")
     time.sleep(0.15)
 
+    operating_cash_flow = fetch_annual_concept(cik, "NetCashProvidedByUsedInOperatingActivities")
+    time.sleep(0.15)
+
+    capex = fetch_annual_concept(cik, "PaymentsToAcquirePropertyPlantAndEquipment")
+    time.sleep(0.15)
+
     if net_income.empty or equity.empty:
         return pd.DataFrame()
 
@@ -155,9 +162,46 @@ def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
     else:
         merged["liabilities"] = None
 
+    if not operating_cash_flow.empty:
+        merged = pd.merge(
+            merged,
+            operating_cash_flow[["fiscal_year_end", "value"]].rename(columns={"value": "operating_cash_flow"}),
+            on="fiscal_year_end",
+            how="left",
+        )
+    else:
+        merged["operating_cash_flow"] = None
+
+    if not capex.empty:
+        merged = pd.merge(
+            merged,
+            capex[["fiscal_year_end", "value"]].rename(columns={"value": "capex"}),
+            on="fiscal_year_end",
+            how="left",
+        )
+    else:
+        merged["capex"] = None
+
     merged["roe"] = merged["net_income"] / merged["stockholders_equity"]
 
     merged["book_value_per_share"] = merged["stockholders_equity"] / merged["shares_outstanding"]
+
+    # Flujo de caja libre = flujo de caja operativo - CapEx (inversión en
+    # activo fijo). Más difícil de maquillar contablemente que el
+    # beneficio neto, que puede incluir partidas no monetarias.
+    merged["free_cash_flow"] = merged.apply(
+        lambda row: row["operating_cash_flow"] - row["capex"]
+        if pd.notna(row["operating_cash_flow"]) and pd.notna(row["capex"])
+        else None,
+        axis=1,
+    )
+
+    merged["fcf_per_share"] = merged.apply(
+        lambda row: row["free_cash_flow"] / row["shares_outstanding"]
+        if pd.notna(row["free_cash_flow"]) and pd.notna(row["shares_outstanding"]) and row["shares_outstanding"] > 0
+        else None,
+        axis=1,
+    )
 
     # Deuda/Patrimonio: solo tiene sentido si el patrimonio es positivo
     # (con patrimonio negativo el ratio sale sin sentido — una empresa
