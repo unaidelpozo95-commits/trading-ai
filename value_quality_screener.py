@@ -462,9 +462,6 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
     with open(os.path.join(TEMPLATES_DIR, "movers_row.html")) as f:
         movers_row_template = f.read()
 
-    with open(os.path.join(TEMPLATES_DIR, "anomaly_row.html")) as f:
-        anomaly_row_template = f.read()
-
     rows_html = []
 
     for rank, (_, row) in enumerate(top.iterrows(), 1):
@@ -571,23 +568,6 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
     gainers_html = build_movers_html(gainers, is_gainer=True)
     losers_html = build_movers_html(losers, is_gainer=False)
 
-    if anomalies.empty:
-        anomalies_html = (
-            '<div style="padding: 12px 0; color: #6b7280; font-size: 13px;">'
-            "Ninguna detectada hoy.</div>"
-        )
-    else:
-        anomaly_parts = []
-        for _, row in anomalies.iterrows():
-            anomaly_parts.append(
-                anomaly_row_template
-                .replace("{{TICKER}}", html.escape(str(row["ticker"])))
-                .replace("{{COMPANY_NAME}}", html.escape(str(row["company_name"])))
-                .replace("{{KIND}}", html.escape(str(row["kind"])))
-                .replace("{{DESCRIPTION}}", html.escape(str(row["description"])))
-            )
-        anomalies_html = "".join(anomaly_parts)
-
     html_output = (
         shell
         .replace("{{HEADER_DATE}}", today)
@@ -596,7 +576,6 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
         .replace("{{ROWS_HTML}}", "".join(rows_html))
         .replace("{{GAINERS_HTML}}", gainers_html)
         .replace("{{LOSERS_HTML}}", losers_html)
-        .replace("{{ANOMALIES_HTML}}", anomalies_html)
     )
 
     with open(output_path, "w") as f:
@@ -703,6 +682,16 @@ def main():
     )
     quality_table_with_explain.sort_values("value_score").to_csv(output_path, index=False)
 
+    movers_path = "data/top_movers_report.csv"
+    gainers_labeled = gainers.copy()
+    gainers_labeled["tipo"] = "subida"
+    losers_labeled = losers.copy()
+    losers_labeled["tipo"] = "bajada"
+    pd.concat([gainers_labeled, losers_labeled], ignore_index=True).to_csv(movers_path, index=False)
+
+    anomalies_path = "data/anomalies_report.csv"
+    anomalies.to_csv(anomalies_path, index=False)
+
     readable_path = "data/value_quality_screener_report.txt"
     write_readable_report(top, gainers, losers, anomalies, args.min_roe, readable_path)
 
@@ -713,6 +702,8 @@ def main():
     print(f"Informe completo (CSV, todas las que cumplen el filtro): {output_path} ({len(quality_table)} filas)")
     print(f"Informe legible (top {args.top}, con explicación de cada una): {readable_path}")
     print(f"Informe HTML (para email): {html_path}")
+    print(f"CSV de top movers: {movers_path} ({len(gainers) + len(losers)} filas)")
+    print(f"CSV de anomalías: {anomalies_path} ({len(anomalies)} filas)")
     print()
     print("=" * 100)
     print("CÓMO LEER ESTO")

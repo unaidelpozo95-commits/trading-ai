@@ -15,11 +15,12 @@ Antes de abrir líneas nuevas, cerrar los cabos sueltos del screener Valor+Calid
 - [x] ~~Email a múltiples destinatarios~~ — hecho: `EMAIL_TO` en `.env` acepta varios correos separados por comas.
 - [ ] **Diagnosticar la descarga por lotes** — `update_prices_daily.py` falla ("possibly delisted; no timezone found") al usar `yf.download` con varios tickers por llamada. Revertido a ticker-a-ticker (funcional pero lento, ~4h con miles de tickers). Investigar si es `threads=True`, tamaño de lote, versión de `yfinance` o rate limit.
 - [ ] **Decidir si el factor Calidad entra en la cartera combinada** — comprobar su correlación con la cartera AAPL (momentum) + Reversión cross-sectional (80/20 ya validada). Si la correlación es baja, evaluar añadirlo como tercera pieza diversificadora aunque sea débil en solitario (mismo patrón que la reversión).
-- [ ] **Conectar `DataValidator`/`AnomalyDetector` a los scripts de investigación** (`research/`) — ya están conectados al pipeline de producción (`update_prices_daily.py`, `value_quality_screener.py`), pero los scripts de investigación no pasan por ellos todavía. (Opcional, menor prioridad.)
-- [ ] HTML del informe más cuidado/bonito para poder compartirlo con otras personas.
+- [x] ~~Conectar `DataValidator`/`AnomalyDetector` a los scripts de investigación~~ — hecho parcialmente: se creó un cargador compartido (`src/data/loader.py`) que valida automáticamente con `DataValidator` al leer cualquier parquet, y se conectó al punto de carga central del sistema de descubrimiento (`load_ticker_for_discovery` en `src/research/strategy_discovery.py`), que es por donde pasa la mayoría de la investigación reutilizable. No bloquea nada — solo avisa si hay problemas de calidad. Quedan sueltos otros scripts de `research/` con su propia función de carga (`backtest_run.py`, `cross_sectional_ranking.py`, etc.) — migrarlos es mecánico (cambiar su `pd.read_parquet(...)` por `load_and_validate(ticker)`), pendiente si se quiere dejar esto cerrado del todo.
+- [x] ~~HTML del informe más cuidado/bonito~~ — hecho: rediseñado de tabla a fichas por empresa (cada métrica etiquetada en línea, sin depender de cabeceras), colores rojo/verde, glosario ampliado al final con umbrales orientativos por métrica. Anomalías quitadas del email (se quedan en consola/texto/CSV).
 - [ ] Universo internacional: CSVs ya convertidos (Frankfurt, ASX, Hong Kong, Tokio, IBEX35 — este último desactualizado) aparcados en `data/tickers/ignore/`. El filtro de Valor+Calidad no funciona fuera de EEUU porque SEC EDGAR solo cubre empresas que reportan a ese regulador.
-- [ ] Métricas adicionales al screener: FCF Yield, consistencia del ROE en varios años (histórico ya descargado, falta usarlo), PEG ratio, Piotroski F-Score.
+- [x] ~~FCF Yield~~ y ~~consistencia del ROE en varios años~~ — hechos: FCF Yield (flujo de caja operativo − CapEx, por acción ÷ precio) y consistencia del ROE (cuántos de los últimos 5 años el ROE estuvo por encima del mínimo exigido), ambos con su propia columna, color y explicación. Quedan pendientes del grupo original: **PEG ratio** y **Piotroski F-Score**.
 - [ ] Retomar PEAD y trend-following (research), sin confirmar ni descartar todavía.
+- [x] ~~CSV completo con top movers y anomalías~~ — hecho: `data/top_movers_report.csv` y `data/anomalies_report.csv`, generados junto al CSV principal en cada ejecución.
 
 ### Fase 2: Insider trading tracker (Form 4, SEC EDGAR) — medio plazo
 
@@ -81,7 +82,8 @@ trading-ai/
 ├── src/
 │   ├── data/
 │   │   ├── providers/yahoo.py       # descarga de precios (Yahoo Finance)
-│   │   └── validator.py             # DataValidator + AnomalyDetector
+│   │   ├── validator.py             # DataValidator + AnomalyDetector
+│   │   └── loader.py                # carga de parquet con validación integrada (usado en research/)
 │   ├── features/engine.py           # FeatureEngine: retornos, RVOL, medias, ATR...
 │   ├── backtest/                    # motor de backtesting (single-asset y multi-asset)
 │   └── research/                    # sistema de descubrimiento automático de estrategias

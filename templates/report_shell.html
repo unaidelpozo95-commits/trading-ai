@@ -46,43 +46,45 @@
             </td>
           </tr>
           <tr>
-            <td style="padding: 0 28px 8px 28px;">
-              <span style="font-size: 15px; font-weight: 700; color: #1a1a1a;">Anomalías de datos de hoy</span><br>
-              <span style="color: #6b7280; font-size: 12px;">Movimientos de precio ≥15% o volumen ≥5x la media de 20 sesiones — puede ser una noticia real o un error en los datos, esta herramienta no distingue entre ambos casos.</span>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 0 28px 20px 28px;">
-              {{ANOMALIES_HTML}}
-            </td>
-          </tr>
-          <tr>
             <td style="padding: 20px 28px; background-color: #f9fafb; border-top: 1px solid #e5e5e5;">
               <p style="margin: 0 0 12px 0; color: #1a1a1a; font-size: 13px; font-weight: 700;">Qué significa cada métrica</p>
               <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
-                <strong style="color: #374151;">P/E</strong> (Precio/Beneficio) y <strong style="color: #374151;">P/B</strong> (Precio/Valor contable) —
-                bajos significa que la acción cotiza barata respecto a su beneficio y a su valor contable.
+                <strong style="color: #374151;">P/E</strong> (Precio/Beneficio) — bajo significa que la acción cotiza barata
+                respecto a su beneficio. Orientativo: por debajo de 15 suele considerarse barato, por encima de 25 caro
+                — pero varía mucho por sector (tech suele cotizar con P/E más alto que utilities, por ejemplo).
               </p>
               <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
-                <strong style="color: #374151;">ROE</strong> (rentabilidad sobre el patrimonio) — alto significa que la empresa es
-                rentable de verdad, no solo barata. El número entre paréntesis (ej. "4/5 años") indica en cuántos de los
-                últimos años el ROE estuvo por encima del mínimo exigido — distingue una empresa consistentemente rentable
-                de otra que tuvo un año excepcional puntual.
+                <strong style="color: #374151;">P/B</strong> (Precio/Valor contable) — bajo significa que cotiza barata
+                respecto a su valor contable. Orientativo: por debajo de 1 cotiza por debajo de su valor contable (poco
+                común, puede ser una ganga o una señal de problemas de fondo); por debajo de 3 suele considerarse razonable.
+              </p>
+              <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
+                <strong style="color: #374151;">ROE</strong> (rentabilidad sobre el patrimonio) — alto significa que la
+                empresa es rentable de verdad, no solo barata. Orientativo: por encima del 15% suele considerarse bueno,
+                por encima del 20% muy bueno. El número entre paréntesis (ej. "4/5 años") indica en cuántos de los
+                últimos años el ROE estuvo por encima del mínimo exigido — distingue una empresa consistentemente
+                rentable de otra que tuvo un año excepcional puntual.
               </p>
               <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
                 <strong style="color: #374151;">D/E</strong> (Deuda/Patrimonio) — cuanto más alto, más apalancada está la
-                empresa (un ROE alto con D/E alto puede deberse a la deuda, no solo a buena gestión). Varía mucho por
-                sector — bancos y financieras suelen tener D/E naturalmente altos sin que sea una señal de alarma.
+                empresa. Orientativo: por debajo de 1 suele considerarse conservador, por encima de 2 conviene mirarlo
+                con más cuidado — salvo en bancos y financieras, que suelen tener D/E naturalmente altos sin que sea
+                una señal de alarma (su negocio consiste en tomar dinero prestado).
               </p>
               <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
-                <strong style="color: #374151;">FCF Yield</strong> (flujo de caja libre por acción ÷ precio) — más difícil de
-                maquillar contablemente que el beneficio neto (P/E), por eso lo prefieren los inversores value más
-                rigurosos. Negativo significa que el negocio quema caja en vez de generarla.
+                <strong style="color: #374151;">FCF Yield</strong> (flujo de caja libre por acción ÷ precio) — más difícil
+                de maquillar contablemente que el beneficio neto (P/E), por eso lo prefieren los inversores value más
+                rigurosos. Orientativo: por encima del 5% suele considerarse atractivo. Negativo significa que el
+                negocio quema caja en vez de generarla.
               </p>
               <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
                 <strong style="color: #374151;">Precio objetivo</strong> — el P/E mediano de las demás empresas del mismo
                 sector multiplicado por el beneficio por acción. Es una referencia RELATIVA al sector, no un valor
                 "justo" absoluto (no tiene en cuenta tipos de interés ni ciclo económico).
+              </p>
+              <p style="margin: 8px 0 0 0; color: #9ca3af; font-size: 11px; line-height: 1.5; font-style: italic;">
+                Estos umbrales son orientación general, no reglas fijas — el nivel "normal" de cada métrica cambia
+                mucho según el sector y el momento del ciclo económico.
               </p>
               <p style="margin: 12px 0 0 0; color: #6b7280; font-size: 12px; line-height: 1.6;">
                 <strong>Esto es un punto de partida para tu propio análisis, no una recomendación de compra.</strong>
