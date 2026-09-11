@@ -1,3 +1,3 @@
-fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,roe,book_value_per_share
-2018-12-31,2020-03-20,-60837,-35737,,,1.7023533032991018,
-2019-12-31,2020-03-20,151393,5000002,,,0.030278587888564846,
+fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,liabilities,operating_cash_flow,capex,roe,book_value_per_share,free_cash_flow,fcf_per_share,debt_to_equity
+2018-12-31,2020-03-20,-60837,-35737,,,402820,-60837,,1.7023533032991018,,,,
+2019-12-31,2020-03-20,151393,5000002,,,2700050,-715669,,0.030278587888564846,,,,0.5400097839960865

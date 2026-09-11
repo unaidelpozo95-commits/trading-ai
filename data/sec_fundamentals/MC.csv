@@ -1,2 +1,2 @@
-fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,roe,book_value_per_share
-2014-12-31,2015-02-27,2787000,113377000,,,0.024581705284140522,
+fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,liabilities,operating_cash_flow,capex,roe,book_value_per_share,free_cash_flow,fcf_per_share,debt_to_equity
+2014-12-31,2015-02-27,2787000,113377000,,,289864000,,3888000,0.024581705284140522,,,,2.556638471647689

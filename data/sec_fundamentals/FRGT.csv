@@ -1,3 +1,3 @@
-fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,roe,book_value_per_share
-2023-12-31,2025-04-14,-9327606,2626981,-194.87,,-3.550694123786963,
-2024-12-31,2025-04-14,-5601227,-654760,-6.14,,8.55462612254872,
+fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,liabilities,operating_cash_flow,capex,roe,book_value_per_share,free_cash_flow,fcf_per_share,debt_to_equity
+2023-12-31,2025-04-14,-9327606,2626981,-194.87,,7410331,-5790684,34724,-3.550694123786963,,-5825408,,2.8208544332829204
+2024-12-31,2025-04-14,-5601227,-654760,-6.14,,6345005,-4206168,9570,8.55462612254872,,-4215738,,

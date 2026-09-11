@@ -1,0 +1,11 @@
+ticker,company_name,price,change_pct,sector,eps,target_price,vs_target_pct,tipo
+FBRX,Forte Biosciences Inc. Common Stock,76.98999786376953,0.5734722539052506,Health Care,-4.71,,,subida
+RDIB,Reading International Inc Class B Common Stock,18.309999465942383,0.18896103373344308,Consumer Discretionary,-0.62,,,subida
+QNRX,Quoin Pharmaceuticals Ltd. American Depositary Shares,6.119999885559082,0.18719682569840446,Health Care,,,,subida
+LBRDK,Liberty Broadband Corporation Class C Common Stock,36.02000045776367,0.16777439648600145,,,,,subida
+LBRDA,Liberty Broadband Corporation Class A Common Stock,35.9900016784668,0.16623463923051407,,,,,subida
+COO,The Cooper Companies,54.16999816894531,-0.14666038816047278,Health Care,1.87,45.93281639037759,-0.15206169571720518,bajada
+PSNYW,Polestar Automotive Holding UK PLC Class C-1 ADS (ADW),5.320000171661377,-0.1460673907907054,,,,,bajada
+PRLD,Prelude Therapeutics Incorporated Common Stock,5.46999979019165,-0.1372240286210592,Health Care,-1.29,,,bajada
+NXTT,Next Technology Holding Inc. Ordinary Shares,6.019999980926514,-0.12879882577984614,Technology,,,,bajada
+CRML,Critical Metals Corp. Ordinary Shares,7.119999885559082,-0.11442787072873406,,,,,bajada

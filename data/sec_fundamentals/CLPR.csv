@@ -1,3 +1,3 @@
-fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,roe,book_value_per_share
-2017-12-31,2019-03-07,-1523000,74912000,-0.04,,-0.02033052114480991,
-2018-12-31,2019-03-07,-1566000,65182000,-0.04,,-0.024025037587063914,
+fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,liabilities,operating_cash_flow,capex,roe,book_value_per_share,free_cash_flow,fcf_per_share,debt_to_equity
+2017-12-31,2019-03-07,-1523000,74912000,-0.04,,866494000,10440000,22725000,-0.02033052114480991,,-12285000,,11.566825074754378
+2018-12-31,2019-03-07,-1566000,65182000,-0.04,,939523000,27256000,45642000,-0.024025037587063914,,-18386000,,14.413841244515357
