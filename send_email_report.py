@@ -35,7 +35,12 @@ ENV_PATH = ".env"
 
 REPORT_HTML = "data/value_quality_screener_report.html"
 REPORT_TXT = "data/value_quality_screener_report.txt"
-REPORT_CSV = "data/value_quality_screener_report.csv"
+
+CSV_ATTACHMENTS = [
+    ("data/value_quality_screener_report.csv", "screener_valor_calidad"),
+    ("data/top_movers_report.csv", "top_movers"),
+    ("data/anomalies_report.csv", "anomalias"),
+]
 
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
@@ -96,14 +101,16 @@ def build_email(env: dict, recipients: list) -> MIMEMultipart:
         msg["Subject"] = f"Screener Valor+Calidad — {today} (SIN INFORME)"
         msg.attach(MIMEText(body, "plain"))
 
-    if os.path.exists(REPORT_CSV):
-        with open(REPORT_CSV, "rb") as f:
+    for path, label in CSV_ATTACHMENTS:
+        if not os.path.exists(path):
+            continue
+        with open(path, "rb") as f:
             part = MIMEBase("application", "octet-stream")
             part.set_payload(f.read())
         encoders.encode_base64(part)
         part.add_header(
             "Content-Disposition",
-            f"attachment; filename=screener_{today}.csv",
+            f"attachment; filename={label}_{today}.csv",
         )
         msg.attach(part)
 
