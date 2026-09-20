@@ -8,7 +8,9 @@ Ejecuta, en orden:
      martillear la API de la SEC sin necesidad (el ROE solo cambia
      una vez al año por ticker)
   3. Screener de Valor + Calidad
-  4. Envío del informe por email
+  4. Detección de novedades respecto a ayer + resumen con IA local
+     (Ollama) — si no hay ninguna novedad real, NO se envía email hoy
+  5. Envío del informe por email (solo si el paso 4 decidió que sí)
 
 El universo de tickers es dinámico: todo lo que haya en
 data/tickers/*.csv se procesa automáticamente — añade un CSV nuevo
@@ -130,6 +132,8 @@ def main():
         "Screener de Valor + Calidad",
         ["value_quality_screener.py", "--top", str(args.top), "--min-roe", str(args.min_roe)],
     )
+
+    run_step("Detección de novedades y resumen con IA local", ["daily_digest.py"])
 
     if not args.calculate_only:
         run_step("Envío del informe por email", ["send_email_report.py"])

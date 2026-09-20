@@ -33,6 +33,9 @@ from email import encoders
 
 ENV_PATH = ".env"
 
+DECISION_PATH = "data/email_decision.txt"
+DIGEST_PATH = "data/daily_digest.html"
+
 REPORT_HTML = "data/value_quality_screener_report.html"
 REPORT_TXT = "data/value_quality_screener_report.txt"
 
@@ -86,6 +89,16 @@ def build_email(env: dict, recipients: list) -> MIMEMultipart:
     if os.path.exists(REPORT_HTML):
         with open(REPORT_HTML) as f:
             body = f.read()
+
+        if os.path.exists(DIGEST_PATH):
+            with open(DIGEST_PATH) as f:
+                digest_html = f.read()
+            anchor = "Significado de cada métrica al final del correo</span>"
+            anchor_pos = body.find(anchor)
+            if anchor_pos != -1:
+                insert_pos = body.find("</tr>", anchor_pos) + len("</tr>")
+                body = body[:insert_pos] + digest_html + body[insert_pos:]
+
         msg["Subject"] = f"Screener Valor+Calidad — {today}"
         msg.attach(MIMEText(body, "html"))
     elif os.path.exists(REPORT_TXT):
@@ -126,6 +139,13 @@ def send_email(env: dict, msg: MIMEMultipart, recipients: list) -> None:
 
 
 def main():
+
+    if os.path.exists(DECISION_PATH):
+        with open(DECISION_PATH) as f:
+            decision = f.read().strip()
+        if decision == "SKIP":
+            print("Sin novedades hoy (según daily_digest.py) — no se envía email.")
+            return
 
     print("Cargando credenciales desde .env...")
     env = load_env()
