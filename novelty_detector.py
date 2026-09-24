@@ -8,9 +8,16 @@ disponible para detectar cambios que merezca la pena destacar:
   - Empresas que ENTRAN o SALEN del top de calidad
   - Cambios grandes en P/E, D/E, o el signo de vs_target_pct
     (pasar de "por debajo del objetivo" a "por encima", o al revés)
-  - Anomalías repetidas (mismo ticker con anomalía 2+ días seguidos)
-  - Movers del día que TAMBIÉN están en la lista de calidad (cruce
-    interesante: una empresa que ya nos gustaba, y hoy además se mueve)
+  - Top movers del día: CADA UNO se comenta con su situación de
+    valor/calidad (P/E, P/B, ROE, D/E, FCF Yield, precio objetivo) —
+    no solo el % de subida/caída — para poder valorar si una caída es
+    una oportunidad o una subida ya está agotada, y viceversa. Esto
+    se hace siempre, todos los días, para todo el top movers.
+
+Las anomalías (movimiento de precio/volumen fuera de rango) se siguen
+calculando y guardando en `data/anomalies_report.csv` para quien
+quiera mirarlas a mano, pero DELIBERADAMENTE no se convierten en
+"hechos" aquí ni se le pasan a la IA — no entran en el email.
 
 El resultado es una lista de "hechos" en texto plano — esto es lo que
 luego se le pasa a un modelo de IA (ver daily_digest.py) para que
@@ -79,36 +86,71 @@ def _load_csv_safe(path: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
+def _mover_quality_commentary(row: pd.Series) -> str:
+    """Frase con las métricas de valor/calidad disponibles para un
+    mover — para poder decir si, además de moverse hoy, es una empresa
+    interesante en sí misma (o si simplemente no tenemos datos suyos,
+    p.ej. porque no reporta a la SEC)."""
+
+    parts = []
+
+    if pd.notna(row.get("pe")):
+        parts.append(f"P/E {row['pe']:.1f}")
+    if pd.notna(row.get("pb")):
+        parts.append(f"P/B {row['pb']:.1f}")
+    if pd.notna(row.get("roe")):
+        parts.append(f"ROE {row['roe']:.1%}")
+    if pd.notna(row.get("debt_to_equity")):
+        parts.append(f"D/E {row['debt_to_equity']:.2f}")
+    if pd.notna(row.get("fcf_yield")):
+        parts.append(f"FCF Yield {row['fcf_yield']:.1%}")
+    if pd.notna(row.get("vs_target_pct")):
+        parts.append(f"precio objetivo {row['vs_target_pct']:+.1%} respecto al actual")
+
+    if not parts:
+        return "sin fundamentales disponibles para valorarla (no reporta a la SEC o falta el dato)"
+
+    return ", ".join(parts)
+
+
 def detect_novelties() -> list:
     """Devuelve una lista de strings, cada uno un "hecho" detectado.
-    Si no hay snapshot anterior (primera vez que corre esto), solo
-    incluye los hechos que no dependen de comparar con ayer (el cruce
-    movers x calidad)."""
+    El comentario de cada top mover se genera siempre (no depende de
+    tener snapshot anterior); el resto de chequeos (entradas/salidas
+    de la lista de calidad, cambios de P/E o D/E) sí necesitan un
+    snapshot de ayer para poder comparar."""
 
     facts = []
 
     today_quality = _load_csv_safe(QUALITY_CSV)
     today_movers = _load_csv_safe(MOVERS_CSV)
-    today_anomalies = _load_csv_safe(ANOMALIES_CSV)
 
     previous_folder = find_previous_snapshot()
 
-    # --- Cruce: movers de hoy que también están en la lista de calidad ---
-    if not today_movers.empty and not today_quality.empty:
-        quality_tickers = set(today_quality["ticker"])
+    # --- Top movers del día, cada uno comentado con su valor/calidad ---
+    # Se hace todos los días para todo el top movers (no solo si es
+    # "nuevo" respecto a ayer): el objetivo es poder valorar, con el
+    # P/E, ROE, D/E, FCF Yield y precio objetivo de cada uno, si una
+    # caída pinta a oportunidad o una subida ya se ha comido el
+    # recorrido — no solo enterarte de que "se movió".
+    if not today_movers.empty:
+        quality_tickers = set(today_quality["ticker"]) if not today_quality.empty else set()
+
         for _, row in today_movers.iterrows():
-            if row["ticker"] in quality_tickers:
-                direccion = "subida" if row.get("tipo") == "subida" else "caída"
-                facts.append(
-                    f"{row['ticker']} ({row.get('company_name', '')}) está en tu lista de calidad "
-                    f"Y ADEMÁS hoy tuvo una {direccion} destacada del {row['change_pct']:+.1%}."
-                )
+            direccion = "subida" if row.get("tipo") == "subida" else "caída"
+            commentary = _mover_quality_commentary(row)
+            nota_calidad = " Está en tu lista de calidad." if row["ticker"] in quality_tickers else ""
+
+            facts.append(
+                f"{row['ticker']} ({row.get('company_name', '')}): {direccion} del "
+                f"{row['change_pct']:+.1%} hoy -> {row['price']:.2f}. "
+                f"Fundamentales: {commentary}.{nota_calidad}"
+            )
 
     if previous_folder is None:
         return facts
 
     prev_quality = _load_csv_safe(os.path.join(previous_folder, "quality.csv"))
-    prev_anomalies = _load_csv_safe(os.path.join(previous_folder, "anomalies.csv"))
 
     # --- Empresas que entran o salen del top de calidad ---
     if not today_quality.empty and not prev_quality.empty:
@@ -160,14 +202,5 @@ def detect_novelties() -> list:
                         f"{ticker} ({name}): ha cruzado su precio objetivo — ahora cotiza {lado_ahora} "
                         f"({today_vs_target:+.1%})."
                     )
-
-    # --- Anomalías repetidas ---
-    if not today_anomalies.empty and not prev_anomalies.empty:
-        today_anomaly_tickers = set(today_anomalies["ticker"])
-        prev_anomaly_tickers = set(prev_anomalies["ticker"])
-        repeated = today_anomaly_tickers & prev_anomaly_tickers
-        for ticker in repeated:
-            name = today_anomalies.loc[today_anomalies["ticker"] == ticker, "company_name"].iloc[0]
-            facts.append(f"{ticker} ({name}) tiene una anomalía de datos por SEGUNDO día seguido — vale la pena revisarlo.")
 
     return facts

@@ -1,0 +1,112 @@
+ticker,company_name,kind,description
+INFO,IHS Markit Ltd.,VOLUME,Volume is 12.8x 20-day average
+SCG,SCANA Corp,VOLUME,Volume is 7.0x 20-day average
+STI,SunTrust Banks,VOLUME,Volume is 86.6x 20-day average
+BGI,Birks Group Inc. Common Stock,PRICE_MOVE,Daily close change: -17.02%
+CCEL,Cryo-Cell International Inc. Common Stock,PRICE_MOVE,Daily close change: 20.63%
+NCL,Northann Corp. Common Stock,PRICE_MOVE,Daily close change: -50.00%
+NCL,Northann Corp. Common Stock,VOLUME,Volume is 5.2x 20-day average
+PMNT,Perfect Moment Ltd. Common Stock,PRICE_MOVE,Daily close change: -21.54%
+RCG,RENN Fund Inc Common Stock,VOLUME,Volume is 5.1x 20-day average
+TOPS,TOP Ships Inc. Common Stock,PRICE_MOVE,Daily close change: 26.37%
+TOPS,TOP Ships Inc. Common Stock,VOLUME,Volume is 681.6x 20-day average
+YCBD,cbdMD Inc. Common Stock,VOLUME,Volume is 5.6x 20-day average
+AIHS,Senmiao Technology Limited Common Stock,PRICE_MOVE,Daily close change: 18.76%
+ALCE,Alternus Clean Energy Inc. Class A Common Stock,VOLUME,Volume is 8320.0x 20-day average
+AQB,AquaBounty Technologies Inc. Common Stock,VOLUME,Volume is 6.3x 20-day average
+ARBK,Argo Blockchain plc American Depositary Shares,VOLUME,Volume is 6.6x 20-day average
+ATXI,Avenue Therapeutics Inc. Common Stock,PRICE_MOVE,Daily close change: -27.18%
+AUID,authID Inc. Common Stock,PRICE_MOVE,Daily close change: 22.85%
+BCAB,BioAtla Inc. Common Stock,PRICE_MOVE,Daily close change: -44.75%
+BCAB,BioAtla Inc. Common Stock,VOLUME,Volume is 12.8x 20-day average
+BIOX,Bioceres Crop Solutions Corp. Ordinary Shares,VOLUME,Volume is 28.0x 20-day average
+BLRX,BioLineRx Ltd. American Depositary Shares,VOLUME,Volume is 6.2x 20-day average
+BTAI,BioXcel Therapeutics Inc. Common Stock,PRICE_MOVE,Daily close change: -74.83%
+BTAI,BioXcel Therapeutics Inc. Common Stock,VOLUME,Volume is 57.1x 20-day average
+BTCS,BTCS Inc. Common Stock,PRICE_MOVE,Daily close change: -15.09%
+CDT,Conduit Pharmaceuticals Inc. Common Stock,VOLUME,Volume is 5.0x 20-day average
+CELU,Celularity Inc. Class A Common Stock,PRICE_MOVE,Daily close change: -24.76%
+CISS,C3is Inc. Common Stock,PRICE_MOVE,Daily close change: -15.02%
+CLGN,CollPlant Biotechnologies Ltd Ordinary Shares,PRICE_MOVE,Daily close change: 23.45%
+CLGN,CollPlant Biotechnologies Ltd Ordinary Shares,VOLUME,Volume is 104.2x 20-day average
+COOT,Australian Oilseeds Holdings Limited Ordinary Shares,VOLUME,Volume is 579.7x 20-day average
+CULL,Cullman Bancorp Inc. Common Stock,VOLUME,Volume is 13.9x 20-day average
+DUO,Fangdd Network Group Ltd. American Depositary Shares,PRICE_MOVE,Daily close change: 37.54%
+DUO,Fangdd Network Group Ltd. American Depositary Shares,VOLUME,Volume is 2305.3x 20-day average
+DXR,Daxor Corporation Common Stock,VOLUME,Volume is 6.8x 20-day average
+EFSCP,Enterprise Financial Services Corporation Depositary Shares Each Representing a 1/40th Interest in a Share of 5% Fixed Rate Non-Cumulative Perpetual Preferred Stock Series A,VOLUME,Volume is 14.1x 20-day average
+EPOW,Sunrise New Energy Co. Ltd Class A Ordinary Shares,VOLUME,Volume is 14.0x 20-day average
+FAMI,Farmmi Inc. Ordinary Shares,PRICE_MOVE,Daily close change: 23.00%
+FBLG,FibroBiologics Inc. Common Stock,PRICE_MOVE,Daily close change: 19.44%
+FBRX,Forte Biosciences Inc. Common Stock,PRICE_MOVE,Daily close change: 57.35%
+FNGR,FingerMotion Inc. Common Stock,PRICE_MOVE,Daily close change: -43.97%
+FTFT,Future FinTech Group Inc. Common Stock,PRICE_MOVE,Daily close change: 254.55%
+GAINZ,Gladstone Investment Corporation 4.875% Notes due 2028,VOLUME,Volume is 76.7x 20-day average
+GCTK,GlucoTrack Inc. Common Stock,PRICE_MOVE,Daily close change: 1407.09%
+GDHG,Golden Heaven Group Holdings Ltd. Class A Ordinary Shares,VOLUME,Volume is 10.8x 20-day average
+GLPI,Gaming and Leisure Properties Inc. Common Stock,VOLUME,Volume is 7.7x 20-day average
+GP,GreenPower Motor Company Inc. Common Shares,PRICE_MOVE,Daily close change: -17.60%
+GPRO,GoPro Inc. Class A Common Stock,PRICE_MOVE,Daily close change: 46.03%
+GPRO,GoPro Inc. Class A Common Stock,VOLUME,Volume is 20.3x 20-day average
+GRABW,Grab Holdings Limited Warrant,PRICE_MOVE,Daily close change: -19.60%
+GSIW,Garden Stage Limited Ordinary Shares,VOLUME,Volume is 7.6x 20-day average
+GSUN,Golden Sun Health Technology Group Limited Class A Ordinary Shares,VOLUME,Volume is 6.3x 20-day average
+KAVL,Kaival Brands Innovations Group Inc. Common Stock,PRICE_MOVE,Daily close change: 30.43%
+KXIN,Kaixin Holdings Ordinary Shares,VOLUME,Volume is 5.9x 20-day average
+LBRDA,Liberty Broadband Corporation Class A Common Stock,PRICE_MOVE,Daily close change: 16.62%
+LBRDK,Liberty Broadband Corporation Class C Common Stock,PRICE_MOVE,Daily close change: 16.78%
+LEXX,Lexaria Bioscience Corp. Common Stock,VOLUME,Volume is 5.7x 20-day average
+LINK,Interlink Electronics Inc. Common Stock,PRICE_MOVE,Daily close change: 15.71%
+LIPO,Lipella Pharmaceuticals Inc. Common Stock,VOLUME,Volume is 85.0x 20-day average
+LX,LexinFintech Holdings Ltd. American Depositary Shares,VOLUME,Volume is 8.1x 20-day average
+LYRA,Lyra Therapeutics Inc. Common Stock,PRICE_MOVE,Daily close change: 1900.00%
+MEDS,TRxADE HEALTH Inc. Common Stock,VOLUME,Volume is 23.3x 20-day average
+MOBX,Mobix Labs Inc. Class A Common Stock,PRICE_MOVE,Daily close change: 18.92%
+MOBX,Mobix Labs Inc. Class A Common Stock,VOLUME,Volume is 24.4x 20-day average
+MOVE,Movano Inc. Common Stock,VOLUME,Volume is 14.8x 20-day average
+NBST,Newbury Street Acquisition Corporation Common Stock,VOLUME,Volume is 18.0x 20-day average
+NCNA,NuCana plc American Depositary Share,PRICE_MOVE,Daily close change: 19.73%
+NCNA,NuCana plc American Depositary Share,VOLUME,Volume is 29.2x 20-day average
+NCPL,Netcapital Inc. Common Stock,PRICE_MOVE,Daily close change: 28.39%
+NTRBW,Nutriband Inc. Warrant,PRICE_MOVE,Daily close change: -35.71%
+NVX,NOVONIX Limited American Depository Shares,PRICE_MOVE,Daily close change: 706.90%
+ORGS,Orgenesis Inc. Common Stock,PRICE_MOVE,Daily close change: 236.39%
+OXSQG,Oxford Square Capital Corp. 5.50% Notes due 2028,VOLUME,Volume is 9.0x 20-day average
+PFXNZ,PhenixFIN Corporation  5.25% Notes due 2028,VOLUME,Volume is 8.7x 20-day average
+PINC,Premier Inc. Class A Common Stock,VOLUME,Volume is 9.0x 20-day average
+QNRX,Quoin Pharmaceuticals Ltd. American Depositary Shares,PRICE_MOVE,Daily close change: 18.72%
+QNRX,Quoin Pharmaceuticals Ltd. American Depositary Shares,VOLUME,Volume is 1281.1x 20-day average
+RDIB,Reading International Inc Class B Common Stock,PRICE_MOVE,Daily close change: 18.90%
+RNWWW,ReNew Energy Global plc Warrant,VOLUME,Volume is 7.7x 20-day average
+RSVR,Reservoir Media Inc. Common Stock,VOLUME,Volume is 13.4x 20-day average
+RUSHB,Rush Enterprises Inc. Class B,VOLUME,Volume is 13.7x 20-day average
+SABS,SAB Biotherapeutics Inc. Common Stock,VOLUME,Volume is 6.7x 20-day average
+SEIC,SEI Investments Company Common Stock,VOLUME,Volume is 5.1x 20-day average
+SHEN,Shenandoah Telecommunications Co Common Stock,VOLUME,Volume is 14.1x 20-day average
+SISI,Shineco Inc. Common Stock,PRICE_MOVE,Daily close change: 5400.00%
+SISI,Shineco Inc. Common Stock,VOLUME,Volume is 24.6x 20-day average
+SMSI,Smith Micro Software Inc. Common Stock,VOLUME,Volume is 9.4x 20-day average
+SOHU,Sohu.com Limited American Depositary Shares,VOLUME,Volume is 14.1x 20-day average
+SONM,Sonim Technologies Inc. Common Stock,PRICE_MOVE,Daily close change: 16.89%
+SOTK,Sono-Tek Corporation Common Stock,VOLUME,Volume is 8.4x 20-day average
+SOWG,Sow Good Inc. Common Stock,PRICE_MOVE,Daily close change: -18.46%
+SSBI,Summit State Bank Common Stock,VOLUME,Volume is 6.2x 20-day average
+STAA,STAAR Surgical Company Common Stock,VOLUME,Volume is 7.2x 20-day average
+STBA,S&T Bancorp Inc. Common Stock,VOLUME,Volume is 5.8x 20-day average
+STTK,Shattuck Labs Inc. Common Stock,VOLUME,Volume is 9.3x 20-day average
+SWVL,Swvl Holdings Corp Class A Common Shares,PRICE_MOVE,Daily close change: 41.18%
+TARA,Protara Therapeutics Inc.  Common Stock,VOLUME,Volume is 7.9x 20-day average
+TCRT,Alaunos Therapeutics Inc. Common Stock,PRICE_MOVE,Daily close change: -25.00%
+TCRT,Alaunos Therapeutics Inc. Common Stock,VOLUME,Volume is 42.3x 20-day average
+TDUP,ThredUp Inc. Class A Common Stock,VOLUME,Volume is 5.1x 20-day average
+TELO,Telomir Pharmaceuticals Inc. Common Stock,VOLUME,Volume is 9.2x 20-day average
+THMO,ThermoGenesis Holdings Inc. Common Stock,VOLUME,Volume is 12.9x 20-day average
+TLSI,TriSalus Life Sciences Inc. Common Stock,VOLUME,Volume is 5.5x 20-day average
+TMCWW,TMC the metals company Inc. Warrants,PRICE_MOVE,Daily close change: -50.00%
+TRUG,TruGolf Holdings Inc. Class A Common Stock,PRICE_MOVE,Daily close change: 29.69%
+TRUG,TruGolf Holdings Inc. Class A Common Stock,VOLUME,Volume is 7.1x 20-day average
+TRVN,Trevena Inc. Common Stock,PRICE_MOVE,Daily close change: 2700.00%
+TSEM,Tower Semiconductor Ltd. Ordinary Shares,VOLUME,Volume is 6.9x 20-day average
+TTD,The Trade Desk Inc. Class A Common Stock,VOLUME,Volume is 8.7x 20-day average
+TTOO,T2 Biosystems Inc. Common Stock,PRICE_MOVE,Daily close change: 200.00%
+UBCP,United Bancorp Inc. Common Stock,VOLUME,Volume is 7.1x 20-day average

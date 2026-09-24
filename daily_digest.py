@@ -41,14 +41,14 @@ DIGEST_PATH = "data/daily_digest.html"
 
 PROMPT_TEMPLATE = """Eres un asistente que redacta resúmenes financieros muy breves para un inversor particular que ya conoce su cartera de seguimiento.
 
-Se te dan HECHOS ya verificados y calculados sobre cambios detectados HOY. Tu única tarea es redactarlos de forma breve, clara y legible en español — agrupando los relacionados si tiene sentido.
+Se te dan HECHOS ya verificados y calculados sobre lo detectado HOY, incluyendo el top movers del día con sus métricas de valor/calidad (P/E, P/B, ROE, D/E, FCF Yield, precio objetivo). Redáctalos de forma breve, clara y legible en español, empresa por empresa — para cada mover, comenta en una frase si su valor/calidad lo hace parecer una oportunidad tras una caída, o si una subida parece ya haber agotado el recorrido según esas métricas (P/E y precio objetivo altos = ya no tan barata; ROE alto y D/E bajo = fundamentales sólidos). Agrupa el resto de hechos (entradas/salidas de la lista de calidad, cambios de P/E o D/E) de forma breve al final.
 
 REGLAS ESTRICTAS:
 - NO inventes ningún dato, cifra o empresa que no aparezca en los hechos de abajo.
-- NO des recomendaciones de compra ni de venta.
+- NO des recomendaciones de compra ni de venta explícitas ("compra", "vende") — describe lo que dicen los números (barata/cara, sólida/endeudada, por encima/debajo de su objetivo) y deja la decisión al lector.
 - NO añadas contexto de mercado que no esté en los hechos.
-- Sé conciso: máximo 150 palabras.
-- Si hay muchos hechos, prioriza los que parezcan más relevantes para decidir si merece la pena mirar algo con detalle.
+- Si un mover no tiene fundamentales disponibles, dilo brevemente en vez de omitirlo.
+- Sé conciso: máximo 250 palabras.
 
 HECHOS DE HOY:
 {facts_bullets}

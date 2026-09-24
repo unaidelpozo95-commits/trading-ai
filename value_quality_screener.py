@@ -231,23 +231,32 @@ def compute_todays_anomalies(tickers: list, ticker_names: dict) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+MOVERS_FUNDAMENTALS_COLUMNS = [
+    "sector", "eps", "pe", "pb", "roe", "debt_to_equity", "fcf_yield",
+    "roe_consistency_years", "roe_consistency_total",
+]
+
+
 def enrich_movers_with_target(movers_df: pd.DataFrame, table: pd.DataFrame, sector_median_pe: pd.Series) -> pd.DataFrame:
-    """Añade precio objetivo a un DataFrame de movers, cruzando con la
-    tabla de fundamentales por ticker. Los movers que no tengan
-    fundamentales (no todos los del universo completo los tienen)
-    quedan con target_price/vs_target_pct en None — se muestra N/A,
-    no se inventa nada."""
+    """Añade precio objetivo Y las métricas de valor/calidad (P/E, P/B,
+    ROE, D/E, FCF Yield, consistencia de ROE) a un DataFrame de movers,
+    cruzando con la tabla de fundamentales por ticker — así un mover se
+    puede comentar no solo por CUÁNTO se movió, sino por si además es
+    una empresa interesante en sí misma. Los movers que no tengan
+    fundamentales (no todos los del universo completo los tienen, p.ej.
+    empresas que no reportan a la SEC) quedan con estas columnas en
+    None — se muestra N/A, no se inventa nada."""
 
     movers_df = movers_df.copy()
 
     if movers_df.empty:
-        movers_df["sector"] = None
-        movers_df["eps"] = None
         movers_df["target_price"] = None
         movers_df["vs_target_pct"] = None
+        for col in MOVERS_FUNDAMENTALS_COLUMNS:
+            movers_df[col] = None
         return movers_df
 
-    fundamentals_lookup = table[["ticker", "sector", "eps"]].drop_duplicates(subset="ticker")
+    fundamentals_lookup = table[["ticker"] + MOVERS_FUNDAMENTALS_COLUMNS].drop_duplicates(subset="ticker")
     merged = movers_df.merge(fundamentals_lookup, on="ticker", how="left")
 
     return add_target_price(merged, sector_median_pe)
@@ -680,17 +689,17 @@ def main():
     quality_table_with_explain["explicacion"] = quality_table_with_explain.apply(
         lambda row: explain_pick(row, args.min_roe), axis=1
     )
-    quality_table_with_explain.sort_values("value_score").to_csv(output_path, index=False)
+    quality_table_with_explain.sort_values("value_score").to_csv(output_path, index=False, encoding="utf-8-sig")
 
     movers_path = "data/top_movers_report.csv"
     gainers_labeled = gainers.copy()
     gainers_labeled["tipo"] = "subida"
     losers_labeled = losers.copy()
     losers_labeled["tipo"] = "bajada"
-    pd.concat([gainers_labeled, losers_labeled], ignore_index=True).to_csv(movers_path, index=False)
+    pd.concat([gainers_labeled, losers_labeled], ignore_index=True).to_csv(movers_path, index=False, encoding="utf-8-sig")
 
     anomalies_path = "data/anomalies_report.csv"
-    anomalies.to_csv(anomalies_path, index=False)
+    anomalies.to_csv(anomalies_path, index=False, encoding="utf-8-sig")
 
     readable_path = "data/value_quality_screener_report.txt"
     write_readable_report(top, gainers, losers, anomalies, args.min_roe, readable_path)
