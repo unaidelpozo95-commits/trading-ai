@@ -42,6 +42,7 @@ from datetime import datetime
 import pandas as pd
 
 from combined_score import METRICS as SCORE_METRICS, format_score, short_breakdown
+from peg_ratio import peg_label
 from piotroski import format_f_score, f_score_level
 
 
@@ -206,6 +207,9 @@ def _mover_quality_commentary(row: pd.Series) -> str:
     if pd.notna(row.get("fcf_yield")):
         etiqueta = "genera bastante caja" if tags.get("fcf_bueno") else ("quema caja, ojo" if tags.get("fcf_malo") else "genera algo de caja")
         parts.append(f"FCF Yield {row['fcf_yield']:.1%} ({etiqueta})")
+    peg_lvl = peg_label(row.get("peg"))
+    if peg_lvl is not None:
+        parts.append(f"PEG {row['peg']:.2f} ({peg_lvl} respecto a su crecimiento pasado)")
     f_level = f_score_level(row.get("f_score"), row.get("f_score_evaluable"))
     if f_level is not None:
         nivel_f = {"sólido": "sólida", "intermedio": "intermedia", "débil": "débil"}[f_level]

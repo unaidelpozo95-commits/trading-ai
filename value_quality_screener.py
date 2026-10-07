@@ -23,6 +23,7 @@ import os
 import pandas as pd
 
 from combined_score import compute_combined_scores, format_score, score_level, short_breakdown
+from peg_ratio import compute_eps_growth, compute_peg, format_peg, peg_label
 from piotroski import compute_piotroski, format_f_score, f_score_level
 from src.data.validator import AnomalyDetector
 from ticker_universe import load_tickers, load_ticker_names, load_ticker_sectors
@@ -81,8 +82,11 @@ def get_latest_fundamentals(ticker: str, min_roe: float) -> dict:
     roe_consistency_years = int((roe_values >= min_roe).sum())
 
     piotroski = compute_piotroski(df)
+    growth = compute_eps_growth(df)
 
     return {
+        "eps_growth": growth["eps_growth"],
+        "eps_growth_years": growth["eps_growth_years"],
         "f_score": piotroski["f_score"],
         "f_score_evaluable": piotroski["f_score_evaluable"],
         "fiscal_year_end": latest.get("fiscal_year_end"),
@@ -123,6 +127,9 @@ def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict
         pb = price / bvps if bvps is not None and pd.notna(bvps) and bvps > 0 else None
         fcf_yield = fcf_per_share / price if fcf_per_share is not None and pd.notna(fcf_per_share) and price > 0 else None
 
+        eps_growth = fundamentals.get("eps_growth")
+        peg = compute_peg(pe, eps_growth)
+
         rows.append({
             "ticker": ticker,
             "company_name": ticker_names.get(ticker, ticker),
@@ -140,6 +147,9 @@ def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict
             "roe_consistency_total": fundamentals.get("roe_consistency_total"),
             "f_score": fundamentals.get("f_score"),
             "f_score_evaluable": fundamentals.get("f_score_evaluable"),
+            "eps_growth": eps_growth,
+            "eps_growth_years": fundamentals.get("eps_growth_years"),
+            "peg": peg,
             "pe": pe,
             "pb": pb,
         })
@@ -242,7 +252,7 @@ def compute_todays_anomalies(tickers: list, ticker_names: dict) -> pd.DataFrame:
 MOVERS_FUNDAMENTALS_COLUMNS = [
     "sector", "eps", "pe", "pb", "roe", "debt_to_equity", "fcf_yield",
     "roe_consistency_years", "roe_consistency_total",
-    "f_score", "f_score_evaluable",
+    "f_score", "f_score_evaluable", "eps_growth", "eps_growth_years", "peg",
     "score_total", "score_value", "score_quality", "score_breakdown",
 ]
 
@@ -389,6 +399,19 @@ def explain_pick(row: pd.Series, min_roe: float) -> str:
             fcf_comment = "genera algo de caja libre, pero no mucha respecto a su precio"
         parts.append(f"FCF Yield de {fcf_y:.1%} ({fcf_comment})")
 
+    if pd.notna(row.get("eps_growth")):
+        growth_verb = "crecido" if row["eps_growth"] > 0 else "caído"
+        growth_txt = f"el beneficio por acción ha {growth_verb} un {abs(row['eps_growth']):.1%} anual en los últimos {int(row['eps_growth_years'])} años"
+        if pd.notna(row.get("peg")):
+            peg_comment = {
+                "barato": "barata respecto a su crecimiento",
+                "razonable": "razonable respecto a su crecimiento",
+                "caro": "cara respecto a su crecimiento",
+            }[peg_label(row["peg"])]
+            parts.append(f"PEG de {row['peg']:.2f} ({peg_comment}; {growth_txt} — es crecimiento pasado, no una previsión)")
+        else:
+            parts.append(f"PEG no calculable ({growth_txt}, así que el ratio no aplica)")
+
     level = f_score_level(row.get("f_score"), row.get("f_score_evaluable"))
     if level is not None:
         level_comment = {
@@ -465,7 +488,7 @@ def write_readable_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.D
         consistency_total = row.get("roe_consistency_total")
         roe_cons_str = f"{int(row['roe_consistency_years'])}/{int(consistency_total)} años" if pd.notna(consistency_total) and consistency_total > 0 else "N/A"
         fcf_str = f"{row['fcf_yield']:.1%}" if pd.notna(row.get("fcf_yield")) else "N/A"
-        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | FCF Yield: {fcf_str} | F-Score: {format_f_score(row.get('f_score'), row.get('f_score_evaluable'))} | Puntuación: {format_score(row.get('score_total'))} | Último 10-K: {filed}")
+        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | FCF Yield: {fcf_str} | PEG: {format_peg(row.get('peg'))} | F-Score: {format_f_score(row.get('f_score'), row.get('f_score_evaluable'))} | Puntuación: {format_score(row.get('score_total'))} | Último 10-K: {filed}")
         lines.append(f"   {explain_pick(row, min_roe)}")
         lines.append("")
 
@@ -559,6 +582,10 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
         else:
             f_score_color = "#6b7280"
 
+        peg_lvl = peg_label(row.get("peg"))
+        peg_str = format_peg(row.get("peg"))
+        peg_color = {"barato": "#1a7f37", "caro": "#c0392b", "razonable": "#2d2d2d"}.get(peg_lvl, "#6b7280")
+
         score_lvl = score_level(row.get("score_total"))
         score_str = format_score(row.get("score_total"))
         score_breakdown_str = short_breakdown(row.get("score_value"), row.get("score_quality")) or "sin desglose"
@@ -580,6 +607,8 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             .replace("{{DEBT_TO_EQUITY_COLOR}}", de_color)
             .replace("{{FCF_YIELD}}", fcf_yield_str)
             .replace("{{FCF_YIELD_COLOR}}", fcf_yield_color)
+            .replace("{{PEG}}", peg_str)
+            .replace("{{PEG_COLOR}}", peg_color)
             .replace("{{SCORE}}", score_str)
             .replace("{{SCORE_COLOR}}", score_color)
             .replace("{{SCORE_BREAKDOWN}}", html.escape(score_breakdown_str))
@@ -731,7 +760,7 @@ def main():
         fcf_str = f"{row['fcf_yield']:.1%}" if pd.notna(row.get("fcf_yield")) else "N/A"
         print()
         print(f"{rank}. {row['ticker']} ({row['company_name']}) — Precio: {row['price']:.2f} | P/E: {row['pe']:.2f} | "
-              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | FCF Yield: {fcf_str} | F-Score: {format_f_score(row.get('f_score'), row.get('f_score_evaluable'))} | Puntuación: {format_score(row.get('score_total'))} | Último 10-K: {filed}")
+              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | FCF Yield: {fcf_str} | PEG: {format_peg(row.get('peg'))} | F-Score: {format_f_score(row.get('f_score'), row.get('f_score_evaluable'))} | Puntuación: {format_score(row.get('score_total'))} | Último 10-K: {filed}")
         print(f"   {row['explicacion']}")
 
     output_path = "data/value_quality_screener_report.csv"
