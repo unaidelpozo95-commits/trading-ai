@@ -12,12 +12,15 @@ Guarda un CSV por ticker en data/sec_fundamentals/{TICKER}.csv con
 columnas: fiscal_year_end, filed_date, net_income, stockholders_equity,
 eps, shares_outstanding, liabilities, operating_cash_flow, capex,
 roe, book_value_per_share, debt_to_equity, free_cash_flow,
-fcf_per_share
+fcf_per_share, total_assets, current_assets, current_liabilities,
+gross_profit, revenue
+(las 5 últimas alimentan el Piotroski F-Score, ver piotroski.py)
 
-AVISO: si ya tenías datos descargados con la versión anterior de este
-script (sin eps/shares_outstanding), borra data/sec_fundamentals/ y
-vuelve a descargar — el chequeo de "ya existe" no distingue esquemas
-de columnas distintos.
+REFRESCO: un fichero existente se vuelve a descargar si (a) tiene más
+de FUNDAMENTALS_MAX_AGE_DAYS días — así llegan los 10-K nuevos — o
+(b) le faltan columnas del esquema actual (REQUIRED_COLUMNS) — así una
+ampliación del esquema se aplica sola, sin borrar data/sec_fundamentals/.
+Si la descarga de un ticker falla, se conserva su fichero anterior.
 """
 
 import os
@@ -34,6 +37,20 @@ USER_AGENT = "ValueResearch tu-email-real@dominio.com"
 OUTPUT_DIR = "data/sec_fundamentals"
 
 HEADERS = {"User-Agent": USER_AGENT}
+
+# Mismo valor que FUNDAMENTALS_MAX_AGE_DAYS en run_daily_pipeline.py
+FUNDAMENTALS_MAX_AGE_DAYS = 25
+
+# Si a un CSV existente le falta alguna, se vuelve a descargar entero
+REQUIRED_COLUMNS = ["total_assets", "current_assets", "current_liabilities", "gross_profit", "revenue"]
+
+# Ingresos: las empresas cambian de etiqueta XBRL con los años (p.ej. al
+# adoptar ASC 606), así que se combinan y manda la primera con dato
+REVENUE_CONCEPTS = [
+    "Revenues",
+    "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "SalesRevenueNet",
+]
 
 
 TICKERS = load_tickers()
@@ -83,6 +100,39 @@ def fetch_annual_concept(cik: str, concept: str, taxonomy: str = "us-gaap") -> p
     return df
 
 
+def fetch_concept_with_fallbacks(cik: str, concepts: list) -> pd.DataFrame:
+    """Prueba varias etiquetas XBRL y las combina por año fiscal: para
+    cada año manda la primera etiqueta de la lista que tenga dato."""
+
+    frames = []
+    for concept in concepts:
+        df = fetch_annual_concept(cik, concept)
+        time.sleep(0.15)
+        if not df.empty:
+            frames.append(df)
+
+    if not frames:
+        return pd.DataFrame()
+
+    return pd.concat(frames).drop_duplicates(subset="fiscal_year_end", keep="first")
+
+
+def merge_optional_concept(merged: pd.DataFrame, concept_df: pd.DataFrame, column: str) -> pd.DataFrame:
+    """Añade una columna opcional (left join por año fiscal); si el
+    concepto no existe para esta empresa, la columna queda vacía."""
+
+    if concept_df.empty:
+        merged[column] = None
+        return merged
+
+    return pd.merge(
+        merged,
+        concept_df[["fiscal_year_end", "value"]].rename(columns={"value": column}),
+        on="fiscal_year_end",
+        how="left",
+    )
+
+
 def fetch_shares_outstanding(cik: str) -> pd.DataFrame:
     """Acciones en circulación — vive en la taxonomía 'dei' (datos de
     portada del informe), no en 'us-gaap'. Se prueban dos conceptos
@@ -121,6 +171,21 @@ def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
 
     capex = fetch_annual_concept(cik, "PaymentsToAcquirePropertyPlantAndEquipment")
     time.sleep(0.15)
+
+    # --- Para el Piotroski F-Score ---
+    total_assets = fetch_annual_concept(cik, "Assets")
+    time.sleep(0.15)
+
+    current_assets = fetch_annual_concept(cik, "AssetsCurrent")
+    time.sleep(0.15)
+
+    current_liabilities = fetch_annual_concept(cik, "LiabilitiesCurrent")
+    time.sleep(0.15)
+
+    gross_profit = fetch_annual_concept(cik, "GrossProfit")
+    time.sleep(0.15)
+
+    revenue = fetch_concept_with_fallbacks(cik, REVENUE_CONCEPTS)
 
     if net_income.empty or equity.empty:
         return pd.DataFrame()
@@ -182,6 +247,12 @@ def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
     else:
         merged["capex"] = None
 
+    merged = merge_optional_concept(merged, total_assets, "total_assets")
+    merged = merge_optional_concept(merged, current_assets, "current_assets")
+    merged = merge_optional_concept(merged, current_liabilities, "current_liabilities")
+    merged = merge_optional_concept(merged, gross_profit, "gross_profit")
+    merged = merge_optional_concept(merged, revenue, "revenue")
+
     merged["roe"] = merged["net_income"] / merged["stockholders_equity"]
 
     merged["book_value_per_share"] = merged["stockholders_equity"] / merged["shares_outstanding"]
@@ -217,6 +288,25 @@ def build_ticker_fundamentals(ticker: str, cik: str) -> pd.DataFrame:
     return merged.sort_values("filed_date")
 
 
+def needs_download(path: str) -> bool:
+    """True si el fichero no existe, está desactualizado (> 25 días) o
+    es de un esquema antiguo al que le faltan columnas."""
+
+    if not os.path.exists(path):
+        return True
+
+    age_days = (time.time() - os.path.getmtime(path)) / 86400
+    if age_days > FUNDAMENTALS_MAX_AGE_DAYS:
+        return True
+
+    try:
+        columns = set(pd.read_csv(path, nrows=0).columns)
+    except Exception:
+        return True
+
+    return not set(REQUIRED_COLUMNS).issubset(columns)
+
+
 print()
 print("Obteniendo mapa ticker -> CIK...")
 ticker_to_cik = get_ticker_to_cik_map()
@@ -234,8 +324,8 @@ for ticker in TICKERS:
 
     output_path = os.path.join(OUTPUT_DIR, f"{ticker}.csv")
 
-    if os.path.exists(output_path):
-        print(f"{ticker}: ya existe, se omite")
+    if not needs_download(output_path):
+        print(f"{ticker}: al día, se omite")
         ok.append(ticker)
         continue
 

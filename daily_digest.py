@@ -41,11 +41,12 @@ DIGEST_PATH = "data/daily_digest.html"
 
 PROMPT_TEMPLATE = """Eres un asistente que redacta resúmenes financieros muy breves para un inversor particular que ya conoce su cartera de seguimiento.
 
-Se te dan HECHOS ya verificados y calculados sobre lo detectado HOY, incluyendo el top movers del día con sus métricas de valor/calidad (P/E, P/B, ROE, D/E, FCF Yield, precio objetivo). Redáctalos de forma breve, clara y legible en español, empresa por empresa — para cada mover, comenta en una frase si su valor/calidad lo hace parecer una oportunidad tras una caída, o si una subida parece ya haber agotado el recorrido según esas métricas (P/E y precio objetivo altos = ya no tan barata; ROE alto y D/E bajo = fundamentales sólidos). Agrupa el resto de hechos (entradas/salidas de la lista de calidad, cambios de P/E o D/E) de forma breve al final.
+Se te dan HECHOS ya verificados y calculados sobre lo detectado HOY, incluyendo el top movers del día con sus métricas de valor/calidad (puntuación combinada 0-100 con su desglose Valor/Calidad, P/E, P/B, ROE, D/E, FCF Yield, Piotroski F-Score, precio objetivo). Cada métrica ya viene con su etiqueta (barata/cara, deuda alta/baja, genera/quema caja...) y cada hecho termina con una "Lectura global" ya calculada con reglas fijas (p.ej. "no pinta mal" o "varias señales de alerta"). Redáctalos de forma breve, clara y legible en español, empresa por empresa — usa y reformula esas etiquetas y esa lectura global (no las decidas tú ni las contradigas), diciendo básicamente si, a la vista de esos fundamentales, una caída pinta a oportunidad o una subida ya se ha comido el recorrido. Agrupa el resto de hechos (entradas/salidas de la lista de calidad, cambios de P/E, D/E o de la puntuación combinada) de forma breve al final.
 
 REGLAS ESTRICTAS:
-- NO inventes ningún dato, cifra o empresa que no aparezca en los hechos de abajo.
-- NO des recomendaciones de compra ni de venta explícitas ("compra", "vende") — describe lo que dicen los números (barata/cara, sólida/endeudada, por encima/debajo de su objetivo) y deja la decisión al lector.
+- NO inventes ningún dato, cifra, etiqueta o empresa que no aparezca en los hechos de abajo.
+- NO cambies ni reinterpretes la "Lectura global" que ya viene calculada — solo redáctala con tus palabras.
+- NO des recomendaciones de compra ni de venta explícitas ("compra", "vende") — describe lo que dicen los números y deja la decisión al lector.
 - NO añadas contexto de mercado que no esté en los hechos.
 - Si un mover no tiene fundamentales disponibles, dilo brevemente en vez de omitirlo.
 - Sé conciso: máximo 250 palabras.

@@ -22,6 +22,8 @@ import os
 
 import pandas as pd
 
+from combined_score import compute_combined_scores, format_score, score_level, short_breakdown
+from piotroski import compute_piotroski, format_f_score, f_score_level
 from src.data.validator import AnomalyDetector
 from ticker_universe import load_tickers, load_ticker_names, load_ticker_sectors
 
@@ -78,7 +80,11 @@ def get_latest_fundamentals(ticker: str, min_roe: float) -> dict:
     roe_consistency_total = len(roe_values)
     roe_consistency_years = int((roe_values >= min_roe).sum())
 
+    piotroski = compute_piotroski(df)
+
     return {
+        "f_score": piotroski["f_score"],
+        "f_score_evaluable": piotroski["f_score_evaluable"],
         "fiscal_year_end": latest.get("fiscal_year_end"),
         "filed_date": latest.get("filed_date"),
         "eps": latest.get("eps"),
@@ -132,6 +138,8 @@ def build_screener_table(tickers: list, ticker_names: dict, ticker_sectors: dict
             "fcf_yield": fcf_yield,
             "roe_consistency_years": fundamentals.get("roe_consistency_years"),
             "roe_consistency_total": fundamentals.get("roe_consistency_total"),
+            "f_score": fundamentals.get("f_score"),
+            "f_score_evaluable": fundamentals.get("f_score_evaluable"),
             "pe": pe,
             "pb": pb,
         })
@@ -234,6 +242,8 @@ def compute_todays_anomalies(tickers: list, ticker_names: dict) -> pd.DataFrame:
 MOVERS_FUNDAMENTALS_COLUMNS = [
     "sector", "eps", "pe", "pb", "roe", "debt_to_equity", "fcf_yield",
     "roe_consistency_years", "roe_consistency_total",
+    "f_score", "f_score_evaluable",
+    "score_total", "score_value", "score_quality", "score_breakdown",
 ]
 
 
@@ -379,6 +389,21 @@ def explain_pick(row: pd.Series, min_roe: float) -> str:
             fcf_comment = "genera algo de caja libre, pero no mucha respecto a su precio"
         parts.append(f"FCF Yield de {fcf_y:.1%} ({fcf_comment})")
 
+    level = f_score_level(row.get("f_score"), row.get("f_score_evaluable"))
+    if level is not None:
+        level_comment = {
+            "sólido": "salud financiera sólida: cumple la gran mayoría de los 9 criterios de Piotroski",
+            "intermedio": "salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos",
+            "débil": "salud financiera débil: incumple la mayoría de los criterios de Piotroski — conviene revisarlo",
+        }[level]
+        parts.append(f"Piotroski F-Score de {format_f_score(row['f_score'], row['f_score_evaluable'])} ({level_comment})")
+
+    if pd.notna(row.get("score_total")):
+        parts.append(
+            f"puntuación combinada Valor+Calidad de {format_score(row['score_total'])} — {row['score_breakdown']} "
+            f"(cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor)"
+        )
+
     # Identificar el motivo principal: el criterio donde destaca más
     # (percentil más bajo = más barata en ese criterio concreto).
     # Solo se afirma "destaca por X bajo" si de verdad está por debajo
@@ -440,7 +465,7 @@ def write_readable_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.D
         consistency_total = row.get("roe_consistency_total")
         roe_cons_str = f"{int(row['roe_consistency_years'])}/{int(consistency_total)} años" if pd.notna(consistency_total) and consistency_total > 0 else "N/A"
         fcf_str = f"{row['fcf_yield']:.1%}" if pd.notna(row.get("fcf_yield")) else "N/A"
-        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | FCF Yield: {fcf_str} | Último 10-K: {filed}")
+        lines.append(f"   P/E: {row['pe']:.2f} | P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | FCF Yield: {fcf_str} | F-Score: {format_f_score(row.get('f_score'), row.get('f_score_evaluable'))} | Puntuación: {format_score(row.get('score_total'))} | Último 10-K: {filed}")
         lines.append(f"   {explain_pick(row, min_roe)}")
         lines.append("")
 
@@ -523,6 +548,22 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             fcf_yield_str = "N/A"
             fcf_yield_color = "#6b7280"
 
+        f_level = f_score_level(row.get("f_score"), row.get("f_score_evaluable"))
+        f_score_str = format_f_score(row.get("f_score"), row.get("f_score_evaluable"))
+        if f_level == "sólido":
+            f_score_color = "#1a7f37"
+        elif f_level == "débil":
+            f_score_color = "#c0392b"
+        elif f_level == "intermedio":
+            f_score_color = "#2d2d2d"
+        else:
+            f_score_color = "#6b7280"
+
+        score_lvl = score_level(row.get("score_total"))
+        score_str = format_score(row.get("score_total"))
+        score_breakdown_str = short_breakdown(row.get("score_value"), row.get("score_quality")) or "sin desglose"
+        score_color = {"alta": "#1a7f37", "baja": "#c0392b", "media": "#2d2d2d"}.get(score_lvl, "#6b7280")
+
         row_html = (
             row_template
             .replace("{{BG_COLOR}}", bg)
@@ -539,6 +580,11 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
             .replace("{{DEBT_TO_EQUITY_COLOR}}", de_color)
             .replace("{{FCF_YIELD}}", fcf_yield_str)
             .replace("{{FCF_YIELD_COLOR}}", fcf_yield_color)
+            .replace("{{SCORE}}", score_str)
+            .replace("{{SCORE_COLOR}}", score_color)
+            .replace("{{SCORE_BREAKDOWN}}", html.escape(score_breakdown_str))
+            .replace("{{F_SCORE}}", f_score_str)
+            .replace("{{F_SCORE_COLOR}}", f_score_color)
             .replace("{{TARGET_PRICE}}", target_str)
             .replace("{{VS_TARGET}}", vs_target_str)
             .replace("{{VS_TARGET_COLOR}}", vs_target_color)
@@ -607,6 +653,10 @@ def main():
     table = build_screener_table(tickers, ticker_names, ticker_sectors, args.min_roe)
 
     print(f"Con datos completos (precio + fundamentales): {len(table)} de {len(tickers)}")
+
+    # Puntuación combinada sobre TODO el universo con datos (no solo las
+    # que pasan el filtro de ROE) — así también existe para los movers.
+    table = compute_combined_scores(table)
 
     sector_median_pe = compute_sector_median_pe(table, MIN_SECTOR_SAMPLE)
     print(f"Sectores con muestra suficiente (>= {MIN_SECTOR_SAMPLE} empresas) para precio objetivo: {len(sector_median_pe)}")
@@ -681,7 +731,7 @@ def main():
         fcf_str = f"{row['fcf_yield']:.1%}" if pd.notna(row.get("fcf_yield")) else "N/A"
         print()
         print(f"{rank}. {row['ticker']} ({row['company_name']}) — Precio: {row['price']:.2f} | P/E: {row['pe']:.2f} | "
-              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | FCF Yield: {fcf_str} | Último 10-K: {filed}")
+              f"P/B: {row['pb']:.2f} | ROE: {row['roe']:.1%} (consistencia: {roe_cons_str}) | D/E: {de_str} | FCF Yield: {fcf_str} | F-Score: {format_f_score(row.get('f_score'), row.get('f_score_evaluable'))} | Puntuación: {format_score(row.get('score_total'))} | Último 10-K: {filed}")
         print(f"   {row['explicacion']}")
 
     output_path = "data/value_quality_screener_report.csv"
