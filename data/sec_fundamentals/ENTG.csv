@@ -1,3 +1,3 @@
-fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,liabilities,operating_cash_flow,capex,roe,book_value_per_share,free_cash_flow,fcf_per_share,debt_to_equity
-2010-12-31,2012-02-24,84356000,459619000,0.63,,,140898000,16794000,0.18353462324229416,,124104000,,
-2011-12-31,2012-02-24,123846000,608238000,0.91,,,157286000,30267000,0.20361437463624438,,127019000,,
+fiscal_year_end,filed_date,net_income,stockholders_equity,eps,shares_outstanding,liabilities,operating_cash_flow,capex,total_assets,current_assets,current_liabilities,gross_profit,revenue,roe,book_value_per_share,free_cash_flow,fcf_per_share,debt_to_equity
+2010-12-31,2012-02-24,84356000,459619000,0.63,,,140898000,16794000,601385000,387091000,107634000,310643000,688416000,0.18353462324229416,,124104000,,
+2011-12-31,2012-02-24,123846000,608238000,0.91,,,157286000,30267000,724663000,502999000,92594000,325930000,749259000,0.20361437463624438,,127019000,,

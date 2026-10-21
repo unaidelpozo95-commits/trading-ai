@@ -1,0 +1,11 @@
+﻿ticker,company_name,price,change_pct,sector,eps,pe,pb,roe,debt_to_equity,fcf_yield,roe_consistency_years,roe_consistency_total,f_score,f_score_evaluable,eps_growth,eps_growth_years,peg,score_total,score_value,score_quality,score_breakdown,target_price,vs_target_pct,tipo
+AONC,American Oncology Network Inc. Class A Common Stock,11.0,10998.999477528061,,,,,,,,,,,,,,,,,,,,,subida
+FBRX,Forte Biosciences Inc. Common Stock,76.98999786376953,0.5734722539052506,Health Care,-4.71,,,-1.1374629043629387,0.3572330343821219,,0.0,5.0,,2.0,,0.0,,,,44.7,,,,subida
+AKTX,Akari Therapeutics plc ADS,8.664999961853027,0.19682323698675797,Health Care,0.0,,,-0.6106325896639367,0.6906241174809375,,1.0,5.0,4.0,6.0,,0.0,,,,49.4,,,,subida
+NRXS,Neuraxis Inc. Common Stock,7.764999866485596,0.1918649310232896,Health Care,-0.95,,,-2.294704727814432,0.8838879651888643,,3.0,5.0,4.0,8.0,,0.0,,,,37.0,,,,subida
+RDIB,Reading International Inc Class B Common Stock,18.309999465942383,0.18896103373344308,Consumer Discretionary,-0.62,,,0.7752618016338615,,,3.0,5.0,3.0,7.0,,0.0,,,,68.1,,,,subida
+FMC,FMC Corporation,5.614999771118164,-0.30636200297753724,Materials,-17.88,,0.3386457619333159,-1.080811006517017,,,3.0,5.0,1.0,6.0,,0.0,,30.0,45.1,15.0,"Valor 45 (P/E 0, P/B 90) · Calidad 15 (ROE 13, F-Score 17)",,,bajada
+PSNYW,Polestar Automotive Holding UK PLC Class C-1 ADS (ADW),5.320000171661377,-0.1460673907907054,,,,,,,,,,,,,,,,,,,,,bajada
+PRLD,Prelude Therapeutics Incorporated Common Stock,5.46999979019165,-0.1372240286210592,Health Care,-1.29,,,-1.4496262948555445,1.0588749508282704,,0.0,5.0,3.0,7.0,,0.0,,,,34.7,,,,bajada
+ASTC,Astrotech Corporation (DE) Common Stock,5.199999809265137,-0.13477543906306977,Industrials,,,,-0.8920974523868415,0.268055899084838,,0.0,5.0,1.0,6.0,,0.0,,,,38.4,,,,bajada
+NXTT,Next Technology Holding Inc. Ordinary Shares,6.019999980926514,-0.12879882577984614,Technology,,,,0.3142480655880564,0.1504721320712719,,4.0,5.0,4.0,8.0,,0.0,,,,76.0,,,,bajada
