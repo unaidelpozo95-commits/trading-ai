@@ -18,30 +18,32 @@
           </tr>
           <tr>
             <td style="padding: 20px 28px 8px 28px;">
-              <span style="font-size: 15px; font-weight: 700; color: #1a1a1a;">Top movers del día</span>
+              <span style="font-size: 15px; font-weight: 700; color: #1a1a1a;">Top movers del día</span> <span style="font-size: 11px; color: #6b7280;">(solo empresas con fundamentales)</span>
             </td>
           </tr>
           <tr>
-            <td style="padding: 0 28px 20px 28px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td width="50%" style="vertical-align: top; padding-right: 8px;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e5e5; border-radius: 6px 6px 0 0; overflow: hidden;">
-                      <tr style="background-color: #f0fdf4;">
-                        <td style="padding: 8px 6px; text-align: left; font-size: 12px; text-transform: uppercase; color: #1a7f37;">Mayores subidas</td>
-                      </tr>
-                    </table>
-                    {{GAINERS_HTML}}
-                  </td>
-                  <td width="50%" style="vertical-align: top; padding-left: 8px;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e5e5; border-radius: 6px 6px 0 0; overflow: hidden;">
-                      <tr style="background-color: #fef2f2;">
-                        <td style="padding: 8px 6px; text-align: left; font-size: 12px; text-transform: uppercase; color: #c0392b;">Mayores caídas</td>
-                      </tr>
-                    </table>
-                    {{LOSERS_HTML}}
-                  </td>
+            <td style="padding: 0 28px 16px 28px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e5e5;">
+                <tr style="background-color: #fef2f2;">
+                  <td colspan="8" style="padding: 8px 6px; text-align: left; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #c0392b;">Mayores caídas</td>
                 </tr>
+                <tr style="background-color: #f9fafb; color: #6b7280; font-size: 11px;">
+                  <td style="padding: 6px;">Empresa</td><td style="padding: 6px; text-align: right;">Precio</td><td style="padding: 6px; text-align: right;">Cambio</td><td style="padding: 6px; text-align: right;">Punt.</td><td style="padding: 6px; text-align: right;">P/E</td><td style="padding: 6px; text-align: right;">ROE</td><td style="padding: 6px; text-align: right;">D/E</td><td style="padding: 6px; text-align: right;">Objetivo</td>
+                </tr>
+                {{LOSERS_HTML}}
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 0 28px 16px 28px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e5e5;">
+                <tr style="background-color: #f0fdf4;">
+                  <td colspan="8" style="padding: 8px 6px; text-align: left; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #1a7f37;">Mayores subidas</td>
+                </tr>
+                <tr style="background-color: #f9fafb; color: #6b7280; font-size: 11px;">
+                  <td style="padding: 6px;">Empresa</td><td style="padding: 6px; text-align: right;">Precio</td><td style="padding: 6px; text-align: right;">Cambio</td><td style="padding: 6px; text-align: right;">Punt.</td><td style="padding: 6px; text-align: right;">P/E</td><td style="padding: 6px; text-align: right;">ROE</td><td style="padding: 6px; text-align: right;">D/E</td><td style="padding: 6px; text-align: right;">Objetivo</td>
+                </tr>
+                {{GAINERS_HTML}}
               </table>
             </td>
           </tr>

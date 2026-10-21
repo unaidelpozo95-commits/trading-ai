@@ -282,6 +282,26 @@ def enrich_movers_with_target(movers_df: pd.DataFrame, table: pd.DataFrame, sect
     return add_target_price(merged, sector_median_pe)
 
 
+FUNDAMENTAL_KEY_COLUMNS = ["score_total", "pe", "pb", "roe", "debt_to_equity", "fcf_yield"]
+
+
+def has_fundamentals(movers_df: pd.DataFrame) -> pd.Series:
+    """True para los movers con al menos una métrica de valor/calidad
+    disponible (los que no reportan a la SEC o no tienen datos quedan
+    fuera del top movers: sin fundamentales no hay nada que valorar)."""
+    cols = [c for c in FUNDAMENTAL_KEY_COLUMNS if c in movers_df.columns]
+    if movers_df.empty or not cols:
+        return pd.Series(False, index=movers_df.index)
+    return movers_df[cols].apply(pd.to_numeric, errors="coerce").notna().any(axis=1)
+
+
+def top_with_fundamentals(movers_df: pd.DataFrame, n: int = N_MOVERS) -> pd.DataFrame:
+    """Primeros n movers (ya ordenados) que tienen fundamentales."""
+    if movers_df.empty:
+        return movers_df
+    return movers_df[has_fundamentals(movers_df)].head(n).reset_index(drop=True)
+
+
 def compute_top_movers(tickers: list, ticker_names: dict, n: int = N_MOVERS) -> tuple:
     """Top N subidas y top N caídas del día, sobre TODO el universo
     cargado (no solo las que pasan el filtro de calidad) — es una
@@ -460,12 +480,12 @@ def write_readable_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.D
     if not gainers.empty or not losers.empty:
         lines.append("TOP MOVERS DEL DÍA")
         lines.append("-" * 70)
-        lines.append("Mayores subidas:")
-        for _, row in gainers.iterrows():
-            target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
-            lines.append(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
         lines.append("Mayores caídas:")
         for _, row in losers.iterrows():
+            target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
+            lines.append(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
+        lines.append("Mayores subidas:")
+        for _, row in gainers.iterrows():
             target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
             lines.append(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
         lines.append("")
@@ -636,6 +656,11 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
                 vs_target_str = ""
                 target_color = "#6b7280"
 
+            score_str = format_score(row["score_total"]) if pd.notna(row.get("score_total")) else "N/A"
+            pe_str = f"{row['pe']:.1f}" if pd.notna(row.get("pe")) else "N/A"
+            roe_str = f"{row['roe']:.1%}" if pd.notna(row.get("roe")) else "N/A"
+            de_str = f"{row['debt_to_equity']:.2f}" if pd.notna(row.get("debt_to_equity")) else "N/A"
+
             parts.append(
                 movers_row_template
                 .replace("{{TICKER}}", html.escape(str(row["ticker"])))
@@ -643,10 +668,16 @@ def write_html_report(top: pd.DataFrame, gainers: pd.DataFrame, losers: pd.DataF
                 .replace("{{PRICE}}", f"{row['price']:.2f}")
                 .replace("{{CHANGE_PCT}}", f"{row['change_pct']:+.2%}")
                 .replace("{{CHANGE_COLOR}}", color)
+                .replace("{{SCORE}}", score_str)
+                .replace("{{PE}}", pe_str)
+                .replace("{{ROE}}", roe_str)
+                .replace("{{DE}}", de_str)
                 .replace("{{TARGET_PRICE}}", target_str)
                 .replace("{{VS_TARGET}}", vs_target_str)
                 .replace("{{TARGET_COLOR}}", target_color)
             )
+        if not parts:
+            return '<tr><td colspan="8" style="padding: 10px 6px; color: #6b7280; font-size: 12px;">Ninguna con fundamentales disponibles hoy.</td></tr>'
         return "".join(parts)
 
     gainers_html = build_movers_html(gainers, is_gainer=True)
@@ -716,16 +747,19 @@ def main():
     print("TOP MOVERS DEL DÍA")
     print("=" * 100)
 
-    gainers, losers = compute_top_movers(tickers, ticker_names, N_MOVERS)
-    gainers = enrich_movers_with_target(gainers, table, sector_median_pe)
-    losers = enrich_movers_with_target(losers, table, sector_median_pe)
+    # Se ordena TODO el universo, se enriquece con fundamentales y solo
+    # entonces se queda con el top N que tenga fundamentales (así el
+    # top 5 siempre se rellena con empresas valorables, no se queda corto).
+    gainers, losers = compute_top_movers(tickers, ticker_names, max(len(tickers), N_MOVERS))
+    gainers = top_with_fundamentals(enrich_movers_with_target(gainers, table, sector_median_pe), N_MOVERS)
+    losers = top_with_fundamentals(enrich_movers_with_target(losers, table, sector_median_pe), N_MOVERS)
 
-    print(f"Mayores subidas (top {N_MOVERS}):")
-    for _, row in gainers.iterrows():
+    print(f"Mayores caídas (top {N_MOVERS}, solo con fundamentales):")
+    for _, row in losers.iterrows():
         target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
         print(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
-    print(f"Mayores caídas (top {N_MOVERS}):")
-    for _, row in losers.iterrows():
+    print(f"Mayores subidas (top {N_MOVERS}, solo con fundamentales):")
+    for _, row in gainers.iterrows():
         target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
         print(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
 
@@ -775,7 +809,7 @@ def main():
     gainers_labeled["tipo"] = "subida"
     losers_labeled = losers.copy()
     losers_labeled["tipo"] = "bajada"
-    pd.concat([gainers_labeled, losers_labeled], ignore_index=True).to_csv(movers_path, index=False, encoding="utf-8-sig")
+    pd.concat([losers_labeled, gainers_labeled], ignore_index=True).to_csv(movers_path, index=False, encoding="utf-8-sig")
 
     anomalies_path = "data/anomalies_report.csv"
     anomalies.to_csv(anomalies_path, index=False, encoding="utf-8-sig")

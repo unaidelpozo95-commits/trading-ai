@@ -48,7 +48,7 @@ REGLAS ESTRICTAS:
 - NO cambies ni reinterpretes la "Lectura global" que ya viene calculada — solo redáctala con tus palabras.
 - NO des recomendaciones de compra ni de venta explícitas ("compra", "vende") — describe lo que dicen los números y deja la decisión al lector.
 - NO añadas contexto de mercado que no esté en los hechos.
-- Si un mover no tiene fundamentales disponibles, dilo brevemente en vez de omitirlo.
+- Menciona primero las caídas y después las subidas, en ese orden.
 - Sé conciso: máximo 250 palabras.
 
 HECHOS DE HOY:
