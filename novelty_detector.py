@@ -225,12 +225,20 @@ def _mover_quality_commentary(row: pd.Series) -> str:
 
 
 def detect_novelties() -> list:
-    """Devuelve una lista de strings, cada uno un "hecho" detectado.
+    """Todos los hechos en una sola lista (movers primero)."""
+    mover_facts, other_facts = detect_novelties_split()
+    return mover_facts + other_facts
+
+
+def detect_novelties_split() -> tuple:
+    """Devuelve (hechos_de_movers, otras_novedades), listas de strings.
+    Cada string es un "hecho" detectado.
     El comentario de cada top mover se genera siempre (no depende de
     tener snapshot anterior); el resto de chequeos (entradas/salidas
     de la lista de calidad, cambios de P/E o D/E) sí necesitan un
     snapshot de ayer para poder comparar."""
 
+    mover_facts = []
     facts = []
 
     today_quality = _load_csv_safe(QUALITY_CSV)
@@ -252,14 +260,14 @@ def detect_novelties() -> list:
             commentary = _mover_quality_commentary(row)
             nota_calidad = " Está en tu lista de calidad." if row["ticker"] in quality_tickers else ""
 
-            facts.append(
+            mover_facts.append(
                 f"{row['ticker']} ({row.get('company_name', '')}): {direccion} del "
                 f"{row['change_pct']:+.1%} hoy -> {row['price']:.2f}. "
                 f"Fundamentales: {commentary}.{nota_calidad}"
             )
 
     if previous_folder is None:
-        return facts
+        return mover_facts, facts
 
     prev_quality = _load_csv_safe(os.path.join(previous_folder, "quality.csv"))
 
@@ -344,4 +352,4 @@ def detect_novelties() -> list:
                         f"({today_vs_target:+.1%})."
                     )
 
-    return facts
+    return mover_facts, facts

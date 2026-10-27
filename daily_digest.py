@@ -29,7 +29,7 @@ import os
 
 import requests
 
-from novelty_detector import save_todays_snapshot, detect_novelties
+from novelty_detector import save_todays_snapshot, detect_novelties_split
 
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
@@ -37,19 +37,36 @@ OLLAMA_MODEL = "llama3.1"  # 8B, buen equilibrio calidad/velocidad para 16GB RAM
 OLLAMA_TIMEOUT_SECONDS = 120
 
 DECISION_PATH = "data/email_decision.txt"
-DIGEST_PATH = "data/daily_digest.html"
+DIGEST_MOVERS_PATH = "data/daily_digest_movers.html"
+DIGEST_NOVELTIES_PATH = "data/daily_digest_novelties.html"
+OLD_DIGEST_PATH = "data/daily_digest.html"  # formato anterior; se borra
 
-PROMPT_TEMPLATE = """Eres un asistente que redacta resúmenes financieros muy breves para un inversor particular que ya conoce su cartera de seguimiento.
+PROMPT_MOVERS = """Eres un asistente que redacta resúmenes financieros muy breves para un inversor particular que ya conoce su cartera de seguimiento.
 
-Se te dan HECHOS ya verificados y calculados sobre lo detectado HOY, incluyendo el top movers del día con sus métricas de valor/calidad (puntuación combinada 0-100 con su desglose Valor/Calidad, P/E, P/B, ROE, D/E, FCF Yield, PEG, Piotroski F-Score, precio objetivo). Cada métrica ya viene con su etiqueta (barata/cara, deuda alta/baja, genera/quema caja...) y cada hecho termina con una "Lectura global" ya calculada con reglas fijas (p.ej. "no pinta mal" o "varias señales de alerta"). Redáctalos de forma breve, clara y legible en español, empresa por empresa — usa y reformula esas etiquetas y esa lectura global (no las decidas tú ni las contradigas), diciendo básicamente si, a la vista de esos fundamentales, una caída pinta a oportunidad o una subida ya se ha comido el recorrido. Agrupa el resto de hechos (entradas/salidas de la lista de calidad, cambios de P/E, D/E o de la puntuación combinada) de forma breve al final.
+Se te dan HECHOS ya verificados y calculados sobre los top movers de HOY (primero las caídas, luego las subidas), cada uno con sus métricas de valor/calidad (puntuación combinada 0-100 con su desglose Valor/Calidad, P/E, P/B, ROE, D/E, FCF Yield, PEG, Piotroski F-Score, precio objetivo). Cada métrica ya viene con su etiqueta (barata/cara, deuda alta/baja, genera/quema caja...) y cada hecho termina con una "Lectura global" ya calculada con reglas fijas. Redáctalos de forma breve y legible en español, empresa por empresa, en el mismo orden (primero las caídas, luego las subidas) — usa y reformula esas etiquetas y esa lectura global (no las decidas tú ni las contradigas), diciendo básicamente si, a la vista de esos fundamentales, una caída pinta a oportunidad o una subida ya se ha comido el recorrido.
 
 REGLAS ESTRICTAS:
 - NO inventes ningún dato, cifra, etiqueta o empresa que no aparezca en los hechos de abajo.
 - NO cambies ni reinterpretes la "Lectura global" que ya viene calculada — solo redáctala con tus palabras.
 - NO des recomendaciones de compra ni de venta explícitas ("compra", "vende") — describe lo que dicen los números y deja la decisión al lector.
 - NO añadas contexto de mercado que no esté en los hechos.
-- Menciona primero las caídas y después las subidas, en ese orden.
-- Sé conciso: máximo 250 palabras.
+- Una o dos frases por empresa. Máximo 300 palabras.
+
+HECHOS DE HOY:
+{facts_bullets}
+
+Resumen:"""
+
+PROMPT_NOVELTIES = """Eres un asistente que redacta resúmenes financieros muy breves para un inversor particular que ya conoce su lista de seguimiento de empresas de valor y calidad.
+
+Se te dan HECHOS ya verificados y calculados sobre las NOVEDADES de HOY respecto a ayer en esa lista: empresas que entran o salen, cambios de P/E o de deuda/patrimonio, cambios de la puntuación combinada Valor+Calidad y cruces del precio objetivo. Las métricas ya vienen etiquetadas (barata/cara, deuda alta/baja...) y las entradas/salidas traen una "Lectura global" ya calculada. Redáctalos de forma breve y legible en español, agrupando lo parecido (entradas y salidas, luego cambios), usando y reformulando esas etiquetas sin decidirlas tú.
+
+REGLAS ESTRICTAS:
+- NO inventes ningún dato, cifra, etiqueta o empresa que no aparezca en los hechos de abajo.
+- NO cambies ni reinterpretes la "Lectura global" que ya viene calculada.
+- NO des recomendaciones de compra ni de venta explícitas ("compra", "vende").
+- NO añadas contexto de mercado que no esté en los hechos.
+- Máximo 200 palabras.
 
 HECHOS DE HOY:
 {facts_bullets}
@@ -57,13 +74,13 @@ HECHOS DE HOY:
 Resumen:"""
 
 
-def call_ollama(facts: list) -> str:
+def call_ollama(facts: list, prompt_template: str) -> str:
     """Devuelve el resumen redactado por el modelo, o None si Ollama
     falla por cualquier motivo (no está corriendo, timeout, modelo no
     descargado, etc.) — el llamador debe tener un plan B."""
 
     facts_bullets = "\n".join(f"- {f}" for f in facts)
-    prompt = PROMPT_TEMPLATE.format(facts_bullets=facts_bullets)
+    prompt = prompt_template.format(facts_bullets=facts_bullets)
 
     try:
         response = requests.post(
@@ -78,24 +95,48 @@ def call_ollama(facts: list) -> str:
         return None
 
 
-def build_digest_html(facts: list, narrative: str = None) -> str:
+def build_digest_html(title: str, facts: list, narrative: str = None) -> str:
     """Caja HTML con el resumen (o la lista en bruto si no hay
-    narrativa de la IA), para insertar al principio del email."""
+    narrativa de la IA), para insertar en su sitio del email."""
 
     if narrative:
-        body = f'<p style="margin: 0; color: #1a1a1a; font-size: 13px; line-height: 1.7;">{html.escape(narrative)}</p>'
+        body = f'<p style="margin: 0; color: #1a1a1a; font-size: 13px; line-height: 1.7;">{html.escape(narrative).replace(chr(10), "<br>")}</p>'
     else:
         items = "".join(f'<li style="margin-bottom: 4px;">{html.escape(f)}</li>' for f in facts)
         body = f'<ul style="margin: 0; padding-left: 18px; color: #1a1a1a; font-size: 13px; line-height: 1.7;">{items}</ul>'
 
     return f"""
     <tr>
-      <td style="padding: 18px 28px; background-color: #fffbeb; border-bottom: 2px solid #f59e0b;">
-        <span style="font-size: 14px; font-weight: 700; color: #92400e;">📌 Resumen del día</span>
+      <td style="padding: 16px 28px; background-color: #fffbeb; border-top: 1px solid #f59e0b; border-bottom: 1px solid #f59e0b;">
+        <span style="font-size: 14px; font-weight: 700; color: #92400e;">{html.escape(title)}</span>
         <div style="margin-top: 8px;">{body}</div>
       </td>
     </tr>
     """
+
+
+def write_section(path: str, title: str, facts: list, prompt_template: str) -> None:
+    """Redacta (Ollama, con fallback a lista) y guarda una sección; si no
+    hay hechos borra el fichero para que el email no la muestre."""
+
+    if not facts:
+        if os.path.exists(path):
+            os.remove(path)
+        return
+
+    print(f"{title}: {len(facts)} hechos")
+    for fact in facts:
+        print(f"  - {fact}")
+
+    print(f"Pidiendo a Ollama ({OLLAMA_MODEL}) que redacte «{title}»...")
+    narrative = call_ollama(facts, prompt_template)
+    if narrative:
+        print(narrative)
+    else:
+        print("Sin resumen de IA — se usará la lista de hechos en bruto.")
+
+    with open(path, "w") as f:
+        f.write(build_digest_html(title, facts, narrative))
 
 
 def main():
@@ -104,40 +145,28 @@ def main():
     save_todays_snapshot()
 
     print("Detectando novedades respecto a ayer...")
-    facts = detect_novelties()
+    mover_facts, other_facts = detect_novelties_split()
 
-    if not facts:
+    if os.path.exists(OLD_DIGEST_PATH):
+        os.remove(OLD_DIGEST_PATH)
+
+    if not mover_facts and not other_facts:
         print("Sin novedades reales hoy — no se enviará email.")
         with open(DECISION_PATH, "w") as f:
             f.write("SKIP")
-        if os.path.exists(DIGEST_PATH):
-            os.remove(DIGEST_PATH)
+        for path in (DIGEST_MOVERS_PATH, DIGEST_NOVELTIES_PATH):
+            if os.path.exists(path):
+                os.remove(path)
         return
 
-    print(f"{len(facts)} novedades detectadas:")
-    for fact in facts:
-        print(f"  - {fact}")
-
-    print()
-    print(f"Pidiendo a Ollama ({OLLAMA_MODEL}) que redacte el resumen...")
-    narrative = call_ollama(facts)
-
-    if narrative:
-        print("Resumen generado por IA:")
-        print(narrative)
-    else:
-        print("Sin resumen de IA — se usará la lista de hechos en bruto en el email.")
-
-    digest_html = build_digest_html(facts, narrative)
-
-    with open(DIGEST_PATH, "w") as f:
-        f.write(digest_html)
+    write_section(DIGEST_MOVERS_PATH, "📌 Top movers: qué dicen sus fundamentales", mover_facts, PROMPT_MOVERS)
+    write_section(DIGEST_NOVELTIES_PATH, "📌 Resumen: novedades en calidad y valor", other_facts, PROMPT_NOVELTIES)
 
     with open(DECISION_PATH, "w") as f:
         f.write("SEND")
 
     print()
-    print(f"Guardado en {DIGEST_PATH}. Hoy SÍ se enviará email.")
+    print("Guardado. Hoy SÍ se enviará email.")
 
 
 if __name__ == "__main__":

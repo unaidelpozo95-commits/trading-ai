@@ -34,7 +34,12 @@ from email import encoders
 ENV_PATH = ".env"
 
 DECISION_PATH = "data/email_decision.txt"
-DIGEST_PATH = "data/daily_digest.html"
+DIGEST_MOVERS_PATH = "data/daily_digest_movers.html"
+DIGEST_NOVELTIES_PATH = "data/daily_digest_novelties.html"
+
+# Marcadores de la plantilla donde se insertan las cajas de la IA
+MARKER_MOVERS = "<!--DIGEST_MOVERS-->"
+MARKER_NOVELTIES = "<!--DIGEST_NOVELTIES-->"
 
 REPORT_HTML = "data/value_quality_screener_report.html"
 REPORT_TXT = "data/value_quality_screener_report.txt"
@@ -90,14 +95,12 @@ def build_email(env: dict, recipients: list) -> MIMEMultipart:
         with open(REPORT_HTML) as f:
             body = f.read()
 
-        if os.path.exists(DIGEST_PATH):
-            with open(DIGEST_PATH) as f:
-                digest_html = f.read()
-            anchor = "Significado de cada métrica al final del correo</span>"
-            anchor_pos = body.find(anchor)
-            if anchor_pos != -1:
-                insert_pos = body.find("</tr>", anchor_pos) + len("</tr>")
-                body = body[:insert_pos] + digest_html + body[insert_pos:]
+        for marker, path in ((MARKER_MOVERS, DIGEST_MOVERS_PATH), (MARKER_NOVELTIES, DIGEST_NOVELTIES_PATH)):
+            digest_html = ""
+            if os.path.exists(path):
+                with open(path) as f:
+                    digest_html = f.read()
+            body = body.replace(marker, digest_html)
 
         msg["Subject"] = f"Screener Valor+Calidad — {today}"
         msg.attach(MIMEText(body, "html"))
