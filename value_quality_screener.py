@@ -282,17 +282,16 @@ def enrich_movers_with_target(movers_df: pd.DataFrame, table: pd.DataFrame, sect
     return add_target_price(merged, sector_median_pe)
 
 
-FUNDAMENTAL_KEY_COLUMNS = ["score_total", "pe", "pb", "roe", "debt_to_equity", "fcf_yield"]
+# Para entrar en el top movers hacen falta TODAS estas métricas: sin ellas
+# no se puede valorar si una caída es oportunidad o una subida ya está cara.
+REQUIRED_MOVER_COLUMNS = ["pe", "roe", "debt_to_equity"]
 
 
 def has_fundamentals(movers_df: pd.DataFrame) -> pd.Series:
-    """True para los movers con al menos una métrica de valor/calidad
-    disponible (los que no reportan a la SEC o no tienen datos quedan
-    fuera del top movers: sin fundamentales no hay nada que valorar)."""
-    cols = [c for c in FUNDAMENTAL_KEY_COLUMNS if c in movers_df.columns]
-    if movers_df.empty or not cols:
+    """True solo para los movers con P/E, ROE y D/E disponibles."""
+    if movers_df.empty or any(c not in movers_df.columns for c in REQUIRED_MOVER_COLUMNS):
         return pd.Series(False, index=movers_df.index)
-    return movers_df[cols].apply(pd.to_numeric, errors="coerce").notna().any(axis=1)
+    return movers_df[REQUIRED_MOVER_COLUMNS].apply(pd.to_numeric, errors="coerce").notna().all(axis=1)
 
 
 def top_with_fundamentals(movers_df: pd.DataFrame, n: int = N_MOVERS) -> pd.DataFrame:
@@ -754,11 +753,11 @@ def main():
     gainers = top_with_fundamentals(enrich_movers_with_target(gainers, table, sector_median_pe), N_MOVERS)
     losers = top_with_fundamentals(enrich_movers_with_target(losers, table, sector_median_pe), N_MOVERS)
 
-    print(f"Mayores caídas (top {N_MOVERS}, solo con fundamentales):")
+    print(f"Mayores caídas (top {N_MOVERS}, solo con P/E, ROE y D/E):")
     for _, row in losers.iterrows():
         target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
         print(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
-    print(f"Mayores subidas (top {N_MOVERS}, solo con fundamentales):")
+    print(f"Mayores subidas (top {N_MOVERS}, solo con P/E, ROE y D/E):")
     for _, row in gainers.iterrows():
         target_note = f" | Obj: {row['target_price']:.2f} ({row['vs_target_pct']:+.1%})" if pd.notna(row.get("vs_target_pct")) else " | Obj: N/A"
         print(f"  {row['ticker']} ({row['company_name']}): {row['change_pct']:+.2%} -> {row['price']:.2f}{target_note}")
