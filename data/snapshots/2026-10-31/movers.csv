@@ -1,0 +1,11 @@
+﻿ticker,company_name,price,change_pct,sector,eps,pe,pb,roe,debt_to_equity,fcf_yield,roe_consistency_years,roe_consistency_total,f_score,f_score_evaluable,eps_growth,eps_growth_years,peg,score_total,score_value,score_quality,score_breakdown,target_price,vs_target_pct,tipo
+INTC,Intel Corp.,65.76000213623047,-0.2857608085782668,Information Technology,-0.06,,,-0.0023363463742879,,,1.0,5.0,5.0,7.0,,0.0,,,,58.2,,,,bajada
+ILMN,Illumina Inc,235.99000549316406,-0.18640968255027046,Health Care,5.45,43.30091843911267,,0.3121557106132941,,,1.0,5.0,6.0,7.0,0.041520357066756164,5.0,10.428840573190094,,,86.8,,141.05710589534158,-0.40227508533437617,bajada
+AGIO,Agios Pharmaceuticals Inc. Common Stock,30.549999237060547,-0.17942520513860116,Health Care,-7.12,,,-0.3459694547210074,0.0872598930194432,,2.0,5.0,2.0,7.0,,0.0,,,,50.0,,,,bajada
+APPS,Digital Turbine Inc. Common Stock,8.869999885559082,-0.1608325315371173,Miscellaneous,-0.33,,,-0.1963561804944812,3.379941819620006,,0.0,5.0,7.0,8.0,,0.0,,,,48.3,,,,bajada
+PRLD,Prelude Therapeutics Incorporated Common Stock,5.46999979019165,-0.1372240286210592,Health Care,-1.29,,,-1.4496262948555445,1.0588749508282704,,0.0,5.0,3.0,7.0,,0.0,,,,34.7,,,,bajada
+FBRX,Forte Biosciences Inc. Common Stock,76.98999786376953,0.5734722539052506,Health Care,-4.71,,,-1.1374629043629387,0.3572330343821219,,0.0,5.0,,2.0,,0.0,,,,44.8,,,,subida
+FMC,FMC Corporation,6.199999809265137,0.3052631177400287,Materials,-17.88,,0.37392764826006275,-1.080811006517017,,,3.0,5.0,1.0,6.0,,0.0,,30.1,45.3,14.9,"Valor 45 (P/E 0, P/B 91) · Calidad 15 (ROE 13, F-Score 17)",,,subida
+ASUR,Asure Software Inc Common Stock,9.40999984741211,0.3015214139125253,Technology,-0.48,,,-0.0663613015430039,1.6867024611215595,,0.0,5.0,4.0,6.0,,0.0,,,,48.3,,,,subida
+RDIB,Reading International Inc Class B Common Stock,18.309999465942383,0.18896103373344308,Consumer Discretionary,-0.62,,,0.7752618016338615,,,3.0,5.0,3.0,7.0,,0.0,,,,68.1,,,,subida
+QNRX,Quoin Pharmaceuticals Ltd. American Depositary Shares,6.119999885559082,0.18719682569840446,Health Care,,,24.46215065859181,-1.2046317252577876,0.554170357622989,,0.0,5.0,3.0,7.0,,0.0,,,,40.8,,,,subida

@@ -3,46 +3,77 @@ INFORME DE VALOR + CALIDAD
 
 TOP MOVERS DEL DÍA
 ----------------------------------------------------------------------
-Mayores subidas:
-  FBRX (Forte Biosciences Inc. Common Stock): +57.35% -> 76.99 | Obj: N/A
-  ATGL (Alpha Technology Group Limited Ordinary Shares): +52.64% -> 6.93 | Obj: N/A
-  RDIB (Reading International Inc Class B Common Stock): +18.90% -> 18.31 | Obj: N/A
-  QNRX (Quoin Pharmaceuticals Ltd. American Depositary Shares): +18.72% -> 6.12 | Obj: N/A
-  AEYE (AudioEye Inc. Common Stock): +17.67% -> 8.19 | Obj: N/A
 Mayores caídas:
-  AEHL (Antelope Enterprise Holdings Limited Class A Ordinary Shares): -16.18% -> 8.39 | Obj: N/A
-  PSNYW (Polestar Automotive Holding UK PLC Class C-1 ADS (ADW)): -14.61% -> 5.32 | Obj: N/A
-  PRLD (Prelude Therapeutics Incorporated Common Stock): -13.72% -> 5.47 | Obj: N/A
-  NXTT (Next Technology Holding Inc. Ordinary Shares): -12.88% -> 6.02 | Obj: N/A
-  CRML (Critical Metals Corp. Ordinary Shares): -11.44% -> 7.12 | Obj: N/A
+  TRIP (TripAdvisor): -27.65% -> 7.38 | Obj: 6.87 (-6.8%)
+  ALAB (Astera Labs Inc. Common Stock): -19.62% -> 179.47 | Obj: 35.23 (-80.4%)
+  MU (Micron Technology): -17.46% -> 656.39 | Obj: 2113.27 (+222.0%)
+  WDC (Western Digital): -17.35% -> 267.63 | Obj: 690.30 (+157.9%)
+  LRCX (Lam Research): -16.36% -> 185.20 | Obj: 163.76 (-11.6%)
+Mayores subidas:
+  APP (Applovin Corporation Class A Common Stock): +31.04% -> 356.10 | Obj: 281.54 (-20.9%)
+  ADMA (ADMA Biologics Inc Common Stock): +26.05% -> 13.21 | Obj: 15.95 (+20.7%)
+  VRSK (Verisk Analytics): +6.88% -> 211.47 | Obj: 224.04 (+5.9%)
+  TER (Teradyne Inc. Common Stock): +5.19% -> 371.47 | Obj: 119.97 (-67.7%)
+  TSLA (Tesla Inc. Common Stock): +5.14% -> 362.86 | Obj: 23.95 (-93.4%)
 
 ======================================================================
 
 ANOMALÍAS DE DATOS DE HOY
 ----------------------------------------------------------------------
+  AMD (Advanced Micro Devices Inc) [PRICE_MOVE]: Daily close change: -17.45%
+  LRCX (Lam Research) [PRICE_MOVE]: Daily close change: -16.36%
+  MU (Micron Technology) [PRICE_MOVE]: Daily close change: -17.46%
+  PCLN (Priceline.com Inc) [VOLUME]: Volume is 11.4x 20-day average
   QRVO (Qorvo) [VOLUME]: Volume is 6.0x 20-day average
   SCG (SCANA Corp) [VOLUME]: Volume is 7.0x 20-day average
-  ATNM (Actinium Pharmaceuticals Inc. (Delaware) Common Stock) [VOLUME]: Volume is 6.2x 20-day average
-  BATL (Battalion Oil Corporation Common Stock) [PRICE_MOVE]: Daily close change: -18.34%
+  STX (Seagate Technology) [PRICE_MOVE]: Daily close change: -16.25%
+  TRIP (TripAdvisor) [PRICE_MOVE]: Daily close change: -27.65%
+  TRIP (TripAdvisor) [VOLUME]: Volume is 6.6x 20-day average
+  WDC (Western Digital) [PRICE_MOVE]: Daily close change: -17.35%
+  AEON (AEON Biopharma Inc. Class A Common Stock) [PRICE_MOVE]: Daily close change: -28.73%
+  AIRI (Air Industries Group Common Stock) [VOLUME]: Volume is 10.2x 20-day average
   BGI (Birks Group Inc. Common Stock) [PRICE_MOVE]: Daily close change: -17.02%
-  BURU (Nuburu Inc. Common Stock) [PRICE_MOVE]: Daily close change: -18.06%
-  DSS (DSS Inc. Common Stock) [VOLUME]: Volume is 6.0x 20-day average
-  ENSV (Enservco Corporation Common Stock) [PRICE_MOVE]: Daily close change: 160.00%
-  LSF (Laird Superfood Inc. Common Stock) [VOLUME]: Volume is 7.0x 20-day average
-  MPU (Mega Matrix Corp. Common Stock) [PRICE_MOVE]: Daily close change: -16.47%
+  BURU (Nuburu Inc. Common Stock) [PRICE_MOVE]: Daily close change: -16.12%
+  LODE (Comstock Inc. Common Stock) [PRICE_MOVE]: Daily close change: 16.11%
   NCL (Northann Corp. Common Stock) [PRICE_MOVE]: Daily close change: -50.00%
   NCL (Northann Corp. Common Stock) [VOLUME]: Volume is 5.2x 20-day average
-  UUU (Universal Security Instruments Inc. Common Stock) [PRICE_MOVE]: Daily close change: -18.71%
-  AACG (ATA Creativity Global American Depositary Shares) [PRICE_MOVE]: Daily close change: -16.77%
-  ABLV (Able View Global Inc. Class B Ordinary Shares) [PRICE_MOVE]: Daily close change: 22.42%
-  AEHL (Antelope Enterprise Holdings Limited Class A Ordinary Shares) [PRICE_MOVE]: Daily close change: -16.18%
-  AEYE (AudioEye Inc. Common Stock) [PRICE_MOVE]: Daily close change: 17.67%
+  SOAR (Volato Group Inc. Class A Common Stock) [PRICE_MOVE]: Daily close change: -17.22%
+  THM (International Tower Hill Mines Ltd. Ordinary Shares (Canada)) [PRICE_MOVE]: Daily close change: -29.68%
+  THM (International Tower Hill Mines Ltd. Ordinary Shares (Canada)) [VOLUME]: Volume is 15.5x 20-day average
+  UMAC (Unusual Machines Inc. Common Stock) [PRICE_MOVE]: Daily close change: -17.64%
+  AACI (Armada Acquisition Corp. I Common Stock) [VOLUME]: Volume is 16.5x 20-day average
+  AACIW (Armada Acquisition Corp. I Warrant) [PRICE_MOVE]: Daily close change: -24.51%
+  AACIW (Armada Acquisition Corp. I Warrant) [VOLUME]: Volume is 23.7x 20-day average
+  AAOI (Applied Optoelectronics Inc. Common Stock) [PRICE_MOVE]: Daily close change: -20.89%
+  ABTS (Abits Group Inc Ordinary Shares) [VOLUME]: Volume is 6.1x 20-day average
+  ACDC (ProFrac Holding Corp. Class A Common Stock) [PRICE_MOVE]: Daily close change: -31.74%
+  ADAG (Adagene Inc. American Depositary Shares) [PRICE_MOVE]: Daily close change: -16.18%
+  ADMA (ADMA Biologics Inc Common Stock) [PRICE_MOVE]: Daily close change: 26.05%
+  ADSEW (ADS-TEC ENERGY PLC Warrant) [PRICE_MOVE]: Daily close change: -17.30%
+  ADTX (Aditxt Inc. Common Stock) [PRICE_MOVE]: Daily close change: 25.00%
+  ADV (Advantage Solutions Inc. Class A Common Stock) [PRICE_MOVE]: Daily close change: -18.93%
+  AEHL (Antelope Enterprise Holdings Limited Class A Ordinary Shares) [PRICE_MOVE]: Daily close change: 178.15%
+  AEHL (Antelope Enterprise Holdings Limited Class A Ordinary Shares) [VOLUME]: Volume is 30.9x 20-day average
+  AEHR (Aehr Test Systems Common Stock) [PRICE_MOVE]: Daily close change: -19.20%
   AIHS (Senmiao Technology Limited Common Stock) [PRICE_MOVE]: Daily close change: 18.76%
-  AIXI (XIAO-I Corporation American Depositary Shares) [PRICE_MOVE]: Daily close change: 40.91%
+  AIRS (AirSculpt Technologies Inc. Common Stock) [PRICE_MOVE]: Daily close change: -15.29%
+  AKBA (Akebia Therapeutics Inc. Common Stock) [PRICE_MOVE]: Daily close change: -38.75%
+  ALAB (Astera Labs Inc. Common Stock) [PRICE_MOVE]: Daily close change: -19.62%
   ALCE (Alternus Clean Energy Inc. Class A Common Stock) [VOLUME]: Volume is 8320.0x 20-day average
-  ANGH (Anghami Inc. Ordinary Shares) [VOLUME]: Volume is 15.8x 20-day average
-  ATGL (Alpha Technology Group Limited Ordinary Shares) [PRICE_MOVE]: Daily close change: 52.64%
-  ATGL (Alpha Technology Group Limited Ordinary Shares) [VOLUME]: Volume is 126.0x 20-day average
+  ALXO (ALX Oncology Holdings Inc. Common Stock) [PRICE_MOVE]: Daily close change: -15.44%
+  AMTX (Aemetis Inc. (DE) Common Stock) [PRICE_MOVE]: Daily close change: 38.40%
+  AMTX (Aemetis Inc. (DE) Common Stock) [VOLUME]: Volume is 19.8x 20-day average
+  ANGHW (Anghami Inc. Warrants) [PRICE_MOVE]: Daily close change: -25.71%
+  APP (Applovin Corporation Class A Common Stock) [PRICE_MOVE]: Daily close change: 31.04%
+  APP (Applovin Corporation Class A Common Stock) [VOLUME]: Volume is 5.2x 20-day average
+  APYX (Apyx Medical Corporation Common Stock) [PRICE_MOVE]: Daily close change: 18.15%
+  APYX (Apyx Medical Corporation Common Stock) [VOLUME]: Volume is 8.1x 20-day average
+  ARAY (Accuray Incorporated Common Stock) [PRICE_MOVE]: Daily close change: -17.40%
+  AREB (American Rebel Holdings Inc. Common Stock) [PRICE_MOVE]: Daily close change: -15.33%
+  ARQ (Arq Inc. Common Stock) [PRICE_MOVE]: Daily close change: 29.73%
+  ARQ (Arq Inc. Common Stock) [VOLUME]: Volume is 43.2x 20-day average
+  ARQT (Arcutis Biotherapeutics Inc. Common Stock) [PRICE_MOVE]: Daily close change: -20.70%
+  ASTS (AST SpaceMobile Inc. Class A Common Stock) [PRICE_MOVE]: Daily close change: -15.22%
   ATXI (Avenue Therapeutics Inc. Common Stock) [PRICE_MOVE]: Daily close change: -27.18%
   AUID (authID Inc. Common Stock) [PRICE_MOVE]: Daily close change: 22.85%
   BCAB (BioAtla Inc. Common Stock) [PRICE_MOVE]: Daily close change: -44.75%
@@ -141,38 +172,42 @@ ANOMALÍAS DE DATOS DE HOY
 
 ======================================================================
 
-1. VNO (Vornado Realty Trust) — Precio: 33.12
-   P/E: 7.89 | P/B: 1.05 | ROE: 15.1% (consistencia: 1/5 años) | D/E: 1.46 | FCF Yield: N/A | PEG: 0.12 | F-Score: 7/7 | Puntuación: 80/100 | Último 10-K: 2026-02-09
-   Destaca sobre todo por su P/E bajo (7.9). P/E de 7.9 (más barata que el 89% de las empresas del ranking, según este criterio); P/B de 1.1 (más barata que el 89% en este criterio); ROE de 15.1% (+0.1% respecto al mínimo exigido de 15%); consistencia: 1/5 años recientes con ROE por encima del mínimo (ROE inconsistente en años recientes — puede que el dato actual sea un año excepcional, conviene revisarlo); precio objetivo por P/E mediano de su sector: 127.90 (+286.2% respecto al precio actual); deuda/patrimonio de 1.46 (deuda moderada respecto a su patrimonio); PEG de 0.12 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 67.8% anual en los últimos 4 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 7/7 (salud financiera sólida: cumple la gran mayoría de los 9 criterios de Piotroski); puntuación combinada Valor+Calidad de 80/100 — Valor 87 (P/E 89, P/B 85) · Calidad 73 (ROE 77, D/E 43, F-Score 100) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+1. VNO (Vornado Realty Trust) — Precio: 35.88
+   P/E: 8.54 | P/B: 1.14 | ROE: 15.1% (consistencia: 1/5 años) | D/E: 1.46 | FCF Yield: N/A | PEG: 0.13 | F-Score: 7/7 | Puntuación: 80/100 | Último 10-K: 2026-02-09
+   Destaca sobre todo por su P/E bajo (8.5). P/E de 8.5 (más barata que el 90% de las empresas del ranking, según este criterio); P/B de 1.1 (más barata que el 90% en este criterio); ROE de 15.1% (+0.1% respecto al mínimo exigido de 15%); consistencia: 1/5 años recientes con ROE por encima del mínimo (ROE inconsistente en años recientes — puede que el dato actual sea un año excepcional, conviene revisarlo); precio objetivo por P/E mediano de su sector: 123.46 (+244.1% respecto al precio actual); deuda/patrimonio de 1.46 (deuda moderada respecto a su patrimonio); PEG de 0.13 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 67.8% anual en los últimos 4 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 7/7 (salud financiera sólida: cumple la gran mayoría de los 9 criterios de Piotroski); puntuación combinada Valor+Calidad de 80/100 — Valor 86 (P/E 88, P/B 84) · Calidad 73 (ROE 76, D/E 44, F-Score 100) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
 
 2. CRCT (Cricut Inc. Class A Common Stock) — Precio: 5.80
-   P/E: 16.57 | P/B: 3.57 | ROE: 22.3% (consistencia: 2/5 años) | D/E: 0.69 | FCF Yield: N/A | PEG: N/A | F-Score: 7/9 | Puntuación: 65/100 | Último 10-K: 2026-03-04
-   Destaca sobre todo por su P/E bajo (16.6). P/E de 16.6 (más barata que el 78% de las empresas del ranking, según este criterio); P/B de 3.6 (más barata que el 78% en este criterio); ROE de 22.3% (+7.3% respecto al mínimo exigido de 15%); consistencia: 2/5 años recientes con ROE por encima del mínimo (ROE inconsistente en años recientes — puede que el dato actual sea un año excepcional, conviene revisarlo); precio objetivo por P/E mediano de su sector: 10.40 (+79.3% respecto al precio actual); deuda/patrimonio de 0.69 (deuda moderada respecto a su patrimonio); PEG no calculable (el beneficio por acción ha caído un 13.9% anual en los últimos 5 años, así que el ratio no aplica); Piotroski F-Score de 7/9 (salud financiera sólida: cumple la gran mayoría de los 9 criterios de Piotroski); puntuación combinada Valor+Calidad de 65/100 — Valor 56 (P/E 61, P/B 51) · Calidad 75 (ROE 84, D/E 62, F-Score 78) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+   P/E: 16.57 | P/B: 3.57 | ROE: 22.3% (consistencia: 2/5 años) | D/E: 0.69 | FCF Yield: N/A | PEG: N/A | F-Score: 7/9 | Puntuación: 66/100 | Último 10-K: 2026-03-04
+   Destaca sobre todo por su P/E bajo (16.6). P/E de 16.6 (más barata que el 80% de las empresas del ranking, según este criterio); P/B de 3.6 (más barata que el 80% en este criterio); ROE de 22.3% (+7.3% respecto al mínimo exigido de 15%); consistencia: 2/5 años recientes con ROE por encima del mínimo (ROE inconsistente en años recientes — puede que el dato actual sea un año excepcional, conviene revisarlo); precio objetivo por P/E mediano de su sector: 10.11 (+74.3% respecto al precio actual); deuda/patrimonio de 0.69 (deuda moderada respecto a su patrimonio); PEG no calculable (el beneficio por acción ha caído un 13.9% anual en los últimos 5 años, así que el ratio no aplica); Piotroski F-Score de 7/9 (salud financiera sólida: cumple la gran mayoría de los 9 criterios de Piotroski); puntuación combinada Valor+Calidad de 66/100 — Valor 56 (P/E 61, P/B 51) · Calidad 75 (ROE 84, D/E 63, F-Score 78) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
 
-3. DRI (Darden Restaurants) — Precio: 217.99
-   P/E: 21.00 | P/B: 11.27 | ROE: 54.7% (consistencia: 5/5 años) | D/E: 4.83 | FCF Yield: N/A | PEG: 1.25 | F-Score: 4/7 | Puntuación: 45/100 | Último 10-K: 2026-07-24
-   Destaca sobre todo por su P/E bajo (21.0). P/E de 21.0 (más barata que el 67% de las empresas del ranking, según este criterio); P/B de 11.3 (más barata que el 22% en este criterio); ROE de 54.7% (+39.7% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 221.59 (+1.7% respecto al precio actual); deuda/patrimonio de 4.83 (deuda alta respecto a su patrimonio — conviene mirarlo con más cuidado); PEG de 1.25 (razonable respecto a su crecimiento; el beneficio por acción ha crecido un 16.8% anual en los últimos 5 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 4/7 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 45/100 — Valor 33 (P/E 48, P/B 17) · Calidad 57 (ROE 92, D/E 21, F-Score 57) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+3. GD (General Dynamics) — Precio: 356.39
+   P/E: 23.07 | P/B: 3.76 | ROE: 16.4% (consistencia: 5/5 años) | D/E: N/A | FCF Yield: 4.1% | PEG: 3.28 | F-Score: 6/6 | Puntuación: 71/100 | Último 10-K: 2026-01-30
+   Destaca sobre todo por su P/B bajo (3.8). P/E de 23.1 (más barata que el 60% de las empresas del ranking, según este criterio); P/B de 3.8 (más barata que el 70% en este criterio); ROE de 16.4% (+1.4% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 534.18 (+49.9% respecto al precio actual); FCF Yield de 4.1% (genera algo de caja libre, pero no mucha respecto a su precio); PEG de 3.28 (cara respecto a su crecimiento; el beneficio por acción ha crecido un 7.0% anual en los últimos 5 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 6/6 (salud financiera sólida: cumple la gran mayoría de los 9 criterios de Piotroski); puntuación combinada Valor+Calidad de 71/100 — Valor 53 (P/E 44, P/B 49, FCF 68) · Calidad 89 (ROE 78, F-Score 100) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
 
-4. NFLX (Netflix Inc.) — Precio: 68.69
-   P/E: 27.15 | P/B: 10.90 | ROE: 41.3% (consistencia: 5/5 años) | D/E: 1.09 | FCF Yield: 3.3% | PEG: N/A | F-Score: 5/8 | Puntuación: 54/100 | Último 10-K: 2026-01-23
-   Destaca sobre todo por su P/E bajo (27.2). P/E de 27.2 (más barata que el 56% de las empresas del ranking, según este criterio); P/B de 10.9 (más barata que el 33% en este criterio); ROE de 41.3% (+26.3% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 80.33 (+16.9% respecto al precio actual); deuda/patrimonio de 1.09 (deuda moderada respecto a su patrimonio); FCF Yield de 3.3% (genera algo de caja libre, pero no mucha respecto a su precio); Piotroski F-Score de 5/8 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 54/100 — Valor 41 (P/E 36, P/B 20, FCF 69) · Calidad 68 (ROE 90, D/E 50, F-Score 62) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+4. GOOG (Alphabet Inc Class C) — Precio: 281.72
+   P/E: 26.06 | P/B: 8.20 | ROE: 31.8% (consistencia: 5/5 años) | D/E: 0.43 | FCF Yield: 2.2% | PEG: 0.78 | F-Score: 5/8 | Puntuación: 58/100 | Último 10-K: 2026-02-05
+   Destaca sobre todo por su P/B bajo (8.2). P/E de 26.1 (más barata que el 40% de las empresas del ranking, según este criterio); P/B de 8.2 (más barata que el 60% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 307.34 (+9.1% respecto al precio actual); deuda/patrimonio de 0.43 (deuda baja respecto a su patrimonio); FCF Yield de 2.2% (genera algo de caja libre, pero no mucha respecto a su precio); PEG de 0.78 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 33.3% anual en los últimos 3 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 5/8 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 58/100 — Valor 41 (P/E 39, P/B 28, FCF 56) · Calidad 74 (ROE 88, D/E 73, F-Score 62) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
 
-5. GOOG (Alphabet Inc Class C) — Precio: 336.22
-   P/E: 31.10 | P/B: 9.79 | ROE: 31.8% (consistencia: 5/5 años) | D/E: 0.43 | FCF Yield: 1.8% | PEG: 0.93 | F-Score: 5/8 | Puntuación: 55/100 | Último 10-K: 2026-02-05
-   Destaca sobre todo por su P/B bajo (9.8). P/E de 31.1 (más barata que el 22% de las empresas del ranking, según este criterio); P/B de 9.8 (más barata que el 56% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 343.22 (+2.1% respecto al precio actual); deuda/patrimonio de 0.43 (deuda baja respecto a su patrimonio); FCF Yield de 1.8% (genera algo de caja libre, pero no mucha respecto a su precio); PEG de 0.93 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 33.3% anual en los últimos 3 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 5/8 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 55/100 — Valor 36 (P/E 31, P/B 24, FCF 53) · Calidad 74 (ROE 88, D/E 73, F-Score 62) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+5. DRI (Darden Restaurants) — Precio: 228.25
+   P/E: 21.99 | P/B: 11.80 | ROE: 54.7% (consistencia: 5/5 años) | D/E: 4.83 | FCF Yield: N/A | PEG: 1.31 | F-Score: 4/7 | Puntuación: 44/100 | Último 10-K: 2026-07-24
+   Destaca sobre todo por su P/E bajo (22.0). P/E de 22.0 (más barata que el 70% de las empresas del ranking, según este criterio); P/B de 11.8 (más barata que el 20% en este criterio); ROE de 54.7% (+39.7% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 230.20 (+0.9% respecto al precio actual); deuda/patrimonio de 4.83 (deuda alta respecto a su patrimonio — conviene mirarlo con más cuidado); PEG de 1.31 (razonable respecto a su crecimiento; el beneficio por acción ha crecido un 16.8% anual en los últimos 5 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 4/7 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 44/100 — Valor 30 (P/E 47, P/B 14) · Calidad 57 (ROE 92, D/E 22, F-Score 57) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
 
-6. NVEC (NVE Corporation Common Stock) — Precio: 100.89
-   P/E: 32.13 | P/B: 8.38 | ROE: 26.1% (consistencia: 5/5 años) | D/E: 0.04 | FCF Yield: 3.0% | PEG: 6.01 | F-Score: 6/9 | Puntuación: 63/100 | Último 10-K: 2026-05-06
-   Destaca sobre todo por su P/B bajo (8.4). P/E de 32.1 (más barata que el 0% de las empresas del ranking, según este criterio); P/B de 8.4 (más barata que el 67% en este criterio); ROE de 26.1% (+11.1% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 93.32 (-7.5% respecto al precio actual); deuda/patrimonio de 0.04 (deuda baja respecto a su patrimonio); FCF Yield de 3.0% (genera algo de caja libre, pero no mucha respecto a su precio); PEG de 6.01 (cara respecto a su crecimiento; el beneficio por acción ha crecido un 5.3% anual en los últimos 5 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 6/9 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 63/100 — Valor 41 (P/E 29, P/B 29, FCF 66) · Calidad 84 (ROE 86, D/E 99, F-Score 67) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+6. NFLX (Netflix Inc.) — Precio: 65.56
+   P/E: 25.91 | P/B: 10.40 | ROE: 41.3% (consistencia: 5/5 años) | D/E: 1.09 | FCF Yield: 3.4% | PEG: N/A | F-Score: 5/8 | Puntuación: 54/100 | Último 10-K: 2026-01-23
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 25.9 (más barata que el 50% de las empresas del ranking, según este criterio); P/B de 10.4 (más barata que el 30% en este criterio); ROE de 41.3% (+26.3% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 71.93 (+9.7% respecto al precio actual); deuda/patrimonio de 1.09 (deuda moderada respecto a su patrimonio); FCF Yield de 3.4% (genera algo de caja libre, pero no mucha respecto a su precio); Piotroski F-Score de 5/8 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 54/100 — Valor 41 (P/E 39, P/B 19, FCF 65) · Calidad 68 (ROE 91, D/E 51, F-Score 62) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
 
-7. GOOGL (Alphabet Inc Class A) — Precio: 340.03
-   P/E: 31.46 | P/B: 9.90 | ROE: 31.8% (consistencia: 5/5 años) | D/E: 0.43 | FCF Yield: 1.8% | PEG: 0.94 | F-Score: 5/8 | Puntuación: 54/100 | Último 10-K: 2026-02-05
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 31.5 (más barata que el 11% de las empresas del ranking, según este criterio); P/B de 9.9 (más barata que el 44% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 343.22 (+0.9% respecto al precio actual); deuda/patrimonio de 0.43 (deuda baja respecto a su patrimonio); FCF Yield de 1.8% (genera algo de caja libre, pero no mucha respecto a su precio); PEG de 0.94 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 33.3% anual en los últimos 3 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 5/8 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 54/100 — Valor 34 (P/E 30, P/B 22, FCF 50) · Calidad 74 (ROE 88, D/E 73, F-Score 62) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+7. GOOGL (Alphabet Inc Class A) — Precio: 282.73
+   P/E: 26.15 | P/B: 8.23 | ROE: 31.8% (consistencia: 5/5 años) | D/E: 0.43 | FCF Yield: 2.1% | PEG: 0.78 | F-Score: 5/8 | Puntuación: 57/100 | Último 10-K: 2026-02-05
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 26.2 (más barata que el 30% de las empresas del ranking, según este criterio); P/B de 8.2 (más barata que el 50% en este criterio); ROE de 31.8% (+16.8% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 307.34 (+8.7% respecto al precio actual); deuda/patrimonio de 0.43 (deuda baja respecto a su patrimonio); FCF Yield de 2.1% (genera algo de caja libre, pero no mucha respecto a su precio); PEG de 0.78 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 33.3% anual en los últimos 3 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 5/8 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 57/100 — Valor 39 (P/E 38, P/B 26, FCF 53) · Calidad 74 (ROE 88, D/E 73, F-Score 62) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
 
-8. EXPE (Expedia Inc.) — Precio: 300.76
-   P/E: 30.66 | P/B: 27.40 | ROE: 100.8% (consistencia: 4/5 años) | D/E: N/A | FCF Yield: 8.8% | PEG: 0.47 | F-Score: 5/7 | Puntuación: 63/100 | Último 10-K: 2026-02-13
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 30.7 (más barata que el 33% de las empresas del ranking, según este criterio); P/B de 27.4 (más barata que el 11% en este criterio); ROE de 100.8% (+85.8% respecto al mínimo exigido de 15%); consistencia: 4/5 años recientes con ROE por encima del mínimo (ROE por encima del mínimo en la mayoría de años recientes); precio objetivo por P/E mediano de su sector: 209.43 (-30.4% respecto al precio actual); FCF Yield de 8.8% (genera bastante caja libre respecto a su precio); PEG de 0.47 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 65.3% anual en los últimos 3 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 5/7 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 63/100 — Valor 43 (P/E 32, P/B 5, FCF 94) · Calidad 83 (ROE 94, F-Score 71) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+8. NVEC (NVE Corporation Common Stock) — Precio: 100.89
+   P/E: 32.13 | P/B: 8.38 | ROE: 26.1% (consistencia: 5/5 años) | D/E: 0.04 | FCF Yield: 3.0% | PEG: 6.01 | F-Score: 6/9 | Puntuación: 61/100 | Último 10-K: 2026-05-06
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 32.1 (más barata que el 10% de las empresas del ranking, según este criterio); P/B de 8.4 (más barata que el 40% en este criterio); ROE de 26.1% (+11.1% respecto al mínimo exigido de 15%); consistencia: 5/5 años recientes con ROE por encima del mínimo (ROE sostenido en todos los años disponibles, no es un año puntual); precio objetivo por P/E mediano de su sector: 90.67 (-10.1% respecto al precio actual); deuda/patrimonio de 0.04 (deuda baja respecto a su patrimonio); FCF Yield de 3.0% (genera algo de caja libre, pero no mucha respecto a su precio); PEG de 6.01 (cara respecto a su crecimiento; el beneficio por acción ha crecido un 5.3% anual en los últimos 5 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 6/9 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 61/100 — Valor 38 (P/E 29, P/B 23, FCF 62) · Calidad 84 (ROE 86, D/E 99, F-Score 67) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
 
-9. APP (Applovin Corporation Class A Common Stock) — Precio: 272.46
-   P/E: 27.94 | P/B: 43.18 | ROE: 156.2% (consistencia: 3/5 años) | D/E: 2.40 | FCF Yield: N/A | PEG: 0.13 | F-Score: 7/8 | Puntuación: 45/100 | Último 10-K: 2026-02-19
-   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 27.9 (más barata que el 44% de las empresas del ranking, según este criterio); P/B de 43.2 (más barata que el 0% en este criterio); ROE de 156.2% (+141.2% respecto al mínimo exigido de 15%); consistencia: 3/5 años recientes con ROE por encima del mínimo (ROE por encima del mínimo en la mayoría de años recientes); precio objetivo por P/E mediano de su sector: 289.75 (+6.3% respecto al precio actual); deuda/patrimonio de 2.40 (deuda alta respecto a su patrimonio — conviene mirarlo con más cuidado); PEG de 0.13 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 222.6% anual en los últimos 4 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 7/8 (salud financiera sólida: cumple la gran mayoría de los 9 criterios de Piotroski); puntuación combinada Valor+Calidad de 45/100 — Valor 19 (P/E 35, P/B 2) · Calidad 71 (ROE 96, D/E 31, F-Score 88) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+9. EXPE (Expedia Inc.) — Precio: 272.48
+   P/E: 27.78 | P/B: 24.82 | ROE: 100.8% (consistencia: 4/5 años) | D/E: N/A | FCF Yield: 9.8% | PEG: 0.43 | F-Score: 5/7 | Puntuación: 64/100 | Último 10-K: 2026-02-13
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 27.8 (más barata que el 20% de las empresas del ranking, según este criterio); P/B de 24.8 (más barata que el 10% en este criterio); ROE de 100.8% (+85.8% respecto al mínimo exigido de 15%); consistencia: 4/5 años recientes con ROE por encima del mínimo (ROE por encima del mínimo en la mayoría de años recientes); precio objetivo por P/E mediano de su sector: 217.55 (-20.2% respecto al precio actual); FCF Yield de 9.8% (genera bastante caja libre respecto a su precio); PEG de 0.43 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 65.3% anual en los últimos 3 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 5/7 (salud financiera intermedia: cumple parte de los criterios de Piotroski, no todos); puntuación combinada Valor+Calidad de 64/100 — Valor 45 (P/E 36, P/B 5, FCF 94) · Calidad 83 (ROE 95, F-Score 71) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).
+
+10. APP (Applovin Corporation Class A Common Stock) — Precio: 356.10
+   P/E: 36.52 | P/B: 56.44 | ROE: 156.2% (consistencia: 3/5 años) | D/E: 2.40 | FCF Yield: N/A | PEG: 0.16 | F-Score: 7/8 | Puntuación: 42/100 | Último 10-K: 2026-02-19
+   No destaca por tener un precio especialmente bajo en P/E ni P/B respecto al resto del universo, pero es de las mejores opciones entre las que cumplen el filtro de calidad. P/E de 36.5 (más barata que el 0% de las empresas del ranking, según este criterio); P/B de 56.4 (más barata que el 0% en este criterio); ROE de 156.2% (+141.2% respecto al mínimo exigido de 15%); consistencia: 3/5 años recientes con ROE por encima del mínimo (ROE por encima del mínimo en la mayoría de años recientes); precio objetivo por P/E mediano de su sector: 281.54 (-20.9% respecto al precio actual); deuda/patrimonio de 2.40 (deuda alta respecto a su patrimonio — conviene mirarlo con más cuidado); PEG de 0.16 (barata respecto a su crecimiento; el beneficio por acción ha crecido un 222.6% anual en los últimos 4 años — es crecimiento pasado, no una previsión); Piotroski F-Score de 7/8 (salud financiera sólida: cumple la gran mayoría de los 9 criterios de Piotroski); puntuación combinada Valor+Calidad de 42/100 — Valor 13 (P/E 24, P/B 2) · Calidad 72 (ROE 96, D/E 31, F-Score 88) (cada nota es el percentil de la empresa en esa métrica dentro de todo el universo: 100 = la mejor, 0 = la peor).

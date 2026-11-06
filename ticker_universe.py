@@ -17,6 +17,7 @@ Import: from ticker_universe import load_tickers
 
 import glob
 import os
+import re
 
 import pandas as pd
 
@@ -63,6 +64,26 @@ def _fix_ticker(ticker: str) -> str:
     return ticker.replace(".", "-")
 
 
+# Un ticker válido: letras/números con guiones o puntos (BRK-B, 7203.T).
+# Descarta líneas corruptas del CSV (comas, comillas, espacios) y las
+# acciones preferentes con "^" (MFA^C, BAC^S): Yahoo las llama distinto,
+# no devuelven datos y no tienen fundamentales para el screener.
+VALID_TICKER = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.\-]*$")
+
+# Instrumentos que no son acciones ordinarias, detectados por el NOMBRE
+# (más seguro que por la letra final del ticker: SNOW o CROW son acciones
+# normales). Sin fundamentales, no sirven al screener.
+EXCLUDED_NAME = re.compile(r"\b(warrants?|rights?|units?)\b", re.I)
+
+
+def _keep_row(ticker: str, name) -> bool:
+    if not VALID_TICKER.match(ticker):
+        return False
+    if isinstance(name, str) and EXCLUDED_NAME.search(name):
+        return False
+    return True
+
+
 def load_tickers(tickers_dir: str = TICKERS_DIR) -> list:
     """Lee todos los .csv de tickers_dir, extrae la columna de ticker
     de cada uno (acepta 'ticker' o 'Symbol'), arregla símbolos con
@@ -91,10 +112,20 @@ def load_tickers(tickers_dir: str = TICKERS_DIR) -> list:
             print(f"AVISO: {path} no tiene columna 'ticker' ni 'Symbol', se omite")
             continue
 
-        tickers = df[col].dropna().astype(str).tolist()
-        tickers = [_fix_ticker(t.strip()) for t in tickers]
+        name_col = "Name" if "Name" in df.columns else ("name" if "name" in df.columns else None)
+        df = df.dropna(subset=[col])
+        raw = df[col].astype(str).str.strip().tolist()
+        names = df[name_col].tolist() if name_col else [None] * len(raw)
 
-        print(f"  {os.path.basename(path)}: {len(tickers)} tickers")
+        tickers, dropped = [], []
+        for t, n in zip(raw, names):
+            if _keep_row(t, n):
+                tickers.append(_fix_ticker(t))
+            else:
+                dropped.append(t)
+
+        print(f"  {os.path.basename(path)}: {len(tickers)} tickers"
+              + (f" ({len(dropped)} descartados: preferentes, warrants, units o filas corruptas)" if dropped else ""))
 
         all_tickers.extend(tickers)
 

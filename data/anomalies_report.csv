@@ -1,27 +1,58 @@
 ﻿ticker,company_name,kind,description
+AMD,Advanced Micro Devices Inc,PRICE_MOVE,Daily close change: -17.45%
+LRCX,Lam Research,PRICE_MOVE,Daily close change: -16.36%
+MU,Micron Technology,PRICE_MOVE,Daily close change: -17.46%
+PCLN,Priceline.com Inc,VOLUME,Volume is 11.4x 20-day average
 QRVO,Qorvo,VOLUME,Volume is 6.0x 20-day average
 SCG,SCANA Corp,VOLUME,Volume is 7.0x 20-day average
-ATNM,Actinium Pharmaceuticals Inc. (Delaware) Common Stock,VOLUME,Volume is 6.2x 20-day average
-BATL,Battalion Oil Corporation Common Stock,PRICE_MOVE,Daily close change: -18.34%
+STX,Seagate Technology,PRICE_MOVE,Daily close change: -16.25%
+TRIP,TripAdvisor,PRICE_MOVE,Daily close change: -27.65%
+TRIP,TripAdvisor,VOLUME,Volume is 6.6x 20-day average
+WDC,Western Digital,PRICE_MOVE,Daily close change: -17.35%
+AEON,AEON Biopharma Inc. Class A Common Stock,PRICE_MOVE,Daily close change: -28.73%
+AIRI,Air Industries Group Common Stock,VOLUME,Volume is 10.2x 20-day average
 BGI,Birks Group Inc. Common Stock,PRICE_MOVE,Daily close change: -17.02%
-BURU,Nuburu Inc. Common Stock,PRICE_MOVE,Daily close change: -18.06%
-DSS,DSS Inc. Common Stock,VOLUME,Volume is 6.0x 20-day average
-ENSV,Enservco Corporation Common Stock,PRICE_MOVE,Daily close change: 160.00%
-LSF,Laird Superfood Inc. Common Stock,VOLUME,Volume is 7.0x 20-day average
-MPU,Mega Matrix Corp. Common Stock,PRICE_MOVE,Daily close change: -16.47%
+BURU,Nuburu Inc. Common Stock,PRICE_MOVE,Daily close change: -16.12%
+LODE,Comstock Inc. Common Stock,PRICE_MOVE,Daily close change: 16.11%
 NCL,Northann Corp. Common Stock,PRICE_MOVE,Daily close change: -50.00%
 NCL,Northann Corp. Common Stock,VOLUME,Volume is 5.2x 20-day average
-UUU,Universal Security Instruments Inc. Common Stock,PRICE_MOVE,Daily close change: -18.71%
-AACG,ATA Creativity Global American Depositary Shares,PRICE_MOVE,Daily close change: -16.77%
-ABLV,Able View Global Inc. Class B Ordinary Shares,PRICE_MOVE,Daily close change: 22.42%
-AEHL,Antelope Enterprise Holdings Limited Class A Ordinary Shares,PRICE_MOVE,Daily close change: -16.18%
-AEYE,AudioEye Inc. Common Stock,PRICE_MOVE,Daily close change: 17.67%
+SOAR,Volato Group Inc. Class A Common Stock,PRICE_MOVE,Daily close change: -17.22%
+THM,International Tower Hill Mines Ltd. Ordinary Shares (Canada),PRICE_MOVE,Daily close change: -29.68%
+THM,International Tower Hill Mines Ltd. Ordinary Shares (Canada),VOLUME,Volume is 15.5x 20-day average
+UMAC,Unusual Machines Inc. Common Stock,PRICE_MOVE,Daily close change: -17.64%
+AACI,Armada Acquisition Corp. I Common Stock,VOLUME,Volume is 16.5x 20-day average
+AACIW,Armada Acquisition Corp. I Warrant,PRICE_MOVE,Daily close change: -24.51%
+AACIW,Armada Acquisition Corp. I Warrant,VOLUME,Volume is 23.7x 20-day average
+AAOI,Applied Optoelectronics Inc. Common Stock,PRICE_MOVE,Daily close change: -20.89%
+ABTS,Abits Group Inc Ordinary Shares,VOLUME,Volume is 6.1x 20-day average
+ACDC,ProFrac Holding Corp. Class A Common Stock,PRICE_MOVE,Daily close change: -31.74%
+ADAG,Adagene Inc. American Depositary Shares,PRICE_MOVE,Daily close change: -16.18%
+ADMA,ADMA Biologics Inc Common Stock,PRICE_MOVE,Daily close change: 26.05%
+ADSEW,ADS-TEC ENERGY PLC Warrant,PRICE_MOVE,Daily close change: -17.30%
+ADTX,Aditxt Inc. Common Stock,PRICE_MOVE,Daily close change: 25.00%
+ADV,Advantage Solutions Inc. Class A Common Stock,PRICE_MOVE,Daily close change: -18.93%
+AEHL,Antelope Enterprise Holdings Limited Class A Ordinary Shares,PRICE_MOVE,Daily close change: 178.15%
+AEHL,Antelope Enterprise Holdings Limited Class A Ordinary Shares,VOLUME,Volume is 30.9x 20-day average
+AEHR,Aehr Test Systems Common Stock,PRICE_MOVE,Daily close change: -19.20%
 AIHS,Senmiao Technology Limited Common Stock,PRICE_MOVE,Daily close change: 18.76%
-AIXI,XIAO-I Corporation American Depositary Shares,PRICE_MOVE,Daily close change: 40.91%
+AIRS,AirSculpt Technologies Inc. Common Stock,PRICE_MOVE,Daily close change: -15.29%
+AKBA,Akebia Therapeutics Inc. Common Stock,PRICE_MOVE,Daily close change: -38.75%
+ALAB,Astera Labs Inc. Common Stock,PRICE_MOVE,Daily close change: -19.62%
 ALCE,Alternus Clean Energy Inc. Class A Common Stock,VOLUME,Volume is 8320.0x 20-day average
-ANGH,Anghami Inc. Ordinary Shares,VOLUME,Volume is 15.8x 20-day average
-ATGL,Alpha Technology Group Limited Ordinary Shares,PRICE_MOVE,Daily close change: 52.64%
-ATGL,Alpha Technology Group Limited Ordinary Shares,VOLUME,Volume is 126.0x 20-day average
+ALXO,ALX Oncology Holdings Inc. Common Stock,PRICE_MOVE,Daily close change: -15.44%
+AMTX,Aemetis Inc. (DE) Common Stock,PRICE_MOVE,Daily close change: 38.40%
+AMTX,Aemetis Inc. (DE) Common Stock,VOLUME,Volume is 19.8x 20-day average
+ANGHW,Anghami Inc. Warrants,PRICE_MOVE,Daily close change: -25.71%
+APP,Applovin Corporation Class A Common Stock,PRICE_MOVE,Daily close change: 31.04%
+APP,Applovin Corporation Class A Common Stock,VOLUME,Volume is 5.2x 20-day average
+APYX,Apyx Medical Corporation Common Stock,PRICE_MOVE,Daily close change: 18.15%
+APYX,Apyx Medical Corporation Common Stock,VOLUME,Volume is 8.1x 20-day average
+ARAY,Accuray Incorporated Common Stock,PRICE_MOVE,Daily close change: -17.40%
+AREB,American Rebel Holdings Inc. Common Stock,PRICE_MOVE,Daily close change: -15.33%
+ARQ,Arq Inc. Common Stock,PRICE_MOVE,Daily close change: 29.73%
+ARQ,Arq Inc. Common Stock,VOLUME,Volume is 43.2x 20-day average
+ARQT,Arcutis Biotherapeutics Inc. Common Stock,PRICE_MOVE,Daily close change: -20.70%
+ASTS,AST SpaceMobile Inc. Class A Common Stock,PRICE_MOVE,Daily close change: -15.22%
 ATXI,Avenue Therapeutics Inc. Common Stock,PRICE_MOVE,Daily close change: -27.18%
 AUID,authID Inc. Common Stock,PRICE_MOVE,Daily close change: 22.85%
 BCAB,BioAtla Inc. Common Stock,PRICE_MOVE,Daily close change: -44.75%

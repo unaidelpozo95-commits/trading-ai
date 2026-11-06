@@ -1,0 +1,61 @@
+======================================================================
+DIAGNÓSTICO DE DESCARGA DE PRECIOS
+======================================================================
+yfinance 1.6.0 | pandas 3.0.5 | python 3.14.4 | Linux-7.0.0-42-generic-x86_64-desconocido-with-glibc2.43
+Universo: 7081 tickers; muestra repartida: 200
+
+--- 0. Un ticker suelto (AAPL) ---
+   filas: 5 en 0.5 s
+
+--- 1a. lote de 10, threads=True (10 tickers) ---
+   con datos: 7/10 (70%) en 1.5 s
+   errores por ticker (yfinance._ERRORS): 0 de 10
+   mensajes del log de yfinance: 7
+        1 x $GGP: No data found, symbol may be delisted
+        1 x $EQR: possibly delisted; no price data found  (1d 2026-10-27 -> 2026-11-06)
+        1 x HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for 
+        1 x $AIG,"AMERICAN INTERNATIONAL GROUP, INC-",FINANCIALS: No data found, symbol may be delisted
+        1 x 
+3 Failed downloads:
+
+--- 1b. lote de 50, threads=True (50 tickers) ---
+   con datos: 39/50 (78%) en 2.4 s
+   errores por ticker (yfinance._ERRORS): 0 de 50
+   mensajes del log de yfinance: 15
+        1 x $BCTXW: possibly delisted; no price data found  (1d 2026-10-27 -> 2026-11-06)
+        1 x $GGP: No data found, symbol may be delisted
+        1 x $AIG,"AMERICAN INTERNATIONAL GROUP, INC-",FINANCIALS: No data found, symbol may be delisted
+        1 x $COOP: possibly delisted; no timezone found
+        1 x $ADTHW: possibly delisted; no price data found  (1d 2026-10-27 -> 2026-11-06)
+
+--- 1c. lote de 200, threads=True (200 tickers) ---
+   con datos: 149/200 (74%) en 11.4 s
+   errores por ticker (yfinance._ERRORS): 0 de 200
+   mensajes del log de yfinance: 55
+        1 x $FBYDW: possibly delisted; no price data found  (1d 2026-10-27 -> 2026-11-06)
+        1 x $NUVO: possibly delisted; no timezone found
+        1 x $HROWM: possibly delisted; no timezone found
+        1 x $TPIC: possibly delisted; no timezone found
+        1 x $GGP: No data found, symbol may be delisted
+
+--- 2. lote de 50, threads=False (50 tickers) ---
+   con datos: 39/50 (78%) en 6.2 s
+   errores por ticker (yfinance._ERRORS): 0 de 50
+   mensajes del log de yfinance: 15
+        1 x $BCTXW: possibly delisted; no price data found  (1d 2026-10-27 -> 2026-11-06)
+        1 x $GGP: No data found, symbol may be delisted
+        1 x $COOP: possibly delisted; no timezone found
+        1 x $AIG,"AMERICAN INTERNATIONAL GROUP, INC-",FINANCIALS: No data found, symbol may be delisted
+        1 x $ADTHW: possibly delisted; no price data found  (1d 2026-10-27 -> 2026-11-06)
+
+--- 3. lote de 50, period='10d' (50 tickers) ---
+   con datos: 39/50 (78%) en 2.1 s
+   errores por ticker (yfinance._ERRORS): 0 de 50
+   mensajes del log de yfinance: 14
+        1 x $BCTXW: possibly delisted; no price data found  (period=10d)
+        1 x $GGP: No data found, symbol may be delisted
+        1 x $COOP: No data found, symbol may be delisted
+        1 x $AIG,"AMERICAN INTERNATIONAL GROUP, INC-",FINANCIALS: No data found, symbol may be delisted
+        1 x $ADTHW: possibly delisted; no price data found  (period=10d)
+
+Guardado en data/price_diag_output.txt — pégame ese fichero.
